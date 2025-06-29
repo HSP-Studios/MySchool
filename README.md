@@ -1,6 +1,5 @@
-# MySchool
-MySchool is an application that manages and displays student and class information at a glance.
+# MySchool - Prototype 3
 
-MySchool is based off of [OneSchool](https://oslp.eq.edu.au), the student information managment platform run by the Queensland Government. It is used across all state schools in Queensland.
+Prototype 3 was functioning, unlike the other prototypes, as it used pdfplumber (python library) to extract full tables from pdf files instead of extracting raw text.
 
-USE CHATGPT FOR PARSING OF PDFS AND CONVERT TO JSON
+The conversion from text to json was still not functioning.
