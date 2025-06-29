@@ -1,0 +1,91 @@
+{
+    "student": {
+        "last_name": "Welter",
+        "first_name": "Kevin",
+        "student_id": "4983506129B",
+        "grade": "Year 9",
+        "house": "Apollo",
+        "homeroom": "HAB14",
+        "homeroom_teacher": "Mr Jones"
+    },
+    "timetable": {
+        "Monday": {
+            "P0": {
+                "period": "P0",
+                "type": "class",
+                "time_start": "7:30",
+                "time_end": "8:40",
+                "class_code": "7:30",
+                "class_name": "Unknown",
+                "room": "8:40"
+            }
+        },
+        "Tuesday": {
+            "P0": {
+                "period": "P0",
+                "type": "free",
+                "time_start": "-",
+                "time_end": "7:30",
+                "teacher_code": "8:40",
+                "teacher_name": "Unknown",
+                "room": "7:30"
+            }
+        },
+        "Wednesday": {
+            "P0": {
+                "period": "P0",
+                "type": "class",
+                "time_start": "8:40",
+                "time_end": "-",
+                "class_code": "8:40",
+                "class_name": "Unknown",
+                "teacher_code": "7:30",
+                "teacher_name": "Unknown"
+            }
+        },
+        "Thursday": {
+            "P0": {
+                "period": "P0",
+                "type": "class",
+                "time_start": "7:30",
+                "time_end": "8:40",
+                "class_code": "7:30",
+                "class_name": "Unknown",
+                "room": "8:40"
+            }
+        },
+        "Friday": {
+            "P0": {
+                "period": "P0",
+                "type": "free",
+                "time_start": "-",
+                "time_end": "7:30",
+                "teacher_code": "8:40",
+                "teacher_name": "Unknown",
+                "room": "HR"
+            }
+        }
+    },    "class_mappings": {
+        "DIG091A": "Digital Technologies",
+        "ENG091G": "English",
+        "FTS091F": "Futures",
+        "HAB14": "Roll Class",
+        "HPE091J": "Health and Physical Education",
+        "MAT091G": "Mathematics",
+        "SCI091G": "Science",
+        "TMT091B": "Materials and Technologies Specialisations"
+    },    "teacher_mappings": {
+        "BLANKA": "Miss Blankenhagen",
+        "DENTMI": "Mr Denton",
+        "GRIFAM": "Miss Griffiths",
+        "HOHIBI": "Mrs Ho Hip",
+        "JONENA": "Mr Jones",
+        "LEHAPE": "Ms Lehane",
+        "NIBBSY": "Miss Nibbs",
+        "SHERST": "Mr Sherlock"
+    },
+    "meta": {
+        "generated_at": "2025-06-23T19:36:44.348143",
+        "source_file": "timetable1.txt"
+    }
+}
