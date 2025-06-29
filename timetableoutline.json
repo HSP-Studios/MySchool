@@ -1,0 +1,354 @@
+{
+    "student": {
+        "school": "",
+        "last_name": "",
+        "first_name": "",
+        "student_id": "",
+        "grade": "",
+        "house": "",
+        "homeroom": "",
+        "homeroom_teacher": "",
+        "term": "",
+        "year": ""
+    },
+    "timetable": {
+        "Monday": {
+            "HR": {
+                "period": "HR",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P1": {
+                "period": "P1",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P2": {
+                "period": "P2",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "1st Break": {
+                "period": "1st Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P3": {
+                "period": "P3",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "2nd Break": {
+                "period": "2nd Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P4": {
+                "period": "P4",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            }
+        },
+        "Tuesday": {
+            "HR": {
+                "period": "HR",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P1": {
+                "period": "P1",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P2": {
+                "period": "P2",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "1st Break": {
+                "period": "1st Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P3": {
+                "period": "P3",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "2nd Break": {
+                "period": "2nd Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P4": {
+                "period": "P4",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            }
+        },        
+        "Wednesday": {
+            "HR": {
+                "period": "HR",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P1": {
+                "period": "P1",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P2": {
+                "period": "P2",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "1st Break": {
+                "period": "1st Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P3": {
+                "period": "P3",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "2nd Break": {
+                "period": "2nd Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P4": {
+                "period": "P4",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            }
+        },
+        "Thursday": {
+            "HR": {
+                "period": "HR",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P1": {
+                "period": "P1",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P2": {
+                "period": "P2",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "1st Break": {
+                "period": "1st Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P3": {
+                "period": "P3",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "2nd Break": {
+                "period": "2nd Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P4": {
+                "period": "P4",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            }
+        },
+        "Friday": {
+            "HR": {
+                "period": "HR",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P1": {
+                "period": "P1",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "P2": {
+                "period": "P2",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            },
+            "1st Break": {
+                "period": "1st Break",
+                "type": "break",
+                "time_start": "",
+                "time_end": ""
+            },
+            "P3": {
+                "period": "P3",
+                "type": "",
+                "time_start": "",
+                "time_end": "",
+                "class_code": "",
+                "class_name": "",
+                "room": "",
+                "teacher_code": "",
+                "teacher_name": ""
+            }
+        }
+    },
+    "class_mappings": {
+        "example_code": "example_class_name"
+    },
+    "teacher_mappings": {
+        "example_code": "example_teacher_name"
+    },
+    "meta": {
+        "generated_at": "",
+        "source_file": ""
+    }
+}

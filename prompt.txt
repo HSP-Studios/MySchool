@@ -1,0 +1,20 @@
+now make another module for turning the raw text into a json that contains timetable information for a school system
+
+here is the structure of the raw text
+line 1 - last name
+line 3 - first name
+line 6 - student ID number
+line 8 - grade
+line 10 - house
+line 12 - homeroom
+line 14 - homeroom teacher
+line 31 - Period Indicator (this one is home room)
+line 32-37 - homeroom class (monday)
+line 38-43 - homeroom class tuesday
+line 44-49 - homeroom class wed
+line 50-55 - homeroom thur
+56-61 - homeroom fri
+lines 31-61 just repeat over and over again until line 384 which is the beginning of p5. p5 is non existent so you can ignore it
+
+
+now look for the word "Legend:" in the file and the format for this table is pretty self explanatory there is a class code section and a teacher code section.
