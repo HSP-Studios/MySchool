@@ -1,0 +1,6 @@
+# Prevent committing sample data
+samples/
+*.pdf
+
+# Prevent committing the virtual environment
+venv/
