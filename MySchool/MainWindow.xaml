@@ -4,9 +4,105 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MySchool"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MySchool" Height="600" Width="1000"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="False">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Custom Title Bar -->
+        <Grid Grid.Row="0" Height="40" Background="{DynamicResource SystemControlAcrylicWindowBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Column="0" Text="MySchool" 
+                      VerticalAlignment="Center" 
+                      Margin="15,0,0,0"
+                      FontWeight="SemiBold"
+                      FontSize="14"/>
+                      
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="—" Width="46" Height="40" 
+                       Click="MinimizeButton_Click"
+                       Style="{StaticResource {x:Type Button}}"
+                       Background="Transparent"
+                       BorderThickness="0"/>
+                <Button Content="□" Width="46" Height="40" 
+                       Click="MaximizeButton_Click"
+                       Style="{StaticResource {x:Type Button}}"
+                       Background="Transparent"
+                       BorderThickness="0"/>
+                <Button Content="✕" Width="46" Height="40" 
+                       Click="CloseButton_Click"
+                       Style="{StaticResource {x:Type Button}}"
+                       Background="Transparent"
+                       BorderThickness="0"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Main Content Area -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Navigation Bar -->
+            <Border Grid.Column="0" 
+                    Width="200" 
+                    Background="{DynamicResource SystemControlAcrylicWindowBrush}"
+                    BorderThickness="0,0,1,0"
+                    BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}">
+                <StackPanel Margin="0,20,0,0">
+                    <RadioButton x:Name="HomeNavButton"
+                               Content="Home"
+                               IsChecked="True"
+                               Click="NavigationButton_Click"
+                               Style="{StaticResource {x:Type RadioButton}}"
+                               Height="40"
+                               Padding="20,0,0,0"
+                               FontSize="14"/>
+                    
+                    <RadioButton x:Name="ChatNavButton"
+                               Content="Chat"
+                               Click="NavigationButton_Click"
+                               Style="{StaticResource {x:Type RadioButton}}"
+                               Height="40"
+                               Padding="20,0,0,0"
+                               FontSize="14"/>
+                    
+                    <RadioButton x:Name="ScheduleNavButton"
+                               Content="Schedule"
+                               Click="NavigationButton_Click"
+                               Style="{StaticResource {x:Type RadioButton}}"
+                               Height="40"
+                               Padding="20,0,0,0"
+                               FontSize="14"/>
+                    
+                    <RadioButton x:Name="ResourcesNavButton"
+                               Content="Resources"
+                               Click="NavigationButton_Click"
+                               Style="{StaticResource {x:Type RadioButton}}"
+                               Height="40"
+                               Padding="20,0,0,0"
+                               FontSize="14"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Content Frame -->
+            <Border Grid.Column="1" Background="{DynamicResource SystemControlAcrylicWindowBrush}">
+                <Frame x:Name="ContentFrame" NavigationUIVisibility="Hidden"/>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

@@ -2,10 +2,16 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.3233" />
+    <PackageReference Include="ModernWpfUI" Version="0.9.6" />
+  </ItemGroup>
 
 </Project>
