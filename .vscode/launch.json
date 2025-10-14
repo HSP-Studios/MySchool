@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run MySchool",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/MySchool/bin/Debug/net9.0-windows/MySchool.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/MySchool",
+      "console": "integratedTerminal"
+    }
+  ]
+}
