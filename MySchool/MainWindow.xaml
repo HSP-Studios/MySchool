@@ -214,7 +214,7 @@
                 </StackPanel>
 
                 <!-- Search box -->
-                <Border Grid.Column="2" Height="36" CornerRadius="8" Background="#EEF2FF" VerticalAlignment="Center">
+                <Border Grid.Column="2" Height="36" CornerRadius="8" Background="#EEF2FF" VerticalAlignment="Center" Margin="50,0,50,0">
                     <Grid Margin="10,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -222,7 +222,6 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Style="{StaticResource Icon}" Foreground="{StaticResource Brush.Primary}" Text=""/>
                         <TextBox Grid.Column="1"
-                                 Margin="8,0,0,0"
                                  BorderThickness="0"
                                  Background="Transparent"
                                  VerticalContentAlignment="Center"
@@ -234,10 +233,7 @@
                 </Border>
 
                 <!-- Profile / actions -->
-                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Style="{StaticResource Button.Secondary}" Margin="0,0,8,0">Feedback</Button>
-                    <Border Width="36" Height="36" Background="#E2E8F0" CornerRadius="18"/>
-                </StackPanel>
+                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center"/>
 
                 <!-- Caption buttons -->
                 <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
@@ -272,20 +268,20 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <TextBlock Text="Welcome back" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"/>
-                            <TextBlock Text="Manage your school with ease" Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8"/>
-                            <TextBlock Text="Quickly access students, classes, attendance, and more." Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"/>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" Text="Welcome Back"/>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold"><Run Language="en-au" Text="Kevin"/></TextBlock>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="History 9:30"/></TextBlock>
                             <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
-                                <Button Style="{StaticResource Button.Primary}">
+                                <Button Style="{StaticResource Button.Primary}" Width="112">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource Icon}" Foreground="White" Text=""/>
-                                        <TextBlock Text="Add Student" Margin="6,0,0,0"/>
+                                        <TextBlock Style="{StaticResource Icon}" Foreground="White" Text="" Margin="5,5,5,5" HorizontalAlignment="Center"/>
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"><Run Language="en-au" Text="Add Class"/></TextBlock>
                                     </StackPanel>
                                 </Button>
                                 <Button Style="{StaticResource Button.Secondary}" Foreground="White" Margin="8,0,0,0">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource Icon}" Foreground="White" Text=""/>
-                                        <TextBlock Text="View Classes" Margin="6,0,0,0"/>
+                                        <TextBlock Style="{StaticResource Icon}" Foreground="White" Text="" Margin="5,5,5,5"/>
+                                        <TextBlock Text="View Classes" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Button>
                             </StackPanel>
@@ -299,41 +295,41 @@
                     <TextBlock Text="Quick actions" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
                     <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Stretch">
                         <!-- Action card 1 -->
-                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,12,12">
+                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,0,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                    <TextBlock Text="Students" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                    <TextBlock Text="Students" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock Text="Manage student records, guardians, and profiles." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
                             </StackPanel>
                         </Border>
                         <!-- Action card 2 -->
-                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,12,12">
+                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,0,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                    <TextBlock Text="Classes" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                    <TextBlock Text="Classes" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock Text="Create, assign, and view class schedules." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
                             </StackPanel>
                         </Border>
                         <!-- Action card 3 -->
-                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,12,12">
+                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,0,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                    <TextBlock Text="Attendance" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                    <TextBlock Text="Attendance" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock Text="Mark and review attendance quickly." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
                             </StackPanel>
                         </Border>
                         <!-- Action card 4 -->
-                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,12,12">
+                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,0,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                    <TextBlock Text="Reports" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                    <TextBlock Text="Reports" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock Text="Export grades, attendance, and summaries." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
                             </StackPanel>
@@ -355,13 +351,13 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                    <TextBlock Text="School newsletter released" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                    <TextBlock Text="School newsletter released" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock Style="{StaticResource Text.Body}" Text="The October newsletter covers upcoming exams, sports day, and parent-teacher meetings." Margin="0,0,0,10"/>
                                 <Separator Margin="0,0,0,10"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                    <TextBlock Text="New library books available" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                    <TextBlock Text="New library books available" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock Style="{StaticResource Text.Body}" Text="A fresh collection of science and literature titles has arrived."/>
                             </StackPanel>
@@ -400,7 +396,6 @@
                 </Grid>
 
                 <!-- Footer note -->
-                <TextBlock Text="Tip: Use the quick actions to jump into frequent tasks." Style="{StaticResource Text.Body}" Margin="4,8,0,12"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

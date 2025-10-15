@@ -2,12 +2,13 @@
 using System.Data;
 using System.Windows;
 
-namespace MySchool;
-
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
-public partial class App : Application
+namespace MySchool
 {
-}
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
+    {
+    }
 
+}

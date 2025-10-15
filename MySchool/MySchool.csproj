@@ -8,4 +8,44 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="resources\fonts\SF-Pro.ttf" />
+    <None Remove="resources\logo\png-transparent\Dark-Icon.png" />
+    <None Remove="resources\logo\png-transparent\Dark-Wide.png" />
+    <None Remove="resources\logo\png-transparent\Light-Icon.png" />
+    <None Remove="resources\logo\png-transparent\Light-Wide.png" />
+    <None Remove="resources\logo\png\Dark-Icon.png" />
+    <None Remove="resources\logo\png\Dark-Wide.png" />
+    <None Remove="resources\logo\png\Light-Icon.png" />
+    <None Remove="resources\logo\png\Light-Wide.png" />
+    <None Remove="resources\logo\svg-transparent\Dark-Icon.svg" />
+    <None Remove="resources\logo\svg-transparent\Dark-Wide.svg" />
+    <None Remove="resources\logo\svg-transparent\Light-Icon.svg" />
+    <None Remove="resources\logo\svg-transparent\Light-Wide.svg" />
+    <None Remove="resources\logo\svg\Dark-Icon.svg" />
+    <None Remove="resources\logo\svg\Dark-Wide.svg" />
+    <None Remove="resources\logo\svg\Light-Icon.svg" />
+    <None Remove="resources\logo\svg\Light-Wide.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resources\fonts\SF-Pro.ttf" />
+    <Resource Include="resources\logo\png-transparent\Dark-Icon.png" />
+    <Resource Include="resources\logo\png-transparent\Dark-Wide.png" />
+    <Resource Include="resources\logo\png-transparent\Light-Icon.png" />
+    <Resource Include="resources\logo\png-transparent\Light-Wide.png" />
+    <Resource Include="resources\logo\png\Dark-Icon.png" />
+    <Resource Include="resources\logo\png\Dark-Wide.png" />
+    <Resource Include="resources\logo\png\Light-Icon.png" />
+    <Resource Include="resources\logo\png\Light-Wide.png" />
+    <Resource Include="resources\logo\svg-transparent\Dark-Icon.svg" />
+    <Resource Include="resources\logo\svg-transparent\Dark-Wide.svg" />
+    <Resource Include="resources\logo\svg-transparent\Light-Icon.svg" />
+    <Resource Include="resources\logo\svg-transparent\Light-Wide.svg" />
+    <Resource Include="resources\logo\svg\Dark-Icon.svg" />
+    <Resource Include="resources\logo\svg\Dark-Wide.svg" />
+    <Resource Include="resources\logo\svg\Light-Icon.svg" />
+    <Resource Include="resources\logo\svg\Light-Wide.svg" />
+  </ItemGroup>
+
 </Project>
