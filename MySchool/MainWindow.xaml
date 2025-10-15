@@ -254,8 +254,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="625*"/>
-            <ColumnDefinition Width="303*"/>
+            <ColumnDefinition Width="464*"/>
+            <ColumnDefinition Width="189*"/>
+            <ColumnDefinition Width="275*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -263,7 +264,7 @@
         </Grid.RowDefinitions>
 
         <!-- Top App Bar -->
-        <Border x:Name="AppBar" Grid.Row="0" Background="{StaticResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown" Grid.ColumnSpan="2">
+        <Border x:Name="AppBar" Grid.Row="0" Background="{StaticResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown" Grid.ColumnSpan="3">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.06"/>
             </Border.Effect>
@@ -286,23 +287,6 @@
                 </StackPanel>
 
                 <!-- Search box -->
-                <Border Grid.Column="2" Height="36" CornerRadius="8" Background="#EEF2FF" VerticalAlignment="Center" Margin="50,0,50,0">
-                    <Grid Margin="10,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Style="{StaticResource Icon}" Foreground="{StaticResource Brush.Primary}" Text=""/>
-                        <TextBox Grid.Column="1"
-                                 BorderThickness="0"
-                                 Background="Transparent"
-                                 VerticalContentAlignment="Center"
-                                 Foreground="{StaticResource Brush.TextPrimary}"
-                                 FontSize="14"
-                                 Text=""
-                                 ToolTip="Search" Margin="15,0,0,0"/>
-                    </Grid>
-                </Border>
 
                 <!-- Profile / actions -->
                 <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center"/>
@@ -323,7 +307,7 @@
         </Border>
 
         <!-- Scrollable content -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Grid.ColumnSpan="2">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Grid.ColumnSpan="3">
             <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
 
                 <!-- Hero section -->
