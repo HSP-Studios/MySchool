@@ -343,20 +343,7 @@
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" Text="Welcome Back"/>
                             <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold"><Run Language="en-au" Text="Kevin"/></TextBlock>
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="History 9:30"/></TextBlock>
-                            <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
-                                <Button Style="{StaticResource Button.Primary}" Width="112">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource Icon}" Foreground="White" Text="" Margin="5,5,5,5" HorizontalAlignment="Center"/>
-                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"><Run Language="en-au" Text="Add Class"/></TextBlock>
-                                    </StackPanel>
-                                </Button>
-                                <Button Style="{StaticResource Button.Secondary}" Foreground="White" Margin="8,0,0,0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource Icon}" Foreground="White" Text="" Margin="5,5,5,5"/>
-                                        <TextBlock Text="View Classes" Margin="0,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,16,0,0"/>
                         </StackPanel>
                         <Ellipse Grid.Column="1" Width="120" Height="120" Fill="#FFFFFF22" Stroke="#FFFFFF55" StrokeThickness="1.5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
