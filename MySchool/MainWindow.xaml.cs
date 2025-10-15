@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using System.Windows.Threading;
 
 namespace MySchool
 {
@@ -19,12 +20,29 @@ namespace MySchool
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly DispatcherTimer _dayNightTimer = new DispatcherTimer();
+
+        public static readonly DependencyProperty IsNightNowProperty = DependencyProperty.Register(
+            nameof(IsNightNow), typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+
+        public bool IsNightNow
+        {
+            get => (bool)GetValue(IsNightNowProperty);
+            set => SetValue(IsNightNowProperty, value);
+        }
+
         public MainWindow()
         {
             InitializeComponent();
             StateChanged += MainWindow_StateChanged;
             this.MinWidth = 600;
             this.MinHeight = 400;
+
+            // Day/Night updater
+            _dayNightTimer.Interval = TimeSpan.FromMinutes(1);
+            _dayNightTimer.Tick += (_, __) => UpdateIsNight();
+            UpdateIsNight();
+            _dayNightTimer.Start();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -171,6 +189,13 @@ namespace MySchool
             public int top;
             public int right;
             public int bottom;
+        }
+
+        private void UpdateIsNight()
+        {
+            var hour = DateTime.Now.Hour;
+            // Night between 19:00 and 06:59
+            IsNightNow = (hour >= 19 || hour < 7);
         }
     }
 }

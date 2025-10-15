@@ -30,6 +30,16 @@
         <SolidColorBrush x:Key="Brush.TextPrimary" Color="#0F172A"/>
         <SolidColorBrush x:Key="Brush.TextSecondary" Color="#475569"/>
 
+        <!-- Hero gradients for day/night -->
+        <LinearGradientBrush x:Key="HeroGradient.Day" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#6366F1" Offset="0"/>
+            <GradientStop Color="#06B6D4" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="HeroGradient.Night" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1E293B" Offset="0"/>
+            <GradientStop Color="#0F172A" Offset="1"/>
+        </LinearGradientBrush>
+
         <!-- Typography helpers -->
         <Style x:Key="Text.Headline" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
@@ -175,6 +185,23 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <!-- Hero orb (sun/moon) style -->
+        <Style x:Key="HeroOrbStyle" TargetType="Ellipse">
+            <!-- Day (sun) default -->
+            <Setter Property="Fill" Value="#F59E0B"/>
+            <Setter Property="Opacity" Value="0.25"/>
+            <Setter Property="Stroke" Value="#FFFFFF55"/>
+            <Setter Property="StrokeThickness" Value="1.5"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsNightNow, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                    <!-- Night (moon) -->
+                    <Setter Property="Fill" Value="#9CA3AF"/>
+                    <Setter Property="Opacity" Value="0.35"/>
+                    <Setter Property="Stroke" Value="#9CA3AF"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <!-- Modern rounded scrollbar -->
@@ -328,12 +355,16 @@
 
                 <!-- Hero section -->
                 <Border CornerRadius="16" Padding="24" Margin="0,0,0,16">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#6366F1" Offset="0"/>
-                            <GradientStop Color="#06B6D4" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="{StaticResource HeroGradient.Day}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsNightNow, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource HeroGradient.Night}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -345,7 +376,7 @@
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="History 9:30"/></TextBlock>
                             <StackPanel Orientation="Horizontal" Margin="0,16,0,0"/>
                         </StackPanel>
-                        <Ellipse Grid.Column="1" Width="120" Height="120" Fill="#FFFFFF22" Stroke="#FFFFFF55" StrokeThickness="1.5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Ellipse Grid.Column="1" Width="120" Height="120" Style="{StaticResource HeroOrbStyle}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
 
