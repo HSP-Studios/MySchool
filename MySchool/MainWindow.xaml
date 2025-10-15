@@ -7,7 +7,7 @@
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="MySchool"
-        Background="{DynamicResource Brush.Background}"
+        Background="#F5F7FB"
         WindowStyle="None"
         ResizeMode="CanResize"
         AllowsTransparency="False"
@@ -25,50 +25,34 @@
         <SolidColorBrush x:Key="Brush.Primary" Color="#4F46E5"/>
         <SolidColorBrush x:Key="Brush.PrimaryDark" Color="#4338CA"/>
         <SolidColorBrush x:Key="Brush.Accent" Color="#06B6D4"/>
-        <!-- Light theme defaults -->
         <SolidColorBrush x:Key="Brush.Surface" Color="#FFFFFFFF"/>
         <SolidColorBrush x:Key="Brush.Background" Color="#F5F7FB"/>
         <SolidColorBrush x:Key="Brush.TextPrimary" Color="#0F172A"/>
         <SolidColorBrush x:Key="Brush.TextSecondary" Color="#475569"/>
-        <!-- Dark theme variants -->
-        <SolidColorBrush x:Key="Brush.Surface.Dark" Color="#1F2937"/>
-        <SolidColorBrush x:Key="Brush.Background.Dark" Color="#0B1220"/>
-        <SolidColorBrush x:Key="Brush.TextPrimary.Dark" Color="#E5E7EB"/>
-        <SolidColorBrush x:Key="Brush.TextSecondary.Dark" Color="#9CA3AF"/>
-
-        <!-- Hero gradients for day/night -->
-        <LinearGradientBrush x:Key="HeroGradient.Day" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#6366F1" Offset="0"/>
-            <GradientStop Color="#06B6D4" Offset="1"/>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="HeroGradient.Night" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#1E293B" Offset="0"/>
-            <GradientStop Color="#0F172A" Offset="1"/>
-        </LinearGradientBrush>
 
         <!-- Typography helpers -->
         <Style x:Key="Text.Headline" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
         </Style>
         <Style x:Key="Text.Title" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
         </Style>
         <Style x:Key="Text.Body" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
         <!-- Cards -->
         <Style x:Key="Card" TargetType="Border">
-            <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+            <Setter Property="Background" Value="{StaticResource Brush.Surface}"/>
             <Setter Property="CornerRadius" Value="12"/>
             <Setter Property="Padding" Value="16"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -151,7 +135,7 @@
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -172,7 +156,7 @@
             </Setter>
         </Style>
         <Style x:Key="CaptionButton.Close" TargetType="Button" BasedOn="{StaticResource CaptionButton}">
-            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -191,23 +175,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <!-- Hero orb (sun/moon) style -->
-        <Style x:Key="HeroOrbStyle" TargetType="Ellipse">
-            <!-- Day (sun) default -->
-            <Setter Property="Fill" Value="#F59E0B"/>
-            <Setter Property="Opacity" Value="0.25"/>
-            <Setter Property="Stroke" Value="#FFFFFF55"/>
-            <Setter Property="StrokeThickness" Value="1.5"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsNightNow, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                    <!-- Night (moon) -->
-                    <Setter Property="Fill" Value="#9CA3AF"/>
-                    <Setter Property="Opacity" Value="0.35"/>
-                    <Setter Property="Stroke" Value="#9CA3AF"/>
-                </DataTrigger>
-            </Style.Triggers>
         </Style>
 
         <!-- Modern rounded scrollbar -->
@@ -283,15 +250,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!-- Theme switch at Window level -->
-        <Style TargetType="Window">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsNightNow, RelativeSource={RelativeSource Self}}" Value="True">
-                    <Setter Property="Background" Value="{StaticResource Brush.Background.Dark}"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
     </Window.Resources>
 
     <Grid>
@@ -304,28 +262,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Override theme brushes on dark -->
-        <Grid.Style>
-            <Style TargetType="Grid">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsNightNow, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                        <Setter Property="Resources">
-                            <Setter.Value>
-                                <ResourceDictionary>
-                                    <SolidColorBrush x:Key="Brush.Surface" Color="#1F2937"/>
-                                    <SolidColorBrush x:Key="Brush.Background" Color="#0B1220"/>
-                                    <SolidColorBrush x:Key="Brush.TextPrimary" Color="#E5E7EB"/>
-                                    <SolidColorBrush x:Key="Brush.TextSecondary" Color="#9CA3AF"/>
-                                </ResourceDictionary>
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Grid.Style>
-
         <!-- Top App Bar -->
-        <Border x:Name="AppBar" Grid.Row="0" Background="{DynamicResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown" Grid.ColumnSpan="2">
+        <Border x:Name="AppBar" Grid.Row="0" Background="{StaticResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown" Grid.ColumnSpan="2">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.06"/>
             </Border.Effect>
@@ -344,7 +282,7 @@
                             <ImageBrush ImageSource="resources/logo/png/Dark-Icon.png" Stretch="UniformToFill"/>
                         </Border.Background>
                     </Border>
-                    <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{DynamicResource Brush.TextPrimary}" VerticalAlignment="Center"/>
+                    <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{StaticResource Brush.TextPrimary}" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <!-- Search box -->
@@ -359,7 +297,7 @@
                                  BorderThickness="0"
                                  Background="Transparent"
                                  VerticalContentAlignment="Center"
-                                 Foreground="{DynamicResource Brush.TextPrimary}"
+                                 Foreground="{StaticResource Brush.TextPrimary}"
                                  FontSize="14"
                                  Text=""
                                  ToolTip="Search" Margin="15,0,0,0"/>
@@ -390,16 +328,12 @@
 
                 <!-- Hero section -->
                 <Border CornerRadius="16" Padding="24" Margin="0,0,0,16">
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Setter Property="Background" Value="{StaticResource HeroGradient.Day}"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsNightNow, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                                    <Setter Property="Background" Value="{StaticResource HeroGradient.Night}"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#6366F1" Offset="0"/>
+                            <GradientStop Color="#06B6D4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -411,7 +345,7 @@
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="History 9:30"/></TextBlock>
                             <StackPanel Orientation="Horizontal" Margin="0,16,0,0"/>
                         </StackPanel>
-                        <Ellipse Grid.Column="1" Width="120" Height="120" Style="{StaticResource HeroOrbStyle}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Ellipse Grid.Column="1" Width="120" Height="120" Fill="#FFFFFF22" Stroke="#FFFFFF55" StrokeThickness="1.5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
 
