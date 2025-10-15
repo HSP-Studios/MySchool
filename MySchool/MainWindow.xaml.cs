@@ -23,8 +23,10 @@ namespace MySchool
         {
             InitializeComponent();
             StateChanged += MainWindow_StateChanged;
-            this.MinWidth = 600;
+            this.MinWidth = 1000;
             this.MinHeight = 400;
+            this.MaxWidth = 1000;
+            this.MaxHeight = 400;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -135,8 +137,12 @@ namespace MySchool
 
         private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
-            // Read current values
             var mmi = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+            var dpi = VisualTreeHelper.GetDpi(this);
+            int minWidthPx = (int)Math.Ceiling(this.MinWidth * dpi.DpiScaleX);
+            int minHeightPx = (int)Math.Ceiling(this.MinHeight * dpi.DpiScaleY);
+            int maxWidthPx = (int)Math.Ceiling(this.MaxWidth * dpi.DpiScaleX);
+            int maxHeightPx = (int)Math.Ceiling(this.MaxHeight * dpi.DpiScaleY);
 
             // Get the primary monitor information for the window
             IntPtr monitor = MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
@@ -149,22 +155,24 @@ namespace MySchool
                     RECT rcWorkArea = monitorInfo.rcWork;
                     RECT rcMonitorArea = monitorInfo.rcMonitor;
 
-                    // Set maximized size and position to the work area of the monitor
-                    mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                    mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                    mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                    mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+                    // If maximized, allow full screen size
+                    if (WindowState == WindowState.Maximized)
+                    {
+                        mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
+                        mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
+                        mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
+                        mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+                    }
+                    else
+                    {
+                        // Otherwise, lock to 1000x400
+                        mmi.ptMaxSize.x = maxWidthPx;
+                        mmi.ptMaxSize.y = maxHeightPx;
+                        mmi.ptMinTrackSize.x = minWidthPx;
+                        mmi.ptMinTrackSize.y = minHeightPx;
+                    }
                 }
             }
-
-            // Enforce the window's MinWidth/MinHeight using DPI-aware pixels
-            var dpi = VisualTreeHelper.GetDpi(this);
-            int minWidthPx = (int)Math.Ceiling(this.MinWidth * dpi.DpiScaleX);
-            int minHeightPx = (int)Math.Ceiling(this.MinHeight * dpi.DpiScaleY);
-            if (minWidthPx > 0) mmi.ptMinTrackSize.x = minWidthPx;
-            if (minHeightPx > 0) mmi.ptMinTrackSize.y = minHeightPx;
-
-            // Write back
             Marshal.StructureToPtr(mmi, lParam, true);
         }
 
