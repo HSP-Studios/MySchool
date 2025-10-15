@@ -197,8 +197,10 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Border Width="36" Height="36" CornerRadius="8" Background="#EEF2FF" VerticalAlignment="Center" ClipToBounds="True">
-                        <Image Source="resources/logo/png/Dark-Icon.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border Width="36" Height="36" CornerRadius="8" BorderThickness="0" VerticalAlignment="Center">
+                        <Border.Background>
+                            <ImageBrush ImageSource="resources/logo/png/Dark-Icon.png" Stretch="UniformToFill"/>
+                        </Border.Background>
                     </Border>
                     <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{StaticResource Brush.TextPrimary}" VerticalAlignment="Center"/>
                 </StackPanel>
