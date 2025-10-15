@@ -4,9 +4,392 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MySchool"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MySchool"
+        MinHeight="600"
+        MinWidth="900"
+        Background="#F5F7FB"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        AllowsTransparency="False"
+        Icon="resources/logo/png/Dark-Icon.png">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="0"
+                             ResizeBorderThickness="6"
+                             CornerRadius="8"
+                             GlassFrameThickness="0"
+                             UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+    <Window.Resources>
+        <!-- Color palette -->
+        <SolidColorBrush x:Key="Brush.Primary" Color="#4F46E5"/>
+        <SolidColorBrush x:Key="Brush.PrimaryDark" Color="#4338CA"/>
+        <SolidColorBrush x:Key="Brush.Accent" Color="#06B6D4"/>
+        <SolidColorBrush x:Key="Brush.Surface" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="Brush.Background" Color="#F5F7FB"/>
+        <SolidColorBrush x:Key="Brush.TextPrimary" Color="#0F172A"/>
+        <SolidColorBrush x:Key="Brush.TextSecondary" Color="#475569"/>
 
+        <!-- Typography helpers -->
+        <Style x:Key="Text.Headline" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
+        </Style>
+        <Style x:Key="Text.Title" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
+        </Style>
+        <Style x:Key="Text.Body" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <!-- Cards -->
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource Brush.Surface}"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.08"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Buttons -->
+        <Style x:Key="Button.Primary" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Brush.Primary}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource Brush.PrimaryDark}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Button.Secondary" TargetType="Button" BasedOn="{StaticResource Button.Primary}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.Primary}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{StaticResource Brush.Primary}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Border.BorderBrush" Value="{StaticResource Brush.PrimaryDark}"/>
+                                <Setter Property="Foreground" Value="{StaticResource Brush.PrimaryDark}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Icon text using Segoe MDL2 Assets -->
+        <Style x:Key="Icon" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.Primary}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Caption buttons (WinUI-like) -->
+        <Style x:Key="CaptionButton" TargetType="Button">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="root" Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="root" Property="Background" Value="#1A000000"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="root" Property="Background" Value="#33000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CaptionButton.Close" TargetType="Button" BasedOn="{StaticResource CaptionButton}">
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="root" Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="root" Property="Background" Value="#FFE81123"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="root" Property="Background" Value="#FFB10F1E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top App Bar -->
+        <Border x:Name="AppBar" Grid.Row="0" Background="{StaticResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.06"/>
+            </Border.Effect>
+            <Grid Margin="16,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse Width="32" Height="32" Fill="{StaticResource Brush.Primary}"/>
+                    <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{StaticResource Brush.TextPrimary}"/>
+                </StackPanel>
+
+                <!-- Search box -->
+                <Border Grid.Column="2" Height="36" CornerRadius="8" Background="#EEF2FF" VerticalAlignment="Center">
+                    <Grid Margin="10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Style="{StaticResource Icon}" Foreground="{StaticResource Brush.Primary}" Text=""/>
+                        <TextBox Grid.Column="1"
+                                 Margin="8,0,0,0"
+                                 BorderThickness="0"
+                                 Background="Transparent"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{StaticResource Brush.TextPrimary}"
+                                 FontSize="14"
+                                 Text=""
+                                 ToolTip="Search"/>
+                    </Grid>
+                </Border>
+
+                <!-- Profile / actions -->
+                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Style="{StaticResource Button.Secondary}" Margin="0,0,8,0">Feedback</Button>
+                    <Border Width="36" Height="36" Background="#E2E8F0" CornerRadius="18"/>
+                </StackPanel>
+
+                <!-- Caption buttons -->
+                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Style="{StaticResource CaptionButton}" Click="MinimizeButton_Click" ToolTip="Minimize">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="12" Text="&#xE921;"/>
+                    </Button>
+                    <Button Style="{StaticResource CaptionButton}" Click="MaxRestoreButton_Click" ToolTip="Maximize/Restore">
+                        <TextBlock x:Name="MaxIcon" FontFamily="Segoe MDL2 Assets" FontSize="12" Text="&#xE922;"/>
+                    </Button>
+                    <Button Style="{StaticResource CaptionButton.Close}" Click="CloseButton_Click" ToolTip="Close">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="12" Text="&#xE8BB;"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Scrollable content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
+
+                <!-- Hero section -->
+                <Border CornerRadius="16" Padding="24" Margin="0,0,0,16">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#6366F1" Offset="0"/>
+                            <GradientStop Color="#06B6D4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Welcome back" Foreground="White" FontSize="14" Opacity="0.9"/>
+                            <TextBlock Text="Manage your school with ease" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,4,0,8"/>
+                            <TextBlock Text="Quickly access students, classes, attendance, and more." Foreground="White" Opacity="0.9"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                                <Button Style="{StaticResource Button.Primary}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource Icon}" Foreground="White" Text=""/>
+                                        <TextBlock Text="Add Student" Margin="6,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource Button.Secondary}" Foreground="White" Margin="8,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource Icon}" Foreground="White" Text=""/>
+                                        <TextBlock Text="View Classes" Margin="6,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                        <Ellipse Grid.Column="1" Width="120" Height="120" Fill="#FFFFFF22" Stroke="#FFFFFF55" StrokeThickness="1.5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Quick actions -->
+                <StackPanel Orientation="Vertical" Margin="0,0,0,16">
+                    <TextBlock Text="Quick actions" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
+                    <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Stretch">
+                        <!-- Action card 1 -->
+                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,12,12">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource Icon}" Text=""/>
+                                    <TextBlock Text="Students" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage student records, guardians, and profiles." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <!-- Action card 2 -->
+                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,12,12">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource Icon}" Text=""/>
+                                    <TextBlock Text="Classes" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                </StackPanel>
+                                <TextBlock Text="Create, assign, and view class schedules." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <!-- Action card 3 -->
+                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,12,12">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource Icon}" Text=""/>
+                                    <TextBlock Text="Attendance" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                </StackPanel>
+                                <TextBlock Text="Mark and review attendance quickly." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <!-- Action card 4 -->
+                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,12,12">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource Icon}" Text=""/>
+                                    <TextBlock Text="Reports" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                </StackPanel>
+                                <TextBlock Text="Export grades, attendance, and summaries." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+                </StackPanel>
+
+                <!-- Announcements & Events -->
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Announcements -->
+                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                        <TextBlock Text="Announcements" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <TextBlock Style="{StaticResource Icon}" Text=""/>
+                                    <TextBlock Text="School newsletter released" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource Text.Body}" Text="The October newsletter covers upcoming exams, sports day, and parent-teacher meetings." Margin="0,0,0,10"/>
+                                <Separator Margin="0,0,0,10"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource Icon}" Text=""/>
+                                    <TextBlock Text="New library books available" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource Text.Body}" Text="A fresh collection of science and literature titles has arrived."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Upcoming events -->
+                    <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                        <TextBlock Text="Upcoming events" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                                    <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Accent}" VerticalAlignment="Center"/>
+                                    <StackPanel Margin="10,0,0,0">
+                                        <TextBlock Text="Parent-Teacher Meeting" FontWeight="SemiBold"/>
+                                        <TextBlock Text="Tue 3:00 PM – Main Hall" Style="{StaticResource Text.Body}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                                    <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Primary}" VerticalAlignment="Center"/>
+                                    <StackPanel Margin="10,0,0,0">
+                                        <TextBlock Text="Mid-term Exams" FontWeight="SemiBold"/>
+                                        <TextBlock Text="Next week – All grades" Style="{StaticResource Text.Body}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Ellipse Width="10" Height="10" Fill="#F59E0B" VerticalAlignment="Center"/>
+                                    <StackPanel Margin="10,0,0,0">
+                                        <TextBlock Text="Sports Day" FontWeight="SemiBold"/>
+                                        <TextBlock Text="Nov 12 – School Grounds" Style="{StaticResource Text.Body}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Footer note -->
+                <TextBlock Text="Tip: Use the quick actions to jump into frequent tasks." Style="{StaticResource Text.Body}" Margin="4,8,0,12"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
