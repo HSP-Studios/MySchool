@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:MySchool"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Main font (global) -->
+        <FontFamily x:Key="Font.Main">pack://application:,,,/resources/fonts/#SF Pro Display</FontFamily>
     </Application.Resources>
 </Application>

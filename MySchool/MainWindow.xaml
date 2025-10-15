@@ -12,9 +12,9 @@
         Background="#F5F7FB"
         WindowStyle="None"
         ResizeMode="CanResize"
-        AllowsTransparency="False"
-        Icon="resources/logo/png/Dark-Icon.png">
-        FontFamily="{StaticResource Font.Main}"
+        AllowsTransparency="True"
+        Icon="resources/logo/png/Dark-Icon.png"
+        FontFamily="{StaticResource Font.Main}">
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="0"
                              ResizeBorderThickness="6"
@@ -23,8 +23,6 @@
                              UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
     <Window.Resources>
-        <!-- Main font -->
-        <FontFamily x:Key="Font.Main">pack://application:,,,/resources/fonts/#SF Pro Display</FontFamily>
         <!-- Color palette -->
         <SolidColorBrush x:Key="Brush.Primary" Color="#4F46E5"/>
         <SolidColorBrush x:Key="Brush.PrimaryDark" Color="#4338CA"/>
