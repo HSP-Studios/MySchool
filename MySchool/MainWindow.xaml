@@ -22,6 +22,8 @@
                              UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
     <Window.Resources>
+        <!-- Main font -->
+        <FontFamily x:Key="Font.Main">pack://application:,,,/resources/fonts/SF-Pro.ttf#SF Pro</FontFamily>
         <!-- Color palette -->
         <SolidColorBrush x:Key="Brush.Primary" Color="#4F46E5"/>
         <SolidColorBrush x:Key="Brush.PrimaryDark" Color="#4338CA"/>
@@ -33,16 +35,19 @@
 
         <!-- Typography helpers -->
         <Style x:Key="Text.Headline" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
         </Style>
         <Style x:Key="Text.Title" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
         </Style>
         <Style x:Key="Text.Body" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -176,14 +181,18 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid FontFamily="{StaticResource Font.Main}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="625*"/>
+            <ColumnDefinition Width="303*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Top App Bar -->
-        <Border x:Name="AppBar" Grid.Row="0" Background="{StaticResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown">
+        <Border x:Name="AppBar" Grid.Row="0" Background="{StaticResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown" Grid.ColumnSpan="2">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.06"/>
             </Border.Effect>
@@ -227,7 +236,6 @@
 
                 <!-- Profile / actions -->
                 <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Style="{StaticResource Button.Secondary}" Margin="0,0,8,0">Feedback</Button>
                     <Border Width="36" Height="36" Background="#E2E8F0" CornerRadius="18"/>
                 </StackPanel>
 
@@ -247,7 +255,7 @@
         </Border>
 
         <!-- Scrollable content -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
             <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
 
                 <!-- Hero section -->
