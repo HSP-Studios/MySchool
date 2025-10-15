@@ -354,7 +354,7 @@
                     <TextBlock Text="Quick actions" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
                     <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Stretch" Margin="0,0,0,0">
                         <!-- Action card 1 -->
-                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,10,0">
+                        <Border Style="{StaticResource Card}" Width="200" Height="100" HorizontalAlignment="Center">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
@@ -364,7 +364,7 @@
                             </StackPanel>
                         </Border>
                         <!-- Action card 2 -->
-                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,0,0">
+                        <Border Style="{StaticResource Card}" Width="200" Height="100" Margin="0,0,0,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
@@ -374,7 +374,7 @@
                             </StackPanel>
                         </Border>
                         <!-- Action card 3 -->
-                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,0,0">
+                        <Border Style="{StaticResource Card}" Width="200" Height="100" Margin="0,0,0,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
@@ -384,7 +384,7 @@
                             </StackPanel>
                         </Border>
                         <!-- Action card 4 -->
-                        <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,0,0">
+                        <Border Style="{StaticResource Card}" Width="200" Height="100" Margin="0,0,0,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
@@ -412,13 +412,13 @@
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
                                     <TextBlock Text="School newsletter released" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <TextBlock Style="{StaticResource Text.Body}" Text="The October newsletter covers upcoming exams, sports day, and parent-teacher meetings." Margin="0,0,0,10"/>
+                                <TextBlock Style="{StaticResource Text.Body}" Text="The October newsletter covers upcoming exams, sports day, and parent-teacher meetings." Margin="0,0,0,10" TextWrapping="Wrap"/>
                                 <Separator Margin="0,0,0,10"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
                                     <TextBlock Text="New library books available" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <TextBlock Style="{StaticResource Text.Body}" Text="A fresh collection of science and literature titles has arrived."/>
+                                <TextBlock Style="{StaticResource Text.Body}" Text="A fresh collection of science and literature titles has arrived." TextWrapping="Wrap"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -470,7 +470,7 @@
         <ScrollViewer x:Name="SettingsView" Grid.Row="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Visibility="Collapsed">
             <Grid Margin="24">
                 <TextBlock Text="Settings" Style="{StaticResource Text.Headline}"/>
-                <TextBlock Text="Configure your app preferences here." Style="{StaticResource Text.Body}" Margin="0,8,0,0"/>
+                <TextBlock Text="Configure your app preferences here." Style="{StaticResource Text.Body}" Margin="0,5,0,0"/>
             </Grid>
         </ScrollViewer>
     </Grid>
