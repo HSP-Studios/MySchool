@@ -70,22 +70,41 @@ namespace MySchool
                 h.Visibility = Visibility.Collapsed;
         }
 
+        private void SetTabHighlight(string selected)
+        {
+            var blue = (Brush)FindResource("Brush.Primary");
+            var gray = (Brush)FindResource("Brush.TextSecondary");
+            if (ScheduleTabIcon != null) ScheduleTabIcon.Foreground = selected == "Schedule" ? blue : gray;
+            if (HomeTabIcon != null) HomeTabIcon.Foreground = selected == "Home" ? blue : gray;
+            if (SettingsTabIcon != null) SettingsTabIcon.Foreground = selected == "Settings" ? blue : gray;
+        }
+
         private void HomeTab_Click(object sender, RoutedEventArgs e)
         {
             if (HomeView != null && ScheduleView != null && SettingsView != null)
                 ShowView(HomeView, ScheduleView, SettingsView);
+            SetTabHighlight("Home");
         }
 
         private void ScheduleTab_Click(object sender, RoutedEventArgs e)
         {
             if (HomeView != null && ScheduleView != null && SettingsView != null)
                 ShowView(ScheduleView, HomeView, SettingsView);
+            SetTabHighlight("Schedule");
         }
 
         private void SettingsTab_Click(object sender, RoutedEventArgs e)
         {
             if (HomeView != null && ScheduleView != null && SettingsView != null)
                 ShowView(SettingsView, HomeView, ScheduleView);
+            SetTabHighlight("Settings");
+        }
+
+        // Set initial tab highlight to Home on load
+        protected override void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+            SetTabHighlight("Home");
         }
 
         private void AppBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
