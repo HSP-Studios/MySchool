@@ -197,8 +197,10 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Ellipse Width="32" Height="32" Fill="{StaticResource Brush.Primary}"/>
-                    <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{StaticResource Brush.TextPrimary}"/>
+                    <Border Width="36" Height="36" CornerRadius="8" Background="#EEF2FF" VerticalAlignment="Center">
+                        <Image Source="resources/logo/png/Dark-Icon.png" Width="24" Height="24" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{StaticResource Brush.TextPrimary}" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <!-- Search box -->
