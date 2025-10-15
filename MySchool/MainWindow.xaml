@@ -286,6 +286,19 @@
                     <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{StaticResource Brush.TextPrimary}" VerticalAlignment="Center"/>
                 </StackPanel>
 
+                <!-- Center tab icons: Schedule | Home | Settings -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Style="{StaticResource CaptionButton}" Click="ScheduleTab_Click" ToolTip="Schedule">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="14" Text="&#xE163;"/>
+                    </Button>
+                    <Button Style="{StaticResource CaptionButton}" Click="HomeTab_Click" ToolTip="Home">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="14" Text="&#xE80F;"/>
+                    </Button>
+                    <Button Style="{StaticResource CaptionButton}" Click="SettingsTab_Click" ToolTip="Settings">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="14" Text="&#xE713;"/>
+                    </Button>
+                </StackPanel>
+
                 <!-- Search box -->
 
                 <!-- Profile / actions -->
@@ -307,7 +320,8 @@
         </Border>
 
         <!-- Scrollable content -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Grid.ColumnSpan="3">
+        <!-- Home View -->
+        <ScrollViewer x:Name="HomeView" Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Grid.ColumnSpan="3">
             <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
 
                 <!-- Hero section -->
@@ -440,6 +454,22 @@
 
                 <!-- Footer note -->
             </StackPanel>
+        </ScrollViewer>
+
+        <!-- Schedule View -->
+        <ScrollViewer x:Name="ScheduleView" Grid.Row="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Visibility="Collapsed">
+            <Grid Margin="24">
+                <TextBlock Text="Schedule" Style="{StaticResource Text.Headline}"/>
+                <TextBlock Text="Your classes and events will appear here." Style="{StaticResource Text.Body}" Margin="0,8,0,0"/>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Settings View -->
+        <ScrollViewer x:Name="SettingsView" Grid.Row="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Visibility="Collapsed">
+            <Grid Margin="24">
+                <TextBlock Text="Settings" Style="{StaticResource Text.Headline}"/>
+                <TextBlock Text="Configure your app preferences here." Style="{StaticResource Text.Body}" Margin="0,8,0,0"/>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Window>

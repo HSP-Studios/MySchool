@@ -63,6 +63,31 @@ namespace MySchool
             Close();
         }
 
+        private void ShowView(UIElement show, params UIElement[] hide)
+        {
+            show.Visibility = Visibility.Visible;
+            foreach (var h in hide)
+                h.Visibility = Visibility.Collapsed;
+        }
+
+        private void HomeTab_Click(object sender, RoutedEventArgs e)
+        {
+            if (HomeView != null && ScheduleView != null && SettingsView != null)
+                ShowView(HomeView, ScheduleView, SettingsView);
+        }
+
+        private void ScheduleTab_Click(object sender, RoutedEventArgs e)
+        {
+            if (HomeView != null && ScheduleView != null && SettingsView != null)
+                ShowView(ScheduleView, HomeView, SettingsView);
+        }
+
+        private void SettingsTab_Click(object sender, RoutedEventArgs e)
+        {
+            if (HomeView != null && ScheduleView != null && SettingsView != null)
+                ShowView(SettingsView, HomeView, ScheduleView);
+        }
+
         private void AppBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
