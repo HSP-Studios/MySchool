@@ -323,7 +323,7 @@
         </Border>
 
         <!-- Scrollable content -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Grid.ColumnSpan="2">
             <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
 
                 <!-- Hero section -->
