@@ -7,12 +7,10 @@
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="MySchool"
-        MinHeight="600"
-        MinWidth="900"
         Background="#F5F7FB"
         WindowStyle="None"
         ResizeMode="CanResize"
-        AllowsTransparency="True"
+        AllowsTransparency="False"
         Icon="resources/logo/png/Dark-Icon.png"
         FontFamily="{StaticResource Font.Main}">
     <shell:WindowChrome.WindowChrome>
@@ -228,7 +226,7 @@
                                  Foreground="{StaticResource Brush.TextPrimary}"
                                  FontSize="14"
                                  Text=""
-                                 ToolTip="Search"/>
+                                 ToolTip="Search" Margin="15,0,0,0"/>
                     </Grid>
                 </Border>
 
@@ -293,7 +291,7 @@
                 <!-- Quick actions -->
                 <StackPanel Orientation="Vertical" Margin="0,0,0,16">
                     <TextBlock Text="Quick actions" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
-                    <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Stretch">
+                    <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Stretch" Margin="0,0,0,0">
                         <!-- Action card 1 -->
                         <Border Style="{StaticResource Card}" Width="220" Height="100" Margin="0,0,0,0">
                             <StackPanel>

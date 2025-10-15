@@ -23,8 +23,8 @@ namespace MySchool
         {
             InitializeComponent();
             StateChanged += MainWindow_StateChanged;
-            this.MinWidth = 1000;
-            this.MinHeight = 1000;
+            this.MinWidth = 600;
+            this.MinHeight = 400;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
