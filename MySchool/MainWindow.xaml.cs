@@ -23,6 +23,8 @@ namespace MySchool
         {
             InitializeComponent();
             StateChanged += MainWindow_StateChanged;
+            this.MinWidth = 1000;
+            this.MinHeight = 1000;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -87,14 +89,15 @@ namespace MySchool
             return IntPtr.Zero;
         }
 
-        private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
+        private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
+            // Read current values
+            var mmi = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+
             // Get the primary monitor information for the window
             IntPtr monitor = MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
             if (monitor != IntPtr.Zero)
             {
-                var mmi = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-
                 var monitorInfo = new MONITORINFO();
                 monitorInfo.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
                 if (GetMonitorInfo(monitor, ref monitorInfo))
@@ -107,10 +110,18 @@ namespace MySchool
                     mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
                     mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
                     mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
-
-                    Marshal.StructureToPtr(mmi, lParam, true);
                 }
             }
+
+            // Enforce the window's MinWidth/MinHeight using DPI-aware pixels
+            var dpi = VisualTreeHelper.GetDpi(this);
+            int minWidthPx = (int)Math.Ceiling(this.MinWidth * dpi.DpiScaleX);
+            int minHeightPx = (int)Math.Ceiling(this.MinHeight * dpi.DpiScaleY);
+            if (minWidthPx > 0) mmi.ptMinTrackSize.x = minWidthPx;
+            if (minHeightPx > 0) mmi.ptMinTrackSize.y = minHeightPx;
+
+            // Write back
+            Marshal.StructureToPtr(mmi, lParam, true);
         }
 
         [DllImport("user32.dll")]
