@@ -23,7 +23,7 @@
     </shell:WindowChrome.WindowChrome>
     <Window.Resources>
         <!-- Main font -->
-        <FontFamily x:Key="Font.Main">pack://application:,,,/resources/fonts/SF-Pro.ttf#SF Pro</FontFamily>
+        <FontFamily x:Key="Font.Main">pack://application:,,,/resources/fonts/#SF Pro Display</FontFamily>
         <!-- Color palette -->
         <SolidColorBrush x:Key="Brush.Primary" Color="#4F46E5"/>
         <SolidColorBrush x:Key="Brush.PrimaryDark" Color="#4338CA"/>
@@ -236,6 +236,7 @@
 
                 <!-- Profile / actions -->
                 <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Style="{StaticResource Button.Secondary}" Margin="0,0,8,0">Feedback</Button>
                     <Border Width="36" Height="36" Background="#E2E8F0" CornerRadius="18"/>
                 </StackPanel>
 
@@ -350,7 +351,7 @@
 
                     <!-- Announcements -->
                     <StackPanel Grid.Column="0" Margin="0,0,12,0">
-                        <TextBlock Text="Announcements" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
+                        <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Text="Announcements"/>
                         <Border Style="{StaticResource Card}">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
