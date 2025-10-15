@@ -14,6 +14,7 @@
         ResizeMode="CanResize"
         AllowsTransparency="False"
         Icon="resources/logo/png/Dark-Icon.png">
+        FontFamily="{StaticResource Font.Main}"
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="0"
                              ResizeBorderThickness="6"
