@@ -181,7 +181,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid FontFamily="{StaticResource Font.Main}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="625*"/>
             <ColumnDefinition Width="303*"/>
