@@ -29,8 +29,10 @@ namespace MySchool
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            Resources.Add("ProgressWidthConverter", new ProgressWidthConverter());
         }
+    }
+    public partial class App : Application
+    {
     }
 
 }
