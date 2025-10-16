@@ -6,5 +6,34 @@
     <Application.Resources>
         <!-- Main font (global) -->
         <FontFamily x:Key="Font.Main">pack://application:,,,/resources/fonts/#SF Pro Display</FontFamily>
+
+        <!-- Hero ProgressBar style: rounded corners, gradient fill -->
+        <Style x:Key="HeroProgressBar" TargetType="ProgressBar">
+            <Setter Property="Height" Value="160"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Grid>
+                            <Border x:Name="PART_Track" CornerRadius="16" Background="#6366F1" Height="160"/>
+                            <Border x:Name="PART_Indicator" CornerRadius="16" Height="160">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#6366F1" Offset="0"/>
+                                        <GradientStop Color="#06B6D4" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Width>
+                                    <MultiBinding Converter="{StaticResource ProgressWidthConverter}">
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth"/>
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Value"/>
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Maximum"/>
+                                    </MultiBinding>
+                                </Border.Width>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

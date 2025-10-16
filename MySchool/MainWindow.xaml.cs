@@ -19,6 +19,8 @@ namespace MySchool
     /// </summary>
     public partial class MainWindow : Window
     {
+        private System.Windows.Threading.DispatcherTimer _hourTimer;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,6 +30,22 @@ namespace MySchool
             this.MaxWidth = 928;
             this.MaxHeight = 632;
             this.ResizeMode = ResizeMode.NoResize;
+
+            _hourTimer = new System.Windows.Threading.DispatcherTimer();
+            _hourTimer.Interval = TimeSpan.FromSeconds(1);
+            _hourTimer.Tick += HourTimer_Tick;
+            _hourTimer.Start();
+        }
+
+        private void HourTimer_Tick(object? sender, EventArgs e)
+        {
+            // Progress for current hour (0-3600 seconds)
+            var now = DateTime.Now;
+            int seconds = now.Minute * 60 + now.Second;
+            if (HeroProgressBar != null)
+            {
+                HeroProgressBar.Value = seconds;
+            }
         }
 
         protected override void OnSourceInitialized(EventArgs e)

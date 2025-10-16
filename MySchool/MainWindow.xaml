@@ -327,19 +327,14 @@
             <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
 
                 <!-- Hero section -->
-                <Border CornerRadius="16" Padding="24" Margin="0,0,0,16">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#6366F1" Offset="0"/>
-                            <GradientStop Color="#06B6D4" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <Grid Margin="0,0,0,16">
+                    <ProgressBar x:Name="HeroProgressBar" Style="{StaticResource HeroProgressBar}" Minimum="0" Maximum="3600" Value="0" Height="160"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel>
+                        <StackPanel Margin="24" VerticalAlignment="Center">
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" Text="Welcome Back"/>
                             <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold"><Run Language="en-au" Text="Kevin"/></TextBlock>
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="History 9:30"/></TextBlock>
@@ -347,7 +342,7 @@
                         </StackPanel>
                         <Ellipse Grid.Column="1" Width="120" Height="120" Fill="#FFFFFF22" Stroke="#FFFFFF55" StrokeThickness="1.5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
-                </Border>
+                </Grid>
 
                 <!-- Quick actions -->
                 <StackPanel Orientation="Vertical" Margin="0,0,0,16">
