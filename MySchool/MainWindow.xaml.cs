@@ -10,7 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System;
 using System.Runtime.InteropServices;
-using System.Windows.Interop;
+ 
 
 namespace MySchool
 {
@@ -28,13 +28,6 @@ namespace MySchool
             this.MaxWidth = 928;
             this.MaxHeight = 632;
             this.ResizeMode = ResizeMode.NoResize;
-        }
-
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            var source = PresentationSource.FromVisual(this) as HwndSource;
-            source?.AddHook(WndProc);
         }
 
         private void MainWindow_StateChanged(object? sender, EventArgs e)
@@ -117,108 +110,6 @@ namespace MySchool
                 DragMove();
             }
             catch { /* ignore */ }
-        }
-
-        private const int WM_GETMINMAXINFO = 0x0024;
-
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == WM_GETMINMAXINFO)
-            {
-                WmGetMinMaxInfo(hwnd, lParam);
-                handled = true;
-            }
-            return IntPtr.Zero;
-        }
-
-        private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
-        {
-            var mmi = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-            var dpi = VisualTreeHelper.GetDpi(this);
-            int minWidthPx = (int)Math.Ceiling(this.MinWidth * dpi.DpiScaleX);
-            int minHeightPx = (int)Math.Ceiling(this.MinHeight * dpi.DpiScaleY);
-            int maxWidthPx = (int)Math.Ceiling(this.MaxWidth * dpi.DpiScaleX);
-            int maxHeightPx = (int)Math.Ceiling(this.MaxHeight * dpi.DpiScaleY);
-
-            // Get the primary monitor information for the window
-            IntPtr monitor = MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-            if (monitor != IntPtr.Zero)
-            {
-                var monitorInfo = new MONITORINFO();
-                monitorInfo.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
-                if (GetMonitorInfo(monitor, ref monitorInfo))
-                {
-                    RECT rcWorkArea = monitorInfo.rcWork;
-                    RECT rcMonitorArea = monitorInfo.rcMonitor;
-
-                    // If maximized, allow full screen size
-                    if (WindowState == WindowState.Maximized)
-                    {
-                        mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                        mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                        mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                        mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
-                    }
-                    else
-                    {
-                        // Otherwise, lock to 1000x400
-                        mmi.ptMaxSize.x = maxWidthPx;
-                        mmi.ptMaxSize.y = maxHeightPx;
-                        mmi.ptMinTrackSize.x = minWidthPx;
-                        mmi.ptMinTrackSize.y = minHeightPx;
-                    }
-                }
-            }
-            Marshal.StructureToPtr(mmi, lParam, true);
-        }
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr MonitorFromWindow(IntPtr hwnd, MonitorOptions dwFlags);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
-
-        private enum MonitorOptions : uint
-        {
-            MONITOR_DEFAULTTONULL = 0x00000000,
-            MONITOR_DEFAULTTOPRIMARY = 0x00000001,
-            MONITOR_DEFAULTTONEAREST = 0x00000002
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct POINT
-        {
-            public int x;
-            public int y;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct MINMAXINFO
-        {
-            public POINT ptReserved;
-            public POINT ptMaxSize;
-            public POINT ptMaxPosition;
-            public POINT ptMinTrackSize;
-            public POINT ptMaxTrackSize;
-        }
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private struct MONITORINFO
-        {
-            public int cbSize;
-            public RECT rcMonitor;
-            public RECT rcWork;
-            public int dwFlags;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public int left;
-            public int top;
-            public int right;
-            public int bottom;
         }
     }
 }
