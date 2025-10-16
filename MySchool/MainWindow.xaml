@@ -311,7 +311,7 @@
                     <Button Style="{StaticResource CaptionButton}" Click="MinimizeButton_Click" ToolTip="Minimize">
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="12" Text="&#xE921;"/>
                     </Button>
-                    <Button Style="{StaticResource CaptionButton}" Click="MaxRestoreButton_Click" ToolTip="Maximize/Restore">
+                    <Button Style="{StaticResource CaptionButton}" Click="MaxRestoreButton_Click" ToolTip="Maximize/Restore" Visibility="Hidden">
                         <TextBlock x:Name="MaxIcon" FontFamily="Segoe MDL2 Assets" FontSize="12" Text="&#xE922;"/>
                     </Button>
                     <Button Style="{StaticResource CaptionButton.Close}" Click="CloseButton_Click" ToolTip="Close">
