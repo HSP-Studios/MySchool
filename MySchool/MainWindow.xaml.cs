@@ -23,10 +23,11 @@ namespace MySchool
         {
             InitializeComponent();
             StateChanged += MainWindow_StateChanged;
-            this.MinWidth = 1000;
-            this.MinHeight = 400;
-            this.MaxWidth = 1000;
-            this.MaxHeight = 400;
+            this.MinWidth = 928;
+            this.MinHeight = 632;
+            this.MaxWidth = 928;
+            this.MaxHeight = 632;
+            this.ResizeMode = ResizeMode.NoResize;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -111,11 +112,6 @@ namespace MySchool
 
         private void AppBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2)
-            {
-                MaxRestoreButton_Click(sender, e);
-                return;
-            }
             try
             {
                 DragMove();
