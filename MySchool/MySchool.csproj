@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\data\holidays\QLD.json" />
     <None Remove="resources\fonts\SF-Pro.ttf" />
     <None Remove="resources\logo\png-transparent\Dark-Icon.png" />
     <None Remove="resources\logo\png-transparent\Dark-Wide.png" />
@@ -26,6 +27,12 @@
     <None Remove="resources\logo\svg\Dark-Wide.svg" />
     <None Remove="resources\logo\svg\Light-Icon.svg" />
     <None Remove="resources\logo\svg\Light-Wide.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\data\holidays\QLD.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
