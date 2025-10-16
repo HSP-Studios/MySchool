@@ -408,7 +408,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                    <timeta FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock Text="Manage student records, guardians, and profiles." Style="{StaticResource Text.Body}" Margin="0,6,0,0"/>
                             </StackPanel>
