@@ -347,7 +347,7 @@
                                 <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center"><Run Language="en-au" Text="History"/></TextBlock>
                                 <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="CG01"/></TextBlock>
                                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
-                                <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="10:10 - 11:20"/></TextBlock>
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="9:00 - 10:10"/></TextBlock>
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -475,28 +475,28 @@
 
                     <!-- Upcoming events -->
                     <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                        <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8"><Run Text="Upcoming "/><Run Language="en-au" Text="Holidays "/></TextBlock>
+                        <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8"><Run Text="Upcoming "/><Run Language="en-au" Text="Events"/></TextBlock>
                         <Border Style="{StaticResource Card}" Height="142">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
                                     <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Accent}" VerticalAlignment="Center"/>
                                     <StackPanel Margin="10,0,0,0">
-                                        <TextBlock FontWeight="SemiBold" Text=""/>
+                                        <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 4 Ends"/></TextBlock>
                                         <TextBlock Style="{StaticResource Text.Body}" FontSize="14"><Run Language="en-au" Text="12 December"/></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
                                     <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Primary}" VerticalAlignment="Center"/>
                                     <StackPanel Margin="10,0,0,0">
-                                        <TextBlock FontWeight="SemiBold"><Run Text="Finals "/><Run Language="en-au" Text="Week"/></TextBlock>
-                                        <TextBlock Style="{StaticResource Text.Body}"><Run Language="en-au" Text="Week 7-9"/></TextBlock>
+                                        <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 1 Starts"/></TextBlock>
+                                        <TextBlock Style="{StaticResource Text.Body}"><Run Language="en-au" Text="26 January 2026"/></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Ellipse Width="10" Height="10" Fill="#F59E0B" VerticalAlignment="Center"/>
                                     <StackPanel Margin="10,0,0,0">
-                                        <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 4 Ends"/></TextBlock>
-                                        <TextBlock Style="{StaticResource Text.Body}"><Run Language="en-au" Text="12 December"/></TextBlock>
+                                        <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 1 Ends"/></TextBlock>
+                                        <TextBlock Style="{StaticResource Text.Body}"><Run Language="en-au" Text="02 April 2026"/></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
