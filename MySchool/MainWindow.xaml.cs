@@ -24,9 +24,9 @@ namespace MySchool
             InitializeComponent();
             StateChanged += MainWindow_StateChanged;
             this.MinWidth = 928;
-            this.MinHeight = 632;
+            this.MinHeight = 600;
             this.MaxWidth = 928;
-            this.MaxHeight = 632;
+            this.MaxHeight = 600;
             this.ResizeMode = ResizeMode.NoResize;
         }
 
