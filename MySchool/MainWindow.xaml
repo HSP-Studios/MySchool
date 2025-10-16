@@ -325,28 +325,55 @@
         <!-- Home View -->
         <ScrollViewer x:Name="HomeView" Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Grid.ColumnSpan="3">
             <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
+                <Grid>
+                    <!-- Hero section left -->
+                    <Border CornerRadius="16" Padding="24" Margin="10,0,0,16" Height="168" Width="145" HorizontalAlignment="Left">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6366F1" Offset="0"/>
+                                <GradientStop Color="#FF089DDA" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center"><Run Language="en-au" Text="History"/></TextBlock>
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="CG01"/></TextBlock>
+                                <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="10:10 - 11:20"/></TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
 
-                <!-- Hero section -->
-                <Border CornerRadius="16" Padding="24" Margin="0,0,0,16" Height="168">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#6366F1" Offset="0"/>
-                            <GradientStop Color="#FF089DDA" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Language="en-au" Text="History"/></TextBlock>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="CG01"/></TextBlock>
-                            <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="10:10 - 11:20"/></TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </Border>
+
+                    <!-- Hero section right -->
+                    <Border CornerRadius="16" Padding="24" Margin="177,0,10,16" Height="168">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6366F1" Offset="0"/>
+                                <GradientStop Color="#FF089DDA" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Language="en-au" Text="History"/></TextBlock>
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="CG01"/></TextBlock>
+                                <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="10:10 - 11:20"/></TextBlock>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top"><Run Language="en-au" Text="History"/></TextBlock>
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Language="en-au" Text="CG01"/></TextBlock>
+                                <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
+                                <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Language="en-au" Text="10:10 - 11:20"/></TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
 
                 <!-- Quick actions -->
                 <StackPanel Orientation="Vertical" Margin="0,0,0,16">
