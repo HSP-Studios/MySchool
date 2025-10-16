@@ -405,7 +405,7 @@
                     <!-- Announcements -->
                     <StackPanel Grid.Column="0" Margin="0,0,12,0">
                         <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Text="Announcements"/>
-                        <Border Style="{StaticResource Card}">
+                        <Border Style="{StaticResource Card}" Height="142">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                                     <TextBlock Style="{StaticResource Icon}" Text=""/>
@@ -425,7 +425,7 @@
                     <!-- Upcoming events -->
                     <StackPanel Grid.Column="1" Margin="12,0,0,0">
                         <TextBlock Text="Upcoming events" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
-                        <Border Style="{StaticResource Card}">
+                        <Border Style="{StaticResource Card}" Height="142">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
                                     <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Accent}" VerticalAlignment="Center"/>
