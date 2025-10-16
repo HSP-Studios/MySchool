@@ -357,8 +357,9 @@
                     <Border CornerRadius="16" Padding="24"  Height="168" Grid.Column="1" Margin="20,0,20,0">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Color="#6366F1" Offset="0"/>
                                 <GradientStop Color="#FF089DDA" Offset="1"/>
+                                <GradientStop Color="#6366F1" Offset="0.483"/>
+                                <GradientStop Color="#FF089DDA" Offset="0"/>
                             </LinearGradientBrush>
                         </Border.Background>
                         <Grid>
