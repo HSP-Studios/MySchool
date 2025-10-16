@@ -351,8 +351,7 @@
 
                 <!-- Quick actions -->
                 <StackPanel Orientation="Vertical" Margin="0,0,0,16">
-                    <TextBlock Text="Quick actions" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
-                    <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Stretch" Margin="0,0,0,0">
+                    <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Left" Margin="0,0,0,0">
                         <!-- Action card 1 -->
                         <Border Style="{StaticResource Card}" Width="200" Height="100" HorizontalAlignment="Center">
                             <StackPanel>
