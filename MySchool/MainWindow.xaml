@@ -327,11 +327,11 @@
             <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
 
                 <!-- Hero section -->
-                <Border CornerRadius="16" Padding="24" Margin="0,0,0,16">
+                <Border CornerRadius="16" Padding="24" Margin="0,0,0,16" Height="168">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#6366F1" Offset="0"/>
-                            <GradientStop Color="#06B6D4" Offset="1"/>
+                            <GradientStop Color="#FF089DDA" Offset="1"/>
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid>
@@ -340,12 +340,11 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" Text="Welcome Back"/>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold"><Run Language="en-au" Text="Kevin"/></TextBlock>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="History 9:30"/></TextBlock>
-                            <StackPanel Orientation="Horizontal" Margin="0,16,0,0"/>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Language="en-au" Text="History"/></TextBlock>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="CG01"/></TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9"><Run Language="en-au" Text="10:10 - 11:20"/></TextBlock>
                         </StackPanel>
-                        <Ellipse Grid.Column="1" Width="120" Height="120" Fill="#FFFFFF22" Stroke="#FFFFFF55" StrokeThickness="1.5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
 
