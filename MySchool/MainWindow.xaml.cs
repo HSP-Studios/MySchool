@@ -30,7 +30,6 @@ namespace MySchool
             this.MaxHeight = 600;
             this.ResizeMode = ResizeMode.NoResize;
             // Navigate to Home on startup
-            ContentFrame.Navigated += (_, __) => { /* keep for potential state */ };
             ContentFrame.Navigate(new Home());
             SetTabHighlight("Home");
         }
