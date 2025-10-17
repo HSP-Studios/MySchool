@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System;
 using System.Runtime.InteropServices;
+using MySchool.Pages;
  
 
 namespace MySchool
@@ -28,6 +29,9 @@ namespace MySchool
             this.MaxWidth = 928;
             this.MaxHeight = 600;
             this.ResizeMode = ResizeMode.NoResize;
+            // Navigate to Home on startup
+            ContentFrame.Navigate(new Home());
+            SetTabHighlight("Home");
         }
 
         private void MainWindow_StateChanged(object? sender, EventArgs e)
@@ -59,13 +63,6 @@ namespace MySchool
             Close();
         }
 
-        private void ShowView(UIElement show, params UIElement[] hide)
-        {
-            show.Visibility = Visibility.Visible;
-            foreach (var h in hide)
-                h.Visibility = Visibility.Collapsed;
-        }
-
         private void SetTabHighlight(string selected)
         {
             var blue = (Brush)FindResource("Brush.Primary");
@@ -77,22 +74,19 @@ namespace MySchool
 
         private void HomeTab_Click(object sender, RoutedEventArgs e)
         {
-            if (HomeView != null && ScheduleView != null && SettingsView != null)
-                ShowView(HomeView, ScheduleView, SettingsView);
+            if (ContentFrame != null) ContentFrame.Navigate(new Home());
             SetTabHighlight("Home");
         }
 
         private void ScheduleTab_Click(object sender, RoutedEventArgs e)
         {
-            if (HomeView != null && ScheduleView != null && SettingsView != null)
-                ShowView(ScheduleView, HomeView, SettingsView);
+            if (ContentFrame != null) ContentFrame.Navigate(new Schedule());
             SetTabHighlight("Schedule");
         }
 
         private void SettingsTab_Click(object sender, RoutedEventArgs e)
         {
-            if (HomeView != null && ScheduleView != null && SettingsView != null)
-                ShowView(SettingsView, HomeView, ScheduleView);
+            if (ContentFrame != null) ContentFrame.Navigate(new Settings());
             SetTabHighlight("Settings");
         }
 
@@ -100,7 +94,7 @@ namespace MySchool
         protected override void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
-            SetTabHighlight("Home");
+            // already set in constructor
         }
 
         private void AppBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MySchool
+namespace MySchool.Pages
 {
     /// <summary>
     /// Interaction logic for Schedule.xaml
