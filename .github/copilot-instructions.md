@@ -68,8 +68,6 @@ MySchool is a WPF application for managing and displaying student and class info
   - Build: `dotnet build MySchool.csproj`
   - Run and verify dark mode toggle via main window UI
 
-- If the PR includes UI changes, attach 1-2 screenshots to help reviewers.
-
 ### Notes and examples from this repo
 - Primary UI logic lives in `MainWindow.xaml.cs` — prefer small, incremental edits there and test each change.
 - Assets live under `resources/` (e.g., `resources/logo/png/Dark-Icon.png`). Keep added assets in the same subfolder and reference relatively in XAML.
