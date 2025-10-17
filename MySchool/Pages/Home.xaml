@@ -8,7 +8,186 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Home">
 
-    <Grid>
-        
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Margin="0,0,0,-18">
+        <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
+            <!-- Hero Section -->
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- Hero section left -->
+                <Border CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Left" Grid.Column="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#6366F1" Offset="0"/>
+                            <GradientStop Color="#FF089DDA" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" Text="Current Class" HorizontalAlignment="Center" FontSize="12"/>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center"><Run Language="en-au" Text="History"/></TextBlock>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="CG01"/></TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="9:00 - 10:10"/></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Hero section center -->
+                <Border CornerRadius="16" Padding="24"  Height="168" Grid.Column="1" Margin="20,0,20,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#FF089DDA" Offset="1"/>
+                            <GradientStop Color="#6366F1" Offset="0.483"/>
+                            <GradientStop Color="#FF089DDA" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Center" Text="Hey Kevin!" VerticalAlignment="Center" FontSize="48"/>
+                        <!-- Windows Hello smile/emoji icon -->
+                        <TextBlock Foreground="White"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   FontSize="100"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="&#xEB68;"
+                                   Grid.Column="2" Margin="0,0,10,0"/>
+                    </Grid>
+                </Border>
+
+                <!-- Hero section right -->
+                <Border CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Right" Grid.Column="2">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#6366F1" Offset="0"/>
+                            <GradientStop Color="#FF089DDA" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="Next Class" FontSize="12"/>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center"><Run Language="en-au" Text="Maths"/></TextBlock>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="KF18"/></TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
+                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="10:10 - 11:20"/></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Quick actions -->
+            <StackPanel Orientation="Vertical" Margin="0,0,0,16">
+                <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Left" Margin="0,0,0,15">
+                    <!-- Action card 1 -->
+                    <Border Style="{StaticResource Card}" Width="200" Height="100" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Icon}" Text="&#xF763;" HorizontalAlignment="Center"/>
+                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Schedule"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource Text.Body}" Margin="0,6,0,0"><Run Text="View your full schedule,"/><LineBreak/><Run Text="or upload a new schedule"/><Run Language="en-au" Text="."/></TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <!-- Action card 2 -->
+                    <Border Style="{StaticResource Card}" Width="200" Height="100" Margin="0,0,0,0">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Icon}" Text="&#xE8F1;"/>
+                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Language="en-au" Text="Resources"/></TextBlock>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource Text.Body}" Margin="0,6,0,0" Text="Coming Soon!"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- Action card 3 -->
+                    <Border Style="{StaticResource Card}" Width="200" Height="100" Margin="0,0,0,0">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Icon}" Text="&#xE716;"/>
+                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Attendance"/><Run Language="en-au" Text=" Tracker"/></TextBlock>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource Text.Body}" Margin="0,6,0,0"><Run Language="en-au" Text="Coming Soon!"/></TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <!-- Action card 4 -->
+                    <Border Style="{StaticResource Card}" Width="200" Height="100" Margin="0,0,0,0">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Icon}" Text="&#xE7BE;"/>
+                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Language="en-au" Text="Grade"/><Run Text=" Predictor"/></TextBlock>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource Text.Body}" Margin="0,6,0,0"><Run Language="en-au" Text="Coming Soon!"/></TextBlock>
+                        </StackPanel>
+                    </Border>
+                </WrapPanel>
+            </StackPanel>
+
+            <!-- Announcements & Events -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Announcements -->
+                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                    <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8"><Run Language="en-au" Text="Quick Notes"/></TextBlock>
+                    <Border Style="{StaticResource Card}" Height="142">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Style="{StaticResource Icon}" Text=""/>
+                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Coming Soon!"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource Text.Body}" Margin="0,0,0,10" TextWrapping="Wrap" Text="Coming Soon!"/>
+                            <Separator Margin="0,0,0,10"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                <TextBlock Style="{StaticResource Icon}" Text=""/>
+                                <TextBlock Text="Coming Soon!" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource Text.Body}" Text="Coming Soon!" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Upcoming events -->
+                <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                    <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8"><Run Text="Upcoming "/><Run Language="en-au" Text="Events"/></TextBlock>
+                    <Border Style="{StaticResource Card}" Height="142">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                                <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Accent}" VerticalAlignment="Center"/>
+                                <StackPanel Margin="10,0,0,0">
+                                    <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 4 Ends"/></TextBlock>
+                                    <TextBlock Style="{StaticResource Text.Body}" FontSize="14"><Run Language="en-au" Text="12 December"/></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                                <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Primary}" VerticalAlignment="Center"/>
+                                <StackPanel Margin="10,0,0,0">
+                                    <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 1 Starts"/></TextBlock>
+                                    <TextBlock Style="{StaticResource Text.Body}"><Run Language="en-au" Text="26 January 2026"/></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Ellipse Width="10" Height="10" Fill="#F59E0B" VerticalAlignment="Center"/>
+                                <StackPanel Margin="10,0,0,0">
+                                    <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 1 Ends"/></TextBlock>
+                                    <TextBlock Style="{StaticResource Text.Body}"><Run Language="en-au" Text="02 April 2026"/></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <!-- Footer note -->
+        </StackPanel>
+    </ScrollViewer>
 </Page>
