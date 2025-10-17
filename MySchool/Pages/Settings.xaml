@@ -9,9 +9,9 @@
       Title="Settings">
 
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-        <Grid Margin="24">
+        <StackPanel Margin="24">
             <TextBlock Text="Settings" Style="{StaticResource Text.Headline}"/>
             <TextBlock Text="Configure your app preferences here." Style="{StaticResource Text.Body}" Margin="0,5,0,0"/>
-        </Grid>
+        </StackPanel>
     </ScrollViewer>
 </Page>

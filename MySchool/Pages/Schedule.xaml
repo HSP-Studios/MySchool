@@ -9,9 +9,9 @@
       Title="Schedule">
 
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-        <Grid Margin="24">
+        <StackPanel Margin="24">
             <TextBlock Text="Schedule" Style="{StaticResource Text.Headline}"/>
             <TextBlock Text="Your classes and events will appear here." Style="{StaticResource Text.Body}" Margin="0,8,0,0"/>
-        </Grid>
+        </StackPanel>
     </ScrollViewer>
 </Page>
