@@ -23,6 +23,34 @@ namespace MySchool.Pages
         public Settings()
         {
             InitializeComponent();
+            Loaded += Settings_Loaded;
+        }
+
+        private void Settings_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Initialize toggle from current settings
+            try
+            {
+                DarkModeToggle.IsChecked = App.CurrentSettings.IsDarkMode;
+            }
+            catch { }
+        }
+
+        private void DarkModeToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            SetDarkMode(true);
+        }
+
+        private void DarkModeToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetDarkMode(false);
+        }
+
+        private void SetDarkMode(bool isDark)
+        {
+            App.CurrentSettings.IsDarkMode = isDark;
+            SettingsService.Save(App.CurrentSettings);
+            ThemeManager.ApplyTheme(isDark);
         }
     }
 }
