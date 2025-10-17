@@ -8,9 +8,11 @@
         <!-- Reference the embedded font file explicitly and use its internal family name -->
         <FontFamily x:Key="Font.Main">pack://application:,,,/MySchool;component/resources/fonts/SF-Pro.ttf#SF Pro</FontFamily>
 
-        <!-- Default TextBlock font so pages without explicit styles still use the app font -->
+        <!-- Default TextBlock font and color so pages without explicit styles still use the app font and themed text color -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+            <!-- Use DynamicResource because Brush.TextPrimary is defined later in this dictionary -->
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         </Style>
 
         <!-- Color palette -->
@@ -38,19 +40,19 @@
         <Style x:Key="Text.Body" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
         <!-- Cards -->
         <Style x:Key="Card" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource Brush.Surface}"/>
+            <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
             <Setter Property="CornerRadius" Value="12"/>
             <Setter Property="Padding" Value="16"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.08"/>
+                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.14"/>
                 </Setter.Value>
             </Setter>
         </Style>

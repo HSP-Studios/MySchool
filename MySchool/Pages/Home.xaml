@@ -139,18 +139,18 @@
 
                 <!-- Announcements -->
                 <StackPanel Grid.Column="0" Margin="0,0,12,0">
-                    <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8"><Run Language="en-au" Text="Quick Notes"/></TextBlock>
+                    <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Language="en-au" Text="Quick Notes"/></TextBlock>
                     <Border Style="{StaticResource Card}" Height="142">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                                 <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Coming Soon!"/>
+                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Coming Soon!" Foreground="{StaticResource Brush.TextPrimary}"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource Text.Body}" Margin="0,0,0,10" TextWrapping="Wrap" Text="Coming Soon!"/>
-                            <Separator Margin="0,0,0,10"/>
+                            <Separator Margin="0,0,0,10" Background="#30FFFFFF"/>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                                 <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                <TextBlock Text="Coming Soon!" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="Coming Soon!" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Brush.TextPrimary}"/>
                             </StackPanel>
                             <TextBlock Style="{StaticResource Text.Body}" Text="Coming Soon!" TextWrapping="Wrap"/>
                         </StackPanel>
@@ -159,27 +159,27 @@
 
                 <!-- Upcoming events -->
                 <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                    <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8"><Run Text="Upcoming "/><Run Language="en-au" Text="Events"/></TextBlock>
+                    <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Text="Upcoming "/><Run Language="en-au" Text="Events"/></TextBlock>
                     <Border Style="{StaticResource Card}" Height="142">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
                                 <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Accent}" VerticalAlignment="Center"/>
                                 <StackPanel Margin="10,0,0,0">
-                                    <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 4 Ends"/></TextBlock>
+                                    <TextBlock FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}"><Run Language="en-au" Text="Term 4 Ends"/></TextBlock>
                                     <TextBlock Style="{StaticResource Text.Body}" FontSize="14"><Run Language="en-au" Text="12 December"/></TextBlock>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
                                 <Ellipse Width="10" Height="10" Fill="{StaticResource Brush.Primary}" VerticalAlignment="Center"/>
                                 <StackPanel Margin="10,0,0,0">
-                                    <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 1 Starts"/></TextBlock>
+                                    <TextBlock FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}"><Run Language="en-au" Text="Term 1 Starts"/></TextBlock>
                                     <TextBlock Style="{StaticResource Text.Body}"><Run Language="en-au" Text="26 January 2026"/></TextBlock>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Ellipse Width="10" Height="10" Fill="#F59E0B" VerticalAlignment="Center"/>
                                 <StackPanel Margin="10,0,0,0">
-                                    <TextBlock FontWeight="SemiBold"><Run Language="en-au" Text="Term 1 Ends"/></TextBlock>
+                                    <TextBlock FontWeight="SemiBold" Foreground="{StaticResource Brush.TextPrimary}"><Run Language="en-au" Text="Term 1 Ends"/></TextBlock>
                                     <TextBlock Style="{StaticResource Text.Body}"><Run Language="en-au" Text="02 April 2026"/></TextBlock>
                                 </StackPanel>
                             </StackPanel>
