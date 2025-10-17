@@ -11,12 +11,11 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
         <StackPanel Margin="24" Orientation="Vertical">
-            <TextBlock Text="Settings" Style="{StaticResource Text.Headline}"/>
-            <TextBlock Text="Configure your app preferences here." Style="{StaticResource Text.Body}" Margin="0,5,0,12"/>
+            <TextBlock Text="Settings" Style="{StaticResource Text.Headline}" Margin="0,0,0,12"/>
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,8"/>
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,5"/>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <CheckBox x:Name="DarkModeToggle" VerticalAlignment="Center" IsChecked="False" Checked="DarkModeToggle_Checked" Unchecked="DarkModeToggle_Unchecked"/>
                         <TextBlock Text="Enable dark mode" Style="{StaticResource Text.Body}" Margin="8,0,0,0"/>
