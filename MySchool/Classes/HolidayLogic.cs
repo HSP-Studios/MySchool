@@ -1,12 +1,215 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace MySchool.Classes
 {
     internal class HolidayLogic
     {
+        internal enum EventKind
+        {
+            TermStart,
+            TermEnd,
+            StaffDevelopment
+        }
+
+        internal sealed class UpcomingEvent
+        {
+            public string Title { get; init; } = string.Empty;
+            public DateTime Date { get; init; }
+            public EventKind Kind { get; init; }
+
+            public override string ToString() => $"{Title} - {Date:d}";
+        }
+
+        // Returns the next upcoming events (term starts/ends and staff development days) based on the QLD holidays JSON file.
+        internal static IReadOnlyList<UpcomingEvent> GetUpcomingEvents(int take = 3, DateTime? fromDate = null)
+        {
+            try
+            {
+                var path = GetHolidaysJsonPath();
+                if (!File.Exists(path))
+                {
+                    return Array.Empty<UpcomingEvent>();
+                }
+
+                using var doc = JsonDocument.Parse(File.ReadAllText(path));
+                var root = doc.RootElement;
+
+                var results = new List<UpcomingEvent>(16);
+                var pivot = (fromDate ?? DateTime.Today).Date;
+
+                foreach (var yearProp in root.EnumerateObject())
+                {
+                    if (!int.TryParse(yearProp.Name, out var year)) continue;
+                    var yearObj = yearProp.Value;
+
+                    // term_dates
+                    if (yearObj.TryGetProperty("term_dates", out var termDates))
+                    {
+                        foreach (var termProp in termDates.EnumerateObject())
+                        {
+                            var termName = NormalizeTermName(termProp.Name);
+                            var term = termProp.Value;
+                            if (term.TryGetProperty("start", out var startEl))
+                            {
+                                if (TryParseIsoDate(startEl.GetString(), out var start))
+                                {
+                                    results.Add(new UpcomingEvent
+                                    {
+                                        Title = $"{termName} Starts",
+                                        Date = start,
+                                        Kind = EventKind.TermStart
+                                    });
+                                }
+                            }
+                            if (term.TryGetProperty("end", out var endEl))
+                            {
+                                if (TryParseIsoDate(endEl.GetString(), out var end))
+                                {
+                                    results.Add(new UpcomingEvent
+                                    {
+                                        Title = $"{termName} Ends",
+                                        Date = end,
+                                        Kind = EventKind.TermEnd
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    // staff_development_days (structure may vary per year/term)
+                    if (yearObj.TryGetProperty("staff_development_days", out var sdd))
+                    {
+                        foreach (var termProp in sdd.EnumerateObject())
+                        {
+                            var termName = NormalizeTermName(termProp.Name);
+                            var termNode = termProp.Value;
+
+                            // range: start + end
+                            if (termNode.TryGetProperty("start", out var sEl) && termNode.TryGetProperty("end", out var eEl))
+                            {
+                                if (TryParseIsoDate(sEl.GetString(), out var s) && TryParseIsoDate(eEl.GetString(), out var e))
+                                {
+                                    foreach (var d in EachDay(s, e))
+                                    {
+                                        results.Add(new UpcomingEvent
+                                        {
+                                            Title = $"{termName} Staff Development Day",
+                                            Date = d,
+                                            Kind = EventKind.StaffDevelopment
+                                        });
+                                    }
+                                }
+                            }
+
+                            // single date
+                            if (termNode.TryGetProperty("date", out var dateEl))
+                            {
+                                if (TryParseIsoDate(dateEl.GetString(), out var d))
+                                {
+                                    results.Add(new UpcomingEvent
+                                    {
+                                        Title = $"{termName} Staff Development Day",
+                                        Date = d,
+                                        Kind = EventKind.StaffDevelopment
+                                    });
+                                }
+                            }
+
+                            // multiple dates
+                            if (termNode.TryGetProperty("dates", out var datesEl) && datesEl.ValueKind == JsonValueKind.Array)
+                            {
+                                foreach (var item in datesEl.EnumerateArray())
+                                {
+                                    if (item.ValueKind == JsonValueKind.String && TryParseIsoDate(item.GetString(), out var d))
+                                    {
+                                        results.Add(new UpcomingEvent
+                                        {
+                                            Title = $"{termName} Staff Development Day",
+                                            Date = d,
+                                            Kind = EventKind.StaffDevelopment
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var upcoming = results
+                    .Where(e => e.Date.Date >= pivot)
+                    .OrderBy(e => e.Date)
+                    .ThenBy(e => e.Kind)
+                    .Take(Math.Max(0, take))
+                    .ToList();
+
+                return upcoming;
+            }
+            catch
+            {
+                // Fail silent and return empty to avoid breaking UI
+                return Array.Empty<UpcomingEvent>();
+            }
+        }
+
+        internal static string FormatDate(DateTime date)
+        {
+            // For current year, omit the year to match existing UI. Otherwise include year.
+            var culture = new CultureInfo("en-AU");
+            return date.Year == DateTime.Today.Year
+                ? date.ToString("dd MMMM", culture)
+                : date.ToString("dd MMMM yyyy", culture);
+        }
+
+        private static string GetHolidaysJsonPath()
+        {
+            // Prefer file copied to output directory
+            var fromOutput = Path.Combine(AppContext.BaseDirectory, "resources", "data", "holidays", "QLD.json");
+            if (File.Exists(fromOutput)) return fromOutput;
+
+            // Fallback to project relative path (design-time)
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var fallback = Path.Combine(baseDir, "resources", "data", "holidays", "QLD.json");
+            if (File.Exists(fallback)) return fallback;
+
+            // Last resort: absolute path provided in prompt (may only work on author's machine)
+            var promptPath = "C:\\Users\\kevin\\OneDrive - Department of Education\\Documents\\Visual Studio Projects\\MySchool\\MySchool\\resources\\data\\holidays\\QLD.json";
+            return promptPath;
+        }
+
+        private static string NormalizeTermName(string termKey)
+        {
+            // Convert keys like "term_1" to "Term 1"
+            if (string.IsNullOrWhiteSpace(termKey)) return "Term";
+            var parts = termKey.Split('_');
+            if (parts.Length == 2 && int.TryParse(parts[1], out var n))
+            {
+                return $"Term {n}";
+            }
+            return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(termKey.Replace('_', ' '));
+        }
+
+        private static bool TryParseIsoDate(string? s, out DateTime date)
+        {
+            if (!string.IsNullOrWhiteSpace(s) && DateTime.TryParseExact(s, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out var d))
+            {
+                date = d.Date;
+                return true;
+            }
+            date = default;
+            return false;
+        }
+
+        private static IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day <= thru.Date; day = day.AddDays(1))
+                yield return day;
+        }
     }
 }
