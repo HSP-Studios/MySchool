@@ -7,7 +7,7 @@
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="MySchool"
-        Background="{StaticResource Brush.Background}"
+        Background="{DynamicResource Brush.Background}"
         WindowStyle="None"
         ResizeMode="CanResize"
         AllowsTransparency="False"
@@ -36,7 +36,7 @@
         </Grid.RowDefinitions>
 
         <!-- Top App Bar -->
-        <Border x:Name="AppBar" Grid.Row="0" Background="{StaticResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown" Grid.ColumnSpan="3">
+        <Border x:Name="AppBar" Grid.Row="0" Background="{DynamicResource Brush.Surface}" Height="64" MouseLeftButtonDown="AppBar_MouseLeftButtonDown" Grid.ColumnSpan="3">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.06"/>
             </Border.Effect>

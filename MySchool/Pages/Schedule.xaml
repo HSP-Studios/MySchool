@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:MySchool.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Schedule">
+      Title="Schedule"
+      Background="{DynamicResource Brush.Background}">
 
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
         <StackPanel Margin="24">
