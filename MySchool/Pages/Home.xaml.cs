@@ -57,6 +57,9 @@ namespace MySchool.Pages
                         case HolidayLogic.EventKind.TermEnd:
                             ellipse.Fill = (Brush)FindResource("Brush.Accent");
                             break;
+                        case HolidayLogic.EventKind.SchoolHoliday:
+                            ellipse.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#10B981")); // teal/green
+                            break;
                         default:
                             ellipse.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F59E0B"));
                             break;

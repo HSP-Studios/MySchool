@@ -15,7 +15,8 @@ namespace MySchool.Classes
         {
             TermStart,
             TermEnd,
-            StaffDevelopment
+            StaffDevelopment,
+            SchoolHoliday
         }
 
         internal sealed class UpcomingEvent
@@ -82,6 +83,29 @@ namespace MySchool.Classes
                                 }
                             }
                         }
+
+                    // school_holidays: add a single event per term with start-end range
+                    if (yearObj.TryGetProperty("school_holidays", out var holidays))
+                    {
+                        foreach (var termProp in holidays.EnumerateObject())
+                        {
+                            var termName = NormalizeTermName(termProp.Name);
+                            var termNode = termProp.Value;
+                            if (termNode.TryGetProperty("start", out var sEl) && termNode.TryGetProperty("end", out var eEl))
+                            {
+                                if (TryParseIsoDate(sEl.GetString(), out var s) && TryParseIsoDate(eEl.GetString(), out var e))
+                                {
+                                    results.Add(new UpcomingEvent
+                                    {
+                                        Title = $"{termName} Holidays",
+                                        Date = s,
+                                        EndDate = e,
+                                        Kind = EventKind.SchoolHoliday
+                                    });
+                                }
+                            }
+                        }
+                    }
                     }
 
                     // staff_development_days (structure may vary per year/term)
@@ -164,29 +188,29 @@ namespace MySchool.Classes
             if (endDate == null || endDate.Value.Date == date.Date)
             {
                 return date.Year == DateTime.Today.Year
-                    ? date.ToString("dd MMMM", culture)
-                    : date.ToString("dd MMMM yyyy", culture);
+                    ? date.ToString("d MMMM", culture)
+                    : date.ToString("d MMMM yyyy", culture);
             }
 
             var end = endDate.Value.Date;
             // Same month and year: 26-27 January 2026 (or without year if current year)
             if (date.Year == end.Year && date.Month == end.Month)
             {
-                var left = date.ToString("dd", culture);
-                var right = end.ToString(date.Year == DateTime.Today.Year ? "dd MMMM" : "dd MMMM yyyy", culture);
+                var left = date.ToString("d", culture);
+                var right = end.ToString(date.Year == DateTime.Today.Year ? "d MMMM" : "d MMMM yyyy", culture);
                 return $"{left}-{right}";
             }
 
             // Same year but different months: 30 Sep - 02 Oct 2026 (or without year if current year)
             if (date.Year == end.Year)
             {
-                var left = date.ToString("dd MMM", culture);
-                var right = end.ToString(date.Year == DateTime.Today.Year ? "dd MMM" : "dd MMM yyyy", culture);
+                var left = date.ToString("d MMM", culture);
+                var right = end.ToString(date.Year == DateTime.Today.Year ? "d MMM" : "d MMM yyyy", culture);
                 return $"{left} - {right}";
             }
 
             // Different years: 13 Dec 2025 - 26 Jan 2026
-            return $"{date:dd MMM yyyy} - {end:dd MMM yyyy}";
+            return $"{date:d MMM yyyy} - {end:d MMM yyyy}";
         }
 
         private static string GetHolidaysJsonPath()
