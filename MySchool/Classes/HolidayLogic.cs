@@ -22,6 +22,7 @@ namespace MySchool.Classes
         {
             public string Title { get; init; } = string.Empty;
             public DateTime Date { get; init; }
+            public DateTime? EndDate { get; init; }
             public EventKind Kind { get; init; }
 
             public override string ToString() => $"{Title} - {Date:d}";
@@ -96,15 +97,14 @@ namespace MySchool.Classes
                             {
                                 if (TryParseIsoDate(sEl.GetString(), out var s) && TryParseIsoDate(eEl.GetString(), out var e))
                                 {
-                                    foreach (var d in EachDay(s, e))
+                                    // Add a single aggregated event covering the range
+                                    results.Add(new UpcomingEvent
                                     {
-                                        results.Add(new UpcomingEvent
-                                        {
-                                            Title = $"{termName} Staff Development Day",
-                                            Date = d,
-                                            Kind = EventKind.StaffDevelopment
-                                        });
-                                    }
+                                        Title = $"{termName} Staff Development Day",
+                                        Date = s,
+                                        EndDate = e,
+                                        Kind = EventKind.StaffDevelopment
+                                    });
                                 }
                             }
 
@@ -158,13 +158,35 @@ namespace MySchool.Classes
             }
         }
 
-        internal static string FormatDate(DateTime date)
+        internal static string FormatDate(DateTime date, DateTime? endDate = null)
         {
-            // For current year, omit the year to match existing UI. Otherwise include year.
             var culture = new CultureInfo("en-AU");
-            return date.Year == DateTime.Today.Year
-                ? date.ToString("dd MMMM", culture)
-                : date.ToString("dd MMMM yyyy", culture);
+            if (endDate == null || endDate.Value.Date == date.Date)
+            {
+                return date.Year == DateTime.Today.Year
+                    ? date.ToString("dd MMMM", culture)
+                    : date.ToString("dd MMMM yyyy", culture);
+            }
+
+            var end = endDate.Value.Date;
+            // Same month and year: 26-27 January 2026 (or without year if current year)
+            if (date.Year == end.Year && date.Month == end.Month)
+            {
+                var left = date.ToString("dd", culture);
+                var right = end.ToString(date.Year == DateTime.Today.Year ? "dd MMMM" : "dd MMMM yyyy", culture);
+                return $"{left}-{right}";
+            }
+
+            // Same year but different months: 30 Sep - 02 Oct 2026 (or without year if current year)
+            if (date.Year == end.Year)
+            {
+                var left = date.ToString("dd MMM", culture);
+                var right = end.ToString(date.Year == DateTime.Today.Year ? "dd MMM" : "dd MMM yyyy", culture);
+                return $"{left} - {right}";
+            }
+
+            // Different years: 13 Dec 2025 - 26 Jan 2026
+            return $"{date:dd MMM yyyy} - {end:dd MMM yyyy}";
         }
 
         private static string GetHolidaysJsonPath()

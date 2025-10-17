@@ -67,7 +67,7 @@ namespace MySchool.Pages
                     var date = new TextBlock { };
                     date.SetResourceReference(TextBlock.StyleProperty, "Text.Body");
                     date.FontSize = 14;
-                    date.Text = HolidayLogic.FormatDate(e.Date);
+                    date.Text = HolidayLogic.FormatDate(e.Date, e.EndDate);
 
                     textStack.Children.Add(title);
                     textStack.Children.Add(date);
