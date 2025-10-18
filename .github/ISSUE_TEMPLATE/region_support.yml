@@ -1,0 +1,93 @@
+name: Region Support Request
+description: Request support for a new Australian state or region
+title: "[Region]: Support for "
+labels: ["region-support"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for requesting regional support! MySchool currently supports Queensland, and we're excited to expand to other regions.
+  
+  - type: dropdown
+    id: region
+    attributes:
+      label: Region
+      description: Which Australian state/territory would you like to see supported?
+      options:
+        - New South Wales
+        - Victoria
+        - South Australia
+        - Western Australia
+        - Tasmania
+        - Northern Territory
+        - Australian Capital Territory
+        - Other (please specify below)
+    validations:
+      required: true
+  
+  - type: input
+    id: region-other
+    attributes:
+      label: Other Region
+      description: If you selected "Other" above, please specify the region
+      placeholder: e.g., International region or specific area
+    validations:
+      required: false
+  
+  - type: textarea
+    id: differences
+    attributes:
+      label: Regional Differences
+      description: Describe any specific differences in the education system that MySchool should account for
+      placeholder: |
+        e.g., 
+        - Different term dates
+        - Different grading systems
+        - Different holidays
+        - Different curriculum structures
+    validations:
+      required: true
+  
+  - type: textarea
+    id: data-sources
+    attributes:
+      label: Data Sources
+      description: Do you know of any official data sources for holidays, term dates, or other regional information?
+      placeholder: |
+        e.g., 
+        - Government education department websites
+        - Official calendars
+        - Public APIs
+    validations:
+      required: false
+  
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency
+      description: How urgently do you need this regional support?
+      options:
+        - Critical - Cannot use MySchool without it
+        - High - Would start using MySchool once available
+        - Medium - Nice to have
+        - Low - Future consideration
+    validations:
+      required: true
+  
+  - type: textarea
+    id: user-base
+    attributes:
+      label: User Base
+      description: Do you know of others who would benefit from this regional support?
+      placeholder: Approximate number of potential users or organizations
+    validations:
+      required: false
+  
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context or information about regional support here.
+      placeholder: Any additional information that might help
+    validations:
+      required: false
