@@ -22,7 +22,7 @@
 
 > **Note:** Currently, MySchool supports **Queensland, Australia** school calendars and term dates (2025-2029).
 > 
-> 📬 Want support for your region? [Create an issue](https://github.com/HSP-Studios/MySchool/issues/new) and we'll implement it!
+> 📬 Want support for your region? [Create an issue](https://github.com/HSP-Studios/MySchool/issues/new?template=region_support.yml) and we'll implement it!
 
 ---
 
