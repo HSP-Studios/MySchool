@@ -10,7 +10,7 @@
   
 *A sleek, intuitive WPF application for displaying student information and resources at a glance.*
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#%EF%B8%8F-architecture) • [Contributing](#-contributing)
+[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#%EF%B8%8F-architecture) • [Contributing](#-contributing) • [Branch Layout](#-branch-layout)
 
 ---
 
@@ -305,6 +305,34 @@ To add support for a new region:
    ```
 3. Update `MySchool.csproj` to include the new file
 4. Submit a pull request with your changes
+
+---
+
+## 🌳 Branch Layout
+
+Understanding our repository's branch structure:
+
+### Branch Types
+
+| Branch Pattern | Purpose | Description |
+|---------------|---------|-------------|
+| **`main`** | Development | The primary development branch. Active development happens here. |
+| **`releases/*`** | Release Source Code | Contains source code for specific releases. Format: `releases/[version]` (e.g., `releases/prototype-1`) |
+| **`testing/*`** | Testing & Validation | Branches for testing new features, optimizations, and experimental changes before merging to main |
+| **`feature/*`** | Feature Development | Branches for developing new features (e.g., `feature/11-add-nsw-vic-sa-wa-nt-act-tas-school-holiday-lists`) |
+| **`copilot/*`** | AI-Assisted Changes | Branches created by GitHub Copilot for automated improvements |
+
+### Finding Release Source Code
+
+Looking for source code of a specific release?
+- Navigate to the `releases/` branches (e.g., `releases/prototype-1`)
+- Or visit the [Releases page](https://github.com/HSP-Studios/MySchool/releases) for compiled binaries
+
+### Branch Workflow
+
+1. **Development**: Active work happens on `main` branch
+2. **Testing**: New features are tested in `testing/*` branches
+3. **Release**: Stable versions are tagged and source code is preserved in `releases/*` branches
 
 ---
 
