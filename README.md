@@ -4,7 +4,7 @@
 [![WPF](https://img.shields.io/badge/WPF-Windows-0078D4?logo=windows)](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
 [![License](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows-00A4EF?logo=windows11)](https://www.microsoft.com/windows)
-<br>
+<br><br>
 
 ### 🎓 Modern Student Information Management System
   
