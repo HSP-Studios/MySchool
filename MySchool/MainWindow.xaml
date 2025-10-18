@@ -11,6 +11,7 @@
         WindowStyle="None"
         ResizeMode="CanResize"
         AllowsTransparency="False"
+        d:DesignHeight="600" d:DesignWidth="928"
         Icon="resources/logo/png/Dark-Icon.png"
         FontFamily="{StaticResource Font.Main}">
     <shell:WindowChrome.WindowChrome>

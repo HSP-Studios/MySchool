@@ -54,7 +54,8 @@ namespace MySchool.Pages
         {
             App.CurrentSettings.IsDarkMode = isDark;
             SettingsService.Save(App.CurrentSettings);
-            ThemeManager.ApplyTheme(isDark);
+            // Apply theme with cross-fade transition (0.5s)
+            ThemeManager.ApplyThemeWithTransition(isDark, 0.5);
         }
     }
 }
