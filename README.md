@@ -10,7 +10,7 @@
   
 *A sleek, intuitive WPF application for displaying student information and resources at a glance.*
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#-architecture) • [Contributing](#-contributing)
+[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#%EF%B8%8F-architecture) • [Contributing](#-contributing)
 
 ---
 
