@@ -23,6 +23,11 @@
         <SolidColorBrush x:Key="Brush.Background" Color="#F5F7FB"/>
         <SolidColorBrush x:Key="Brush.TextPrimary" Color="#0F172A"/>
         <SolidColorBrush x:Key="Brush.TextSecondary" Color="#475569"/>
+        <!-- Lightened text brush for dark mode -->
+        <SolidColorBrush x:Key="Brush.TextPrimaryLighter" Color="#FFFFFF"/>
+
+        <!-- Lightened card background for dark mode -->
+        <SolidColorBrush x:Key="Brush.CardLighter" Color="#2b3242"/>
 
         <!-- Typography helpers -->
         <Style x:Key="Text.Headline" TargetType="TextBlock">
