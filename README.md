@@ -8,7 +8,7 @@
 
 ### 🎓 Modern Student Information Management System
   
-*A sleek, intuitive WPF application for managing and displaying student information at a glance.*
+*A sleek, intuitive WPF application for displaying student information and resources at a glance.*
 
 [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#-architecture) • [Contributing](#-contributing)
 
@@ -16,7 +16,7 @@
 
 ## 📖 About
 
-**MySchool** is a modern Windows desktop application built with WPF (Windows Presentation Foundation) that helps educators and administrators efficiently manage student schedules, class information, and school calendars. With a beautiful, user-friendly interface featuring dark mode support and smooth navigation, MySchool makes educational data management effortless.
+**MySchool** is a modern Windows desktop application built with WPF (Windows Presentation Foundation) that helps students efficiently manage their student schedules, class information, and school calendars. With a beautiful, user-friendly interface featuring dark mode support and smooth navigation, MySchool makes educational data management effortless.
 
 ### 🌏 Regional Support
 
