@@ -74,8 +74,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Search box -->
-
                 <!-- Profile / actions -->
                 <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center"/>
 
