@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -22,8 +23,32 @@ namespace MySchool
             return Color.FromArgb(255, r, g, b);
         }
 
+        private static string _currentTheme = "Light";
+
+        public static string CurrentTheme
+        {
+            get => _currentTheme;
+            private set
+            {
+                if (_currentTheme != value)
+                {
+                    _currentTheme = value;
+                    OnPropertyChanged(nameof(CurrentTheme));
+                }
+            }
+        }
+
+        public static event PropertyChangedEventHandler? PropertyChanged;
+
+        private static void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
+        }
+
         public static void ApplyTheme(bool dark)
         {
+            CurrentTheme = dark ? "Dark" : "Light";
+
             var resources = Application.Current.Resources;
 
             if (dark)

@@ -60,7 +60,22 @@
                 </StackPanel>
 
                 <!-- Center tab icons: Schedule | Home | Settings -->
-                <Border Style="{StaticResource Card}" Grid.Column="2" CornerRadius="18" Padding="6,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{DynamicResource Brush.CardLighter}">
+                <Border Grid.Column="2" CornerRadius="12" Padding="6,2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border.Style>
+                        <Style TargetType="Border" BasedOn="{StaticResource Card}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Static local:ThemeManager.CurrentTheme}}" Value="Dark">
+                                    <Setter Property="Background" Value="{DynamicResource Brush.CardLighter}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Source={x:Static local:ThemeManager.CurrentTheme}}" Value="Light">
+                                    <Setter Property="Background" Value="{DynamicResource Brush.Surface}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.3" />
+                    </Border.Effect>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
                         <Button x:Name="ScheduleTab" Style="{StaticResource CaptionButton}" Click="ScheduleTab_Click" ToolTip="Schedule" Margin="2,0">
                             <TextBlock x:Name="ScheduleTabIcon" FontFamily="Segoe MDL2 Assets" FontSize="14" Text="&#xE163;" Foreground="{DynamicResource Brush.TextPrimaryLighter}"/>
