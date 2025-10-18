@@ -33,7 +33,11 @@ namespace MySchool.Pages
             {
                 DarkModeToggle.IsChecked = App.CurrentSettings.IsDarkMode;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Failed to initialize DarkModeToggle: " + ex);
+                DarkModeToggle.IsChecked = false; // fallback to default
+            }
         }
 
         private void DarkModeToggle_Checked(object sender, RoutedEventArgs e)
