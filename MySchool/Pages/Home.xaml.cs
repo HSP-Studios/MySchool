@@ -81,9 +81,10 @@ namespace MySchool.Pages
                     UpcomingEventsPanel.Children.Add(row);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Swallow any exceptions to avoid breaking UI
+                // Log the exception to help with debugging, but avoid breaking UI
+                System.Diagnostics.Debug.WriteLine($"Exception in TryRenderUpcomingEvents: {ex}");
             }
         }
     }

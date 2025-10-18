@@ -224,9 +224,10 @@ namespace MySchool.Classes
             var fallback = Path.Combine(baseDir, "resources", "data", "holidays", "QLD.json");
             if (File.Exists(fallback)) return fallback;
 
-            // Last resort: absolute path provided in prompt (may only work on author's machine)
-            var promptPath = "C:\\Users\\kevin\\OneDrive - Department of Education\\Documents\\Visual Studio Projects\\MySchool\\MySchool\\resources\\data\\holidays\\QLD.json";
-            return promptPath;
+            // Last resort: check environment variable for custom path
+            var envPath = Environment.GetEnvironmentVariable("QLD_HOLIDAYS_JSON_PATH");
+            if (!string.IsNullOrWhiteSpace(envPath) && File.Exists(envPath)) return envPath;
+            throw new FileNotFoundException("Could not find QLD.json in any known location. Set the QLD_HOLIDAYS_JSON_PATH environment variable to specify a custom path.");
         }
 
         private static string NormalizeTermName(string termKey)
