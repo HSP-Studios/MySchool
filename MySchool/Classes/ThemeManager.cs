@@ -45,10 +45,11 @@ namespace MySchool
                 resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4F46E5"));
                 resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4338CA"));
                 resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#06B6D4"));
-                var bg = (Color)ColorConverter.ConvertFromString("#F5F7FB");
+                // Slightly darker neutral background so surfaces (white) stand out
+                var bg = (Color)ColorConverter.ConvertFromString("#EEF2F7");
                 resources["Brush.Background"] = new SolidColorBrush(bg);
-                var surface = Lighten(bg, 0.12);
-                resources["Brush.Surface"] = new SolidColorBrush(surface);
+                // Use pure white for surfaces (cards/app bar) for clear separation
+                resources["Brush.Surface"] = new SolidColorBrush(Colors.White);
                 resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
                 resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
             }
