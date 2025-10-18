@@ -387,6 +387,6 @@ Special thanks to:
   
   Made with ❤️ by HSP Studios
   
-  [⬆ Back to Top](#myschool)
+  [⬆ Back to Top](https://github.com/HSP-Studios/MySchool/tree/main?tab=readme-ov-file#--myschool-)
   
 </div>
