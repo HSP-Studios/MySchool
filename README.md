@@ -133,6 +133,7 @@ Toggle dark mode in **Settings**:
 - **Move**: Click and drag the title bar area
 
 Note: Window resizing has been disabled for aesthetics. If you would like resizing enabled, feel free to open an issue!
+
 ---
 
 ## 🏗️ Architecture
