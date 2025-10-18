@@ -252,6 +252,7 @@ namespace MySchool.Classes
             return false;
         }
 
+        // unused helper to enumerate each day in a date range
         private static IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
         {
             for (var day = from.Date; day <= thru.Date; day = day.AddDays(1))
