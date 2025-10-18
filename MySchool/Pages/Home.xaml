@@ -9,6 +9,7 @@
       Title="Home"
       Background="{DynamicResource Brush.Background}">
 
+    <!-- Margin="0,0,0,-18" to remove scroll functionality -->
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Margin="0,0,0,-18" Background="Transparent">
         <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
             <!-- Hero Section -->
