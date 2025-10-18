@@ -1,4 +1,4 @@
-# Copilot Instructions for MySchool
+﻿# Copilot Instructions for MySchool
 
 ## Project Overview
 MySchool is a WPF application for managing and displaying student and class information. The main UI and logic reside in `MainWindow.xaml` and `MainWindow.xaml.cs`. Application-level configuration is handled in `App.xaml` and `App.xaml.cs`.
