@@ -1,20 +1,15 @@
-<div align="center">
-  <img src="MySchool/resources/logo/png/Dark-Icon.png" alt="MySchool Logo" width="150" height="150">
+<h1> <p "font-size:200px;"> <img align="left" src="https://github.com/HSP-Studios/MySchool/blob/main/MySchool/resources/logo/png/Dark-Icon.png" alt="" width="125">MySchool</p> </h1>
+
+### 🎓 Modern Student Information Management System
   
-  # MySchool
-  
-  ### 🎓 Modern Student & Class Information Management System
-  
-  [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
-  [![WPF](https://img.shields.io/badge/WPF-Windows-0078D4?logo=windows)](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
-  [![License](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
-  [![Platform](https://img.shields.io/badge/Platform-Windows-00A4EF?logo=windows11)](https://www.microsoft.com/windows)
-  
-  *A sleek, intuitive WPF application for managing and displaying student and class information at a glance.*
-  
-  [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#-architecture) • [Contributing](#-contributing)
-  
-</div>
+[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
+[![WPF](https://img.shields.io/badge/WPF-Windows-0078D4?logo=windows)](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
+[![License](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows-00A4EF?logo=windows11)](https://www.microsoft.com/windows)
+
+*A sleek, intuitive WPF application for managing and displaying student information at a glance.*
+
+[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#-architecture) • [Contributing](#-contributing)
 
 ---
 
