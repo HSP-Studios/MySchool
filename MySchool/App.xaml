@@ -8,9 +8,11 @@
         <!-- Reference the embedded font file explicitly and use its internal family name -->
         <FontFamily x:Key="Font.Main">pack://application:,,,/MySchool;component/resources/fonts/SF-Pro.ttf#SF Pro</FontFamily>
 
-        <!-- Default TextBlock font so pages without explicit styles still use the app font -->
+        <!-- Default TextBlock font and color so pages without explicit styles still use the app font and themed text color -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+            <!-- Use DynamicResource because Brush.TextPrimary is defined later in this dictionary -->
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         </Style>
 
         <!-- Color palette -->
@@ -27,37 +29,37 @@
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         </Style>
         <Style x:Key="Text.Title" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         </Style>
         <Style x:Key="Text.Body" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="{StaticResource Brush.TextSecondary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
         <!-- Cards -->
         <Style x:Key="Card" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource Brush.Surface}"/>
+            <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
             <Setter Property="CornerRadius" Value="12"/>
             <Setter Property="Padding" Value="16"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.08"/>
+                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.14"/>
                 </Setter.Value>
             </Setter>
         </Style>
 
         <!-- Buttons -->
         <Style x:Key="Button.Primary" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource Brush.Primary}"/>
+            <Setter Property="Background" Value="{DynamicResource Brush.Primary}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Padding" Value="14,8"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -73,7 +75,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource Brush.PrimaryDark}"/>
+                                <Setter Property="Background" Value="{DynamicResource Brush.PrimaryDark}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.6"/>
@@ -86,13 +88,13 @@
 
         <Style x:Key="Button.Secondary" TargetType="Button" BasedOn="{StaticResource Button.Primary}">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource Brush.Primary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.Primary}"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Bd" Background="{TemplateBinding Background}"
-                                BorderBrush="{StaticResource Brush.Primary}"
+                                BorderBrush="{DynamicResource Brush.Primary}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="8">
                             <ContentPresenter HorizontalAlignment="Center"
@@ -100,8 +102,8 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Border.BorderBrush" Value="{StaticResource Brush.PrimaryDark}"/>
-                                <Setter Property="Foreground" Value="{StaticResource Brush.PrimaryDark}"/>
+                                <Setter TargetName="Bd" Property="Border.BorderBrush" Value="{DynamicResource Brush.PrimaryDark}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource Brush.PrimaryDark}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.6"/>
@@ -116,7 +118,7 @@
         <Style x:Key="Icon" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="{StaticResource Brush.Primary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.Primary}"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
@@ -127,7 +129,7 @@
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -148,7 +150,7 @@
             </Setter>
         </Style>
         <Style x:Key="CaptionButton.Close" TargetType="Button" BasedOn="{StaticResource CaptionButton}">
-            <Setter Property="Foreground" Value="{StaticResource Brush.TextPrimary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -189,7 +191,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Thumb">
-                        <Border x:Name="ThumbBd" CornerRadius="5" Background="{StaticResource Brush.Primary}" Opacity="0.7"/>
+                        <Border x:Name="ThumbBd" CornerRadius="5" Background="{DynamicResource Brush.Primary}" Opacity="0.7"/>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ThumbBd" Property="Opacity" Value="0.95"/>

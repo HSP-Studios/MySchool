@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows;
 using System;
 using System.IO;
+using System.Text.Json;
 
 namespace MySchool
 {
@@ -11,6 +12,8 @@ namespace MySchool
     /// </summary>
     public partial class App : Application
     {
+        public static UserSettings CurrentSettings { get; private set; } = new UserSettings();
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -23,6 +26,10 @@ namespace MySchool
                 {
                     Directory.CreateDirectory(mySchoolPath);
                 }
+
+                // Load settings and apply theme
+                CurrentSettings = SettingsService.Load();
+                ThemeManager.ApplyTheme(CurrentSettings.IsDarkMode);
             }
             catch
             {
