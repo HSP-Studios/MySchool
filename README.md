@@ -5,7 +5,6 @@
 [![License](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows-00A4EF?logo=windows11)](https://www.microsoft.com/windows)
 
-<br>
 
 ### 🎓 Modern Student Information Management System
   
