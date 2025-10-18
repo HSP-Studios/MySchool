@@ -74,16 +74,6 @@ MySchool/
     └── MySchool.csproj          # Project configuration file
 ```
 
-### 📋 Key Files Explained
-
-- **`MainWindow.xaml/cs`**: The main application window with custom title bar, tab navigation, and frame-based page routing
-- **`App.xaml/cs`**: Global application resources, theme definitions, and startup logic
-- **`ThemeManager.cs`**: Handles dynamic theme switching between light and dark modes
-- **`SettingsService.cs`**: Manages user preferences using JSON serialization to `%AppData%/MySchool/`
-- **`QLD.json`**: Structured data containing Queensland school term dates, holidays, and staff development days
-
----
-
 ## 🚀 Installation
 
 ### Prerequisites
@@ -94,10 +84,9 @@ MySchool/
 
 ### Quick Start
 
-#### Option 1: Download Pre-built Release (Coming Soon)
+#### Option 1: Download Pre-built Release
 1. Navigate to the [Releases](https://github.com/HSP-Studios/MySchool/releases) page
-2. Download the latest `MySchool-v*.zip`
-3. Extract and run `MySchool.exe`
+2. Download the latest `MySchool-v*.exe` self-extracting archive
 
 #### Option 2: Build from Source
 
@@ -130,31 +119,6 @@ When you first launch MySchool:
 2. Default settings are created in `%AppData%/MySchool/user_settings.json`
 3. Light theme is enabled by default
 
-### Navigation
-
-<table>
-  <tr>
-    <th>Tab</th>
-    <th>Description</th>
-    <th>Keyboard Shortcut</th>
-  </tr>
-  <tr>
-    <td>🏠 <strong>Home</strong></td>
-    <td>Dashboard with overview of current information</td>
-    <td><code>Alt + H</code></td>
-  </tr>
-  <tr>
-    <td>📅 <strong>Schedule</strong></td>
-    <td>View and manage class schedules</td>
-    <td><code>Alt + S</code></td>
-  </tr>
-  <tr>
-    <td>⚙️ <strong>Settings</strong></td>
-    <td>Customize preferences and toggle dark mode</td>
-    <td><code>Alt + T</code></td>
-  </tr>
-</table>
-
 ### Dark Mode
 
 Toggle dark mode in **Settings**:
@@ -165,10 +129,10 @@ Toggle dark mode in **Settings**:
 ### Window Controls
 
 - **Minimize**: Click the minimize button (—) in the top-right
-- **Maximize/Restore**: Click the maximize button (□) in the top-right
 - **Close**: Click the close button (✕) in the top-right
 - **Move**: Click and drag the title bar area
 
+Note: Window resizing has been disabled for aesthetics. If you would like resizing enabled, feel free to open an issue!
 ---
 
 ## 🏗️ Architecture
@@ -195,12 +159,12 @@ MySchool uses a **Code-Behind Pattern** with the following structure:
 └──────────────┬──────────────────────┘
                │ Hosts Frame
                ▼
-┌──────────────────────────────────────┐
-│          Page Navigation             │
-│  ┌─────────┐ ┌──────────┐ ┌───────┐ │
-│  │  Home   │ │ Schedule │ │Setting│ │
-│  └─────────┘ └──────────┘ └───────┘ │
-└──────────────┬───────────────────────┘
+┌───────────────────────────────────────┐
+│           Page Navigation             │
+│  ┌─────────┐ ┌──────────┐ ┌────────┐  │
+│  │  Home   │ │ Schedule │ │Settings│  │
+│  └─────────┘ └──────────┘ └────────┘  │
+└──────────────┬────────────────────────┘
                │ Uses Services
                ▼
 ┌──────────────────────────────────────┐
@@ -221,7 +185,7 @@ MySchool uses a **Code-Behind Pattern** with the following structure:
 
 ### Custom UI Components
 
-- **Custom Window Chrome**: Frameless window with custom title bar and controls
+- **Custom Window**: Frameless window with custom title bar and controls
 - **Themed Scrollbars**: Rounded, modern scrollbars matching the application theme
 - **Icon Buttons**: Using Segoe MDL2 Assets for consistent Windows-native icons
 - **Smooth Navigation**: Frame-based page transitions without flickering
@@ -292,6 +256,7 @@ The application is configured in `MySchool.csproj`:
 > - Unit tests for business logic (SettingsService, ThemeManager, HolidayLogic)
 > - Integration tests for page navigation
 > - UI automation tests
+> - A GitHub actions workflow for build verification
 
 ---
 
@@ -364,10 +329,25 @@ See the [LICENSE](LICENSE) file for the full license text.
 
 ---
 
-## 👥 Authors & Maintainers
+## 👥 Contributors
 
-**HSP Studios**
-- GitHub: [@HSP-Studios](https://github.com/HSP-Studios)
+### HSP Studios
+**Development Team**
+- [@HighSchoolProgrammer](https://github.com/HighSchoolProgrammer)
+
+**Design Team**
+- [@HighSchoolProgrammer](https://github.com/HighSchoolProgrammer)
+
+**Translation Team**
+- [@HighSchoolProgrammer](https://github.com/HighSchoolProgrammer)
+- [@VivianZZz0](https://github.com/VivianZZz0)
+
+**App Tester Team**
+- [@HighSchoolProgrammer](https://github.com/HighSchoolProgrammer)
+- [@VivianZZz0](https://github.com/VivianZZz0)
+
+### Other Contributors
+- None yet ;)
 
 ---
 
@@ -383,14 +363,11 @@ See the [LICENSE](LICENSE) file for the full license text.
 ### Roadmap
 
 Future planned features:
-- [ ] Student database management
-- [ ] Class attendance tracking  
-- [ ] Grade/assessment recording
-- [ ] Report generation
+- [ ] Quick Notes
+- [ ] Report predictor
 - [ ] Multi-region support (NSW, VIC, SA, etc.)
 - [ ] Export/import functionality
 - [ ] Cloud synchronization
-- [ ] Mobile companion app
 
 ---
 
