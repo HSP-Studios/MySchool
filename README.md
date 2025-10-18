@@ -1,4 +1,5 @@
 <h1> <p "font-size:200px;"> <img align="left" src="https://github.com/HSP-Studios/MySchool/blob/main/MySchool/resources/logo/png/Dark-Icon.png" alt="" width="125">MySchool</p> </h1>
+<br><br><br>
 
 ### 🎓 Modern Student Information Management System
   
