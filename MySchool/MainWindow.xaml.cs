@@ -75,7 +75,7 @@ namespace MySchool
 
         private void HomeTab_Click(object sender, RoutedEventArgs e)
         {
-            if (ContentFrame != null)
+            if (ContentFrame != null && ContentFrame.Content?.GetType() != typeof(Home))
             {
                 PageTransition.AnimatePageTransition(ContentFrame, new Home(), 0.3);
             }
@@ -84,7 +84,7 @@ namespace MySchool
 
         private void ScheduleTab_Click(object sender, RoutedEventArgs e)
         {
-            if (ContentFrame != null)
+            if (ContentFrame != null && ContentFrame.Content?.GetType() != typeof(Schedule))
             {
                 PageTransition.AnimatePageTransition(ContentFrame, new Schedule(), 0.3);
             }
@@ -93,7 +93,7 @@ namespace MySchool
 
         private void SettingsTab_Click(object sender, RoutedEventArgs e)
         {
-            if (ContentFrame != null)
+            if (ContentFrame != null && ContentFrame.Content?.GetType() != typeof(Settings))
             {
                 PageTransition.AnimatePageTransition(ContentFrame, new Settings(), 0.3);
             }
