@@ -86,8 +86,16 @@
             </StackPanel>
 
             <!-- Step 2: AI Parsing (initially hidden) -->
-            <StackPanel x:Name="AiParsingPanel" Grid.Row="1" Grid.RowSpan="5" Visibility="Collapsed">
-                <TextBlock Style="{StaticResource Text.Body}" Margin="0,0,0,12" TextWrapping="Wrap">
+            <Grid x:Name="AiParsingPanel" Grid.Row="1" Grid.RowSpan="5" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Style="{StaticResource Text.Body}" Margin="0,0,0,12" TextWrapping="Wrap">
                     <Run Text="Step 2: Copy the prompt below and paste it into ChatGPT, Claude, or any AI assistant."/>
                     <LineBreak/>
                     <Run Text="Step 3: Follow the AI's instructions to provide your timetable information."/>
@@ -95,68 +103,68 @@
                     <Run Text="Step 4: Copy the AI's JSON response and paste it in the box below."/>
                 </TextBlock>
 
-            <!-- Prompt Display -->
-            <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,0,0,12">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    
-                    <Grid Grid.Row="0" Margin="0,0,0,8">
-                        <TextBlock Text="Prompt for AI Assistant" Style="{StaticResource Text.Title}"/>
-                        <Button x:Name="CopyPromptButton" 
-                                Style="{StaticResource Button.Secondary}" 
-                                Content="Copy Prompt" 
-                                HorizontalAlignment="Right"
-                                Padding="12,6"
-                                Click="CopyPromptButton_Click"/>
-                    </Grid>
+                <!-- Prompt Display -->
+                <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0,0,0,12" MaxHeight="150">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Grid.Row="0" Margin="0,0,0,8">
+                            <TextBlock Text="Prompt for AI Assistant" Style="{StaticResource Text.Title}"/>
+                            <Button x:Name="CopyPromptButton" 
+                                    Style="{StaticResource Button.Secondary}" 
+                                    Content="Copy Prompt" 
+                                    HorizontalAlignment="Right"
+                                    Padding="12,6"
+                                    Click="CopyPromptButton_Click"/>
+                        </Grid>
 
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="150">
-                        <TextBox x:Name="PromptTextBox" 
-                                 IsReadOnly="True" 
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <TextBox x:Name="PromptTextBox" 
+                                     IsReadOnly="True" 
+                                     TextWrapping="Wrap"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     FontSize="12"
+                                     Foreground="{DynamicResource Brush.TextSecondary}"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Label for response input -->
+                <TextBlock Grid.Row="2" Text="Paste AI Response (JSON only)" Style="{StaticResource Text.Title}" Margin="0,8,0,8"/>
+
+                <!-- Response Input -->
+                <Border Grid.Row="3" Style="{StaticResource Card}" Margin="0,0,0,12">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBox x:Name="ResponseTextBox" 
                                  TextWrapping="Wrap"
+                                 AcceptsReturn="True"
                                  BorderThickness="0"
                                  Background="Transparent"
+                                 FontFamily="Consolas"
                                  FontSize="12"
-                                 Foreground="{DynamicResource Brush.TextSecondary}"/>
+                                 Foreground="{DynamicResource Brush.TextPrimary}"
+                                 MinHeight="100"/>
                     </ScrollViewer>
-                </Grid>
-            </Border>
+                </Border>
 
-            <!-- Label for response input -->
-            <TextBlock Grid.Row="3" Text="Paste AI Response (JSON only)" Style="{StaticResource Text.Title}" Margin="0,8,0,8"/>
-
-            <!-- Response Input -->
-            <Border Grid.Row="4" Style="{StaticResource Card}" Margin="0,0,0,12">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <TextBox x:Name="ResponseTextBox" 
-                             TextWrapping="Wrap"
-                             AcceptsReturn="True"
-                             BorderThickness="0"
-                             Background="Transparent"
-                             FontFamily="Consolas"
-                             FontSize="12"
-                             Foreground="{DynamicResource Brush.TextPrimary}"
-                             MinHeight="100"/>
-                </ScrollViewer>
-            </Border>
-
-            <!-- Action Buttons -->
-            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource Button.Secondary}" 
-                        Content="Back" 
-                        Padding="16,8"
-                        Margin="0,0,8,0"
-                        Click="BackButton_Click"/>
-                <Button x:Name="SaveButton" 
-                        Style="{StaticResource Button.Primary}" 
-                        Content="Save Timetable" 
-                        Padding="16,8"
-                        Click="SaveButton_Click"/>
-            </StackPanel>
-            </StackPanel>
+                <!-- Action Buttons -->
+                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource Button.Secondary}" 
+                            Content="Back" 
+                            Padding="16,8"
+                            Margin="0,0,8,0"
+                            Click="BackButton_Click"/>
+                    <Button x:Name="SaveButton" 
+                            Style="{StaticResource Button.Primary}" 
+                            Content="Save Timetable" 
+                            Padding="16,8"
+                            Click="SaveButton_Click"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Border>
 </Window>
