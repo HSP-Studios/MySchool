@@ -114,38 +114,79 @@ namespace MySchool.Pages
         private void SetWeatherGradient(string condition)
         {
             Color startColor, endColor;
+            bool isDarkMode = App.CurrentSettings.IsDarkMode;
 
             switch (condition.ToLower())
             {
                 case "clear":
                     // Sunny gradient (yellow to orange)
-                    startColor = (Color)ColorConverter.ConvertFromString("#F59E0B");
-                    endColor = (Color)ColorConverter.ConvertFromString("#F97316");
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#D97706");
+                        endColor = (Color)ColorConverter.ConvertFromString("#DC2626");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#F59E0B");
+                        endColor = (Color)ColorConverter.ConvertFromString("#F97316");
+                    }
                     break;
 
                 case "clouds":
-                    // Cloudy gradient (light gray to muted blue-gray)
-                    startColor = (Color)ColorConverter.ConvertFromString("#D1D5DB");
-                    endColor = (Color)ColorConverter.ConvertFromString("#94A3B8");
+                    // Cloudy gradient
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#6B7280");
+                        endColor = (Color)ColorConverter.ConvertFromString("#475569");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#D1D5DB");
+                        endColor = (Color)ColorConverter.ConvertFromString("#94A3B8");
+                    }
                     break;
 
                 case "rain":
                 case "drizzle":
-                    // Rainy gradient (dark blue to blue)
-                    startColor = (Color)ColorConverter.ConvertFromString("#1E40AF");
-                    endColor = (Color)ColorConverter.ConvertFromString("#3B82F6");
+                    // Rainy gradient
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#1E3A8A");
+                        endColor = (Color)ColorConverter.ConvertFromString("#1E40AF");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#1E40AF");
+                        endColor = (Color)ColorConverter.ConvertFromString("#3B82F6");
+                    }
                     break;
 
                 case "snow":
-                    // Snowy gradient (light blue to white-blue)
-                    startColor = (Color)ColorConverter.ConvertFromString("#DBEAFE");
-                    endColor = (Color)ColorConverter.ConvertFromString("#93C5FD");
+                    // Snowy gradient
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#60A5FA");
+                        endColor = (Color)ColorConverter.ConvertFromString("#3B82F6");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#DBEAFE");
+                        endColor = (Color)ColorConverter.ConvertFromString("#93C5FD");
+                    }
                     break;
 
                 case "thunderstorm":
-                    // Storm gradient (dark purple to gray)
-                    startColor = (Color)ColorConverter.ConvertFromString("#4C1D95");
-                    endColor = (Color)ColorConverter.ConvertFromString("#6B7280");
+                    // Storm gradient
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#3730A3");
+                        endColor = (Color)ColorConverter.ConvertFromString("#374151");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#4C1D95");
+                        endColor = (Color)ColorConverter.ConvertFromString("#6B7280");
+                    }
                     break;
 
                 default:
