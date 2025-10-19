@@ -124,9 +124,9 @@ namespace MySchool.Pages
                     break;
 
                 case "clouds":
-                    // Cloudy gradient (light gray to blue)
+                    // Cloudy gradient (light gray to muted blue-gray)
                     startColor = (Color)ColorConverter.ConvertFromString("#D1D5DB");
-                    endColor = (Color)ColorConverter.ConvertFromString("#60A5FA");
+                    endColor = (Color)ColorConverter.ConvertFromString("#94A3B8");
                     break;
 
                 case "rain":
