@@ -8,6 +8,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>resources\logo\ico\Dark-Icon.ico</ApplicationIcon>
+
+    <!-- Versioning -->
+	<Version>v1.0.0-beta2</Version>
+	  
   </PropertyGroup>
   
   <ItemGroup>
