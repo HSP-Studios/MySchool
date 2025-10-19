@@ -212,6 +212,13 @@ namespace MySchool.Pages
         {
             try
             {
+                // Check if both textboxes are initialized
+                if (HourTextBox == null || MinuteTextBox == null)
+                    return;
+
+                if (string.IsNullOrWhiteSpace(HourTextBox.Text) || string.IsNullOrWhiteSpace(MinuteTextBox.Text))
+                    return;
+
                 if (int.TryParse(HourTextBox.Text, out int hour) && 
                     int.TryParse(MinuteTextBox.Text, out int minute) &&
                     hour >= 0 && hour < 24 && minute >= 0 && minute < 60)
