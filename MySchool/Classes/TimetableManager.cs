@@ -59,6 +59,7 @@ namespace MySchool.Classes
             }
             catch
             {
+                // Intentionally catch all exceptions and return null if unable to retrieve the latest timetable PDF.
                 return null;
             }
         }
