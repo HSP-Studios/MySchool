@@ -43,6 +43,8 @@ namespace MySchool.Classes
             }
             catch
             {
+                // Catch all exceptions and return null to indicate location could not be obtained.
+                // This may occur due to denied permissions, unavailable location, or other errors.
                 return null;
             }
         }
