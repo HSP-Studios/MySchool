@@ -48,12 +48,13 @@ namespace MySchool.Pages
                 // Adjust greeting border margin to expand left
                 GreetingBorder.Margin = new Thickness(0, 0, 20, 0);
                 
-                // Show weekend content in right section
+                // Update center greeting for weekend
+                MainGreeting.Text = today == DayOfWeek.Saturday ? "Happy Saturday!" : "Happy Sunday!";
+                
+                // Show weekend content in right section (sigma1 placeholder)
                 NextClassPanel.Visibility = Visibility.Collapsed;
                 WeekendPanel.Visibility = Visibility.Visible;
-                
-                // Update weekend greeting based on day
-                WeekendGreeting.Text = today == DayOfWeek.Saturday ? "Happy Saturday!" : "Happy Sunday!";
+                WeekendGreeting.Text = "sigma1";
             }
             else
             {
@@ -63,6 +64,9 @@ namespace MySchool.Pages
                 
                 // Normal greeting border margin
                 GreetingBorder.Margin = new Thickness(20, 0, 20, 0);
+                
+                // Weekday greeting
+                MainGreeting.Text = "Hey Kevin!";
                 
                 // Show next class content in right section
                 NextClassPanel.Visibility = Visibility.Visible;

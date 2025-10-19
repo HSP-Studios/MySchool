@@ -53,7 +53,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Center" Text="Hey Kevin!" VerticalAlignment="Center" FontSize="48"/>
+                        <TextBlock x:Name="MainGreeting" Grid.Column="0" Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Center" Text="Hey Kevin!" VerticalAlignment="Center" FontSize="48"/>
                         <!-- Windows Hello smile/emoji icon -->
                         <TextBlock Grid.Column="1"
                                    Foreground="White"
