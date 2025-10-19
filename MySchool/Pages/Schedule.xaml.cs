@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySchool.Classes;
+using Microsoft.Web.WebView2.Core;
 
 namespace MySchool.Pages
 {
@@ -45,8 +46,20 @@ namespace MySchool.Pages
                     NoTimetablePanel.Visibility = Visibility.Collapsed;
                     PdfViewer.Visibility = Visibility.Visible;
                     
-                    // Ensure WebView2 is initialized
-                    await PdfViewer.EnsureCoreWebView2Async();
+                    // Set up WebView2 environment with user data folder in AppData
+                    string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    string webViewDataPath = System.IO.Path.Combine(appData, "MySchool", "WebView2");
+                    
+                    if (!Directory.Exists(webViewDataPath))
+                    {
+                        Directory.CreateDirectory(webViewDataPath);
+                    }
+                    
+                    var environment = await CoreWebView2Environment.CreateAsync(
+                        userDataFolder: webViewDataPath);
+                    
+                    // Ensure WebView2 is initialized with custom environment
+                    await PdfViewer.EnsureCoreWebView2Async(environment);
                     
                     // Navigate to the PDF file
                     PdfViewer.Source = new Uri(pdfPath);
