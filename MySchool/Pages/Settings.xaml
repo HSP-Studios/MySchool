@@ -83,6 +83,41 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Text.Title}" Text="About" Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Vertical" Margin="0,4,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBlock Text="Version:" 
+                                       Style="{StaticResource Text.Body}" 
+                                       FontWeight="SemiBold"
+                                       Width="100"/>
+                            <TextBlock x:Name="VersionText" 
+                                       Text="Loading..." 
+                                       Style="{StaticResource Text.Body}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBlock Text="Build Number:" 
+                                       Style="{StaticResource Text.Body}" 
+                                       FontWeight="SemiBold"
+                                       Width="100"/>
+                            <TextBlock x:Name="BuildNumberText" 
+                                       Text="Loading..." 
+                                       Style="{StaticResource Text.Body}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Build Date:" 
+                                       Style="{StaticResource Text.Body}" 
+                                       FontWeight="SemiBold"
+                                       Width="100"/>
+                            <TextBlock x:Name="BuildDateText" 
+                                       Text="Loading..." 
+                                       Style="{StaticResource Text.Body}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -1,0 +1,35 @@
+<Project>
+  <Target Name="GenerateBuildNumber" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <BuildYear>$([System.DateTime]::Now.ToString('yy'))</BuildYear>
+      <BuildMonth>$([System.DateTime]::Now.ToString('MM'))</BuildMonth>
+      <BuildDay>$([System.DateTime]::Now.ToString('dd'))</BuildDay>
+      <BuildRandom>$([System.String]::Format('{0:D4}', $([MSBuild]::Modulo($([System.DateTime]::Now.Ticks), 9999))))</BuildRandom>
+      <BuildNumber>$(BuildYear)$(BuildMonth)$(BuildDay)$(BuildRandom)</BuildNumber>
+      <BuildInfoPath>$(IntermediateOutputPath)BuildInfo.cs</BuildInfoPath>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <BuildInfoContent>
+// This file is auto-generated during build. Do not edit manually.
+namespace MySchool.Generated
+{
+    internal static class BuildInfo
+    {
+        public const string BuildNumber = "$(BuildNumber)"%3b
+        public const string Version = "$(Version)"%3b
+        public const string BuildDate = "$(BuildYear)-$(BuildMonth)-$(BuildDay)"%3b
+    }
+}
+      </BuildInfoContent>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(IntermediateOutputPath)" />
+    <WriteLinesToFile File="$(BuildInfoPath)" Lines="$(BuildInfoContent)" Overwrite="true" />
+    <ItemGroup>
+      <Compile Include="$(BuildInfoPath)" />
+    </ItemGroup>
+
+    <Message Text="Generated build number: $(BuildNumber)" Importance="high" />
+  </Target>
+</Project>
