@@ -61,17 +61,27 @@ namespace MySchool.Classes
                 
                 var address = json.RootElement.GetProperty("address");
                 
+                string locationName = "Unknown Location";
+                
                 // Try to get city, town, or village
                 if (address.TryGetProperty("city", out var city))
-                    return city.GetString() ?? "Unknown Location";
-                if (address.TryGetProperty("town", out var town))
-                    return town.GetString() ?? "Unknown Location";
-                if (address.TryGetProperty("village", out var village))
-                    return village.GetString() ?? "Unknown Location";
-                if (address.TryGetProperty("suburb", out var suburb))
-                    return suburb.GetString() ?? "Unknown Location";
+                    locationName = city.GetString() ?? "Unknown Location";
+                else if (address.TryGetProperty("town", out var town))
+                    locationName = town.GetString() ?? "Unknown Location";
+                else if (address.TryGetProperty("village", out var village))
+                    locationName = village.GetString() ?? "Unknown Location";
+                else if (address.TryGetProperty("suburb", out var suburb))
+                    locationName = suburb.GetString() ?? "Unknown Location";
                 
-                return "Unknown Location";
+                // Clean up common suffixes
+                locationName = locationName
+                    .Replace(" City", "", StringComparison.OrdinalIgnoreCase)
+                    .Replace(" Council", "", StringComparison.OrdinalIgnoreCase)
+                    .Replace(" Municipality", "", StringComparison.OrdinalIgnoreCase)
+                    .Replace(" Region", "", StringComparison.OrdinalIgnoreCase)
+                    .Trim();
+                
+                return locationName;
             }
             catch
             {
