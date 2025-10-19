@@ -22,6 +22,7 @@ namespace MySchool.Pages
     public partial class Home : Page
     {
         private static bool hasLoadedWeather = false;
+        private static WeatherData? cachedWeather = null;
 
         public Home()
         {
@@ -35,11 +36,16 @@ namespace MySchool.Pages
             TryRenderUpcomingEvents();
             LoadCurrentAndNextClass();
             
-            // Only load weather once per app session
+            // Load weather once or display cached data
             if (!hasLoadedWeather)
             {
                 await LoadWeatherIfWeekendAsync();
                 hasLoadedWeather = true;
+            }
+            else if (cachedWeather != null)
+            {
+                // Display cached weather data
+                DisplayWeatherData(cachedWeather);
             }
         }
 
@@ -99,45 +105,39 @@ namespace MySchool.Pages
 
                 if (weather != null)
                 {
-                    WeatherTemperature.Text = $"{Math.Round(weather.Temperature)}°";
-                    WeatherDescription.Text = char.ToUpper(weather.Description[0]) + weather.Description.Substring(1);
-                    
-                    // Update gradient based on weather condition
-                    SetWeatherGradient(weather.Condition);
+                    cachedWeather = weather;
+                    DisplayWeatherData(weather);
                 }
                 else
                 {
                     WeatherTemperature.Text = "--°";
                     WeatherDescription.Text = "Unable to load weather";
+                    WeatherLocationLabel.Text = "Weather";
                 }
-
-                // Update location label
-                UpdateWeatherLocationLabel();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Failed to load weather: {ex.Message}");
                 WeatherTemperature.Text = "--°";
                 WeatherDescription.Text = "Weather unavailable";
-                UpdateWeatherLocationLabel();
+                WeatherLocationLabel.Text = "Weather";
             }
+        }
+
+        private void DisplayWeatherData(WeatherData weather)
+        {
+            WeatherTemperature.Text = $"{Math.Round(weather.Temperature)}°";
+            WeatherDescription.Text = char.ToUpper(weather.Description[0]) + weather.Description.Substring(1);
+            WeatherLocationLabel.Text = weather.LocationName;
+            
+            // Update gradient based on weather condition
+            SetWeatherGradient(weather.Condition);
         }
 
         private void UpdateWeatherLocationLabel()
         {
-            // Update the weather location label
-            if (App.CurrentSettings.WeatherLocation.HasValue)
-            {
-                // Use manual location name if available
-                var locationName = string.IsNullOrWhiteSpace(App.CurrentSettings.WeatherLocationName)
-                    ? "Custom Location"
-                    : App.CurrentSettings.WeatherLocationName;
-                WeatherLocationLabel.Text = locationName;
-            }
-            else
-            {
-                WeatherLocationLabel.Text = "Your Location";
-            }
+            // This method is no longer needed as location comes from WeatherData
+            // Keeping for backwards compatibility but it won't be called
         }
 
         private void SetWeatherGradient(string condition)

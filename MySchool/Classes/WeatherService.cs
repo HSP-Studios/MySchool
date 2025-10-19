@@ -12,12 +12,14 @@ namespace MySchool.Classes
         public double Temperature { get; set; }
         public int WeatherCode { get; set; }
         public string Condition { get; set; } = string.Empty; // Clear, Clouds, Rain, Snow, etc.
+        public string LocationName { get; set; } = string.Empty;
     }
 
     public static class WeatherService
     {
         private static readonly HttpClient httpClient = new HttpClient();
         private const string ApiUrl = "https://api.open-meteo.com/v1/forecast";
+        private const string GeocodingUrl = "https://geocoding-api.open-meteo.com/v1/search";
 
         public static async Task<(double latitude, double longitude)?> GetLocationAsync()
         {
@@ -45,6 +47,38 @@ namespace MySchool.Classes
             }
         }
 
+        public static async Task<string> GetLocationNameAsync(double latitude, double longitude)
+        {
+            try
+            {
+                // Use reverse geocoding to get location name
+                var url = $"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}&zoom=10";
+                httpClient.DefaultRequestHeaders.UserAgent.Clear();
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("MySchool/1.0");
+                
+                var response = await httpClient.GetStringAsync(url);
+                var json = JsonDocument.Parse(response);
+                
+                var address = json.RootElement.GetProperty("address");
+                
+                // Try to get city, town, or village
+                if (address.TryGetProperty("city", out var city))
+                    return city.GetString() ?? "Unknown Location";
+                if (address.TryGetProperty("town", out var town))
+                    return town.GetString() ?? "Unknown Location";
+                if (address.TryGetProperty("village", out var village))
+                    return village.GetString() ?? "Unknown Location";
+                if (address.TryGetProperty("suburb", out var suburb))
+                    return suburb.GetString() ?? "Unknown Location";
+                
+                return "Unknown Location";
+            }
+            catch
+            {
+                return "Unknown Location";
+            }
+        }
+
         public static async Task<WeatherData?> GetWeatherAsync(double latitude, double longitude)
         {
             try
@@ -58,13 +92,17 @@ namespace MySchool.Classes
                 var weatherCode = current.GetProperty("weather_code").GetInt32();
 
                 var (description, condition) = GetWeatherDescription(weatherCode);
+                
+                // Get location name
+                var locationName = await GetLocationNameAsync(latitude, longitude);
 
                 return new WeatherData
                 {
                     Temperature = temperature,
                     WeatherCode = weatherCode,
                     Description = description,
-                    Condition = condition
+                    Condition = condition,
+                    LocationName = locationName
                 };
             }
             catch
@@ -79,7 +117,12 @@ namespace MySchool.Classes
             var savedLocation = App.CurrentSettings.WeatherLocation;
             if (savedLocation.HasValue)
             {
-                return await GetWeatherAsync(savedLocation.Value.latitude, savedLocation.Value.longitude);
+                var weather = await GetWeatherAsync(savedLocation.Value.latitude, savedLocation.Value.longitude);
+                if (weather != null && !string.IsNullOrWhiteSpace(App.CurrentSettings.WeatherLocationName))
+                {
+                    weather.LocationName = App.CurrentSettings.WeatherLocationName;
+                }
+                return weather;
             }
 
             // Fall back to device location
