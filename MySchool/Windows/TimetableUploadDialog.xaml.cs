@@ -243,9 +243,9 @@ namespace MySchool.Windows
             {
                 foreach (var period in day.Periods)
                 {
-                    if (shortenedNames.ContainsKey(period.Subject))
+                    if (!string.IsNullOrWhiteSpace(period.Subject) && shortenedNames.TryGetValue(period.Subject, out var shortened))
                     {
-                        period.Subject = shortenedNames[period.Subject];
+                        period.Subject = shortened;
                     }
                 }
             }
