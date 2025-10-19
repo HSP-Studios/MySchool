@@ -35,6 +35,8 @@ namespace MySchool.Classes
             }
             catch
             {
+                // Intentionally catch all exceptions to ensure the application continues
+                // gracefully if there are any issues accessing the timetables directory or files.
                 return new List<string>();
             }
         }
