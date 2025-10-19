@@ -41,14 +41,59 @@
                 </Button>
             </Grid>
 
-            <!-- Instructions -->
-            <TextBlock Grid.Row="1" Style="{StaticResource Text.Body}" Margin="0,0,0,12" TextWrapping="Wrap">
-                <Run Text="Step 1: Copy the prompt below and paste it into ChatGPT, Claude, or any AI assistant."/>
-                <LineBreak/>
-                <Run Text="Step 2: Follow the AI's instructions to provide your timetable information."/>
-                <LineBreak/>
-                <Run Text="Step 3: Copy the AI's JSON response and paste it in the box below."/>
-            </TextBlock>
+            <!-- Step 1: PDF Upload -->
+            <StackPanel x:Name="PdfUploadPanel" Grid.Row="1" Grid.RowSpan="5" Visibility="Visible">
+                <TextBlock Style="{StaticResource Text.Body}" Margin="0,0,0,16" TextWrapping="Wrap">
+                    <Run Text="Step 1: Upload your timetable PDF file"/>
+                    <LineBreak/>
+                    <Run Text="This will be displayed in the Schedule tab for easy reference."/>
+                </TextBlock>
+
+                <Border Style="{StaticResource Card}" Margin="0,0,0,16" MinHeight="200">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" 
+                                   FontSize="48" 
+                                   Text="&#xE8A5;" 
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource Brush.Primary}"
+                                   Margin="0,0,0,16"/>
+                        <TextBlock x:Name="PdfFileNameText" 
+                                   Style="{StaticResource Text.Body}" 
+                                   Text="No file selected" 
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,16"/>
+                        <Button x:Name="SelectPdfButton" 
+                                Style="{StaticResource Button.Primary}" 
+                                Content="Select PDF File" 
+                                Padding="16,8"
+                                Click="SelectPdfButton_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource Button.Secondary}" 
+                            Content="Cancel" 
+                            Padding="16,8"
+                            Margin="0,0,8,0"
+                            Click="CancelButton_Click"/>
+                    <Button x:Name="NextToParsing" 
+                            Style="{StaticResource Button.Primary}" 
+                            Content="Next: Parse Timetable" 
+                            Padding="16,8"
+                            IsEnabled="False"
+                            Click="NextToParsing_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Step 2: AI Parsing (initially hidden) -->
+            <StackPanel x:Name="AiParsingPanel" Grid.Row="1" Grid.RowSpan="5" Visibility="Collapsed">
+                <TextBlock Style="{StaticResource Text.Body}" Margin="0,0,0,12" TextWrapping="Wrap">
+                    <Run Text="Step 2: Copy the prompt below and paste it into ChatGPT, Claude, or any AI assistant."/>
+                    <LineBreak/>
+                    <Run Text="Step 3: Follow the AI's instructions to provide your timetable information."/>
+                    <LineBreak/>
+                    <Run Text="Step 4: Copy the AI's JSON response and paste it in the box below."/>
+                </TextBlock>
 
             <!-- Prompt Display -->
             <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,0,0,12">
@@ -101,15 +146,16 @@
             <!-- Action Buttons -->
             <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource Button.Secondary}" 
-                        Content="Cancel" 
+                        Content="Back" 
                         Padding="16,8"
                         Margin="0,0,8,0"
-                        Click="CancelButton_Click"/>
+                        Click="BackButton_Click"/>
                 <Button x:Name="SaveButton" 
                         Style="{StaticResource Button.Primary}" 
                         Content="Save Timetable" 
                         Padding="16,8"
                         Click="SaveButton_Click"/>
+            </StackPanel>
             </StackPanel>
         </Grid>
     </Border>

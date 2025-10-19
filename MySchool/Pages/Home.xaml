@@ -30,10 +30,10 @@
                     <Grid>
                         <StackPanel Grid.Column="0">
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" Text="Current Class" HorizontalAlignment="Center" FontSize="12"/>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center"><Run Language="en-au" Text="History"/></TextBlock>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="CG01"/></TextBlock>
+                            <TextBlock x:Name="CurrentClassSubject" Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center" Text="None" TextWrapping="Wrap" TextAlignment="Center"/>
+                            <TextBlock x:Name="CurrentClassRoom" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="-"/>
                             <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="9:00 - 10:10"/></TextBlock>
+                            <TextBlock x:Name="CurrentClassTime" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="-"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -76,10 +76,10 @@
                     <Grid>
                         <StackPanel Grid.Column="0">
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="Next Class" FontSize="12"/>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center"><Run Language="en-au" Text="Maths"/></TextBlock>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="KF18"/></TextBlock>
+                            <TextBlock x:Name="NextClassSubject" Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center" Text="None" TextWrapping="Wrap" TextAlignment="Center"/>
+                            <TextBlock x:Name="NextClassRoom" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="-"/>
                             <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
-                            <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center"><Run Language="en-au" Text="10:10 - 11:20"/></TextBlock>
+                            <TextBlock x:Name="NextClassTime" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="-"/>
                         </StackPanel>
                     </Grid>
                 </Border>

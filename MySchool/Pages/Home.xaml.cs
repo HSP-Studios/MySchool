@@ -24,7 +24,53 @@ namespace MySchool.Pages
         public Home()
         {
             InitializeComponent();
+            Loaded += Home_Loaded;
+        }
+
+        private void Home_Loaded(object sender, RoutedEventArgs e)
+        {
             TryRenderUpcomingEvents();
+            LoadCurrentAndNextClass();
+        }
+
+        private void LoadCurrentAndNextClass()
+        {
+            try
+            {
+                var (current, next) = TimetableManager.GetCurrentAndNextClass();
+
+                // Update current class
+                if (current != null)
+                {
+                    CurrentClassSubject.Text = current.Subject;
+                    CurrentClassRoom.Text = current.Room;
+                    CurrentClassTime.Text = $"{current.StartTime} - {current.EndTime}";
+                }
+                else
+                {
+                    CurrentClassSubject.Text = "None";
+                    CurrentClassRoom.Text = "-";
+                    CurrentClassTime.Text = "-";
+                }
+
+                // Update next class
+                if (next != null)
+                {
+                    NextClassSubject.Text = next.Subject;
+                    NextClassRoom.Text = next.Room;
+                    NextClassTime.Text = $"{next.StartTime} - {next.EndTime}";
+                }
+                else
+                {
+                    NextClassSubject.Text = "None";
+                    NextClassRoom.Text = "-";
+                    NextClassTime.Text = "-";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to load class info: {ex.Message}");
+            }
         }
 
         private void TryRenderUpcomingEvents()
