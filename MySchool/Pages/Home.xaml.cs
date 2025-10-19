@@ -49,6 +49,32 @@ namespace MySchool.Pages
             }
         }
 
+        private string GetWeekdayGreeting()
+        {
+            string userName = App.CurrentSettings.UserName;
+            
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                return $"Hey {userName}!";
+            }
+            
+            // Use time-based greeting if no name is set
+            var hour = DateTime.Now.Hour;
+            
+            if (hour >= 5 && hour < 12)
+            {
+                return "Good Morning!";
+            }
+            else if (hour >= 12 && hour < 17)
+            {
+                return "Good Afternoon!";
+            }
+            else
+            {
+                return "Good Evening!";
+            }
+        }
+
         private void ConfigureWeekendLayout()
         {
             var today = DateTime.Now.DayOfWeek;
@@ -80,7 +106,7 @@ namespace MySchool.Pages
                 GreetingBorder.Margin = new Thickness(20, 0, 20, 0);
                 
                 // Weekday greeting
-                MainGreeting.Text = "Hey Kevin!";
+                MainGreeting.Text = GetWeekdayGreeting();
                 
                 // Show next class content in right section
                 NextClassPanel.Visibility = Visibility.Visible;
