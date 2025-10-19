@@ -318,7 +318,7 @@ Understanding our repository's branch structure:
 | Branch Pattern | Purpose | Description |
 |---------------|---------|-------------|
 | **`main`** | Development | The primary development branch. Active development happens here. |
-| **`releases/*`** | Release Source Code | Contains source code for specific releases. Format: `releases/[version]` (e.g., `releases/prototype-1`) |
+| **`release/*`** | Release Source Code | Contains source code for specific releases. Format: `releases/[version]` (e.g., `releases/prototype-1`) |
 | **`testing/*`** | Testing & Validation | Branches for testing new features, optimizations, and experimental changes before merging to main |
 | **`feature/*`** | Feature Development | Branches for developing new features (e.g., `feature/11-add-nsw-vic-sa-wa-nt-act-tas-school-holiday-lists`) |
 | **`copilot/*`** | AI-Assisted Changes | Branches created by GitHub Copilot for automated improvements |
