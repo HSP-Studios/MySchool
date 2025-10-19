@@ -64,6 +64,8 @@ namespace MySchool.Classes
                 // Lighter text for contrast
                 resources["Brush.TextPrimary"] = new SolidColorBrush(Colors.White);
                 resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C7D2FE"));
+                // Border color for dark mode
+                resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4B5563"));
             }
             else
             {
@@ -77,6 +79,8 @@ namespace MySchool.Classes
                 resources["Brush.Surface"] = new SolidColorBrush(Colors.White);
                 resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
                 resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
+                // Border color for light mode
+                resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D1D5DB"));
             }
         }
 
