@@ -169,8 +169,8 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Announcements -->
-                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                <!-- Quick Notes -->
+                <StackPanel Grid.Column="0" Margin="0,2,12,0">
                     <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Language="en-au" Text="Quick Notes"/></TextBlock>
                     <Border Style="{StaticResource Card}" Height="142">
                         <StackPanel>
@@ -190,9 +190,9 @@
                 </StackPanel>
 
                 <!-- Upcoming events -->
-                <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                <StackPanel Grid.Column="1" Margin="12,2,0,0">
                     <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Text="Upcoming "/><Run Language="en-au" Text="Events"/></TextBlock>
-                    <Border Style="{StaticResource Card}" Height="142">
+                    <Border Style="{StaticResource Card}" Height="142" Margin="0,0,1,0">
                         <StackPanel x:Name="UpcomingEventsPanel" />
                     </Border>
                 </StackPanel>
