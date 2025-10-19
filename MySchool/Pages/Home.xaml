@@ -69,7 +69,7 @@
                 <!-- Hero section right (Next Class / Weekend Info) -->
                 <Border x:Name="RightSectionBorder" CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Right" Grid.Column="2">
                     <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <LinearGradientBrush x:Name="RightSectionGradient" StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#6366F1" Offset="0"/>
                             <GradientStop Color="#FF089DDA" Offset="1"/>
                         </LinearGradientBrush>
@@ -84,17 +84,32 @@
                             <TextBlock x:Name="NextClassTime" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="-"/>
                         </StackPanel>
                         
-                        <!-- Weekend content -->
-                        <StackPanel x:Name="WeekendPanel" Grid.Column="0" Visibility="Collapsed">
-                            <TextBlock x:Name="WeekendGreeting"
+                        <!-- Weekend content (Weather) -->
+                        <StackPanel x:Name="WeekendPanel" Grid.Column="0" Visibility="Collapsed" VerticalAlignment="Center">
+                            <TextBlock Foreground="White" 
+                                       Style="{StaticResource Text.Body}" 
+                                       Opacity="0.9" 
+                                       HorizontalAlignment="Center" 
+                                       Text="Weather"
+                                       FontSize="12"
+                                       Margin="0,0,0,8"/>
+                            <TextBlock x:Name="WeatherTemperature"
                                        Foreground="White" 
                                        Style="{StaticResource Text.Headline}" 
                                        FontWeight="Bold" 
-                                       HorizontalAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       Text="Happy Weekend!"
+                                       HorizontalAlignment="Center"
+                                       Text="--°"
+                                       FontSize="36"
+                                       Margin="0,0,0,4"/>
+                            <TextBlock x:Name="WeatherDescription"
+                                       Foreground="White" 
+                                       Style="{StaticResource Text.Body}" 
+                                       Opacity="0.9"
+                                       HorizontalAlignment="Center"
+                                       Text="Loading..."
                                        TextWrapping="Wrap" 
-                                       TextAlignment="Center"/>
+                                       TextAlignment="Center"
+                                       FontSize="12"/>
                         </StackPanel>
                     </Grid>
                 </Border>

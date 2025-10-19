@@ -27,11 +27,12 @@ namespace MySchool.Pages
             Loaded += Home_Loaded;
         }
 
-        private void Home_Loaded(object sender, RoutedEventArgs e)
+        private async void Home_Loaded(object sender, RoutedEventArgs e)
         {
             ConfigureWeekendLayout();
             TryRenderUpcomingEvents();
             LoadCurrentAndNextClass();
+            await LoadWeatherIfWeekendAsync();
         }
 
         private void ConfigureWeekendLayout()
@@ -51,10 +52,9 @@ namespace MySchool.Pages
                 // Update center greeting for weekend
                 MainGreeting.Text = today == DayOfWeek.Saturday ? "Happy Saturday!" : "Happy Sunday!";
                 
-                // Show weekend content in right section (sigma1 placeholder)
+                // Show weekend content in right section (weather)
                 NextClassPanel.Visibility = Visibility.Collapsed;
                 WeekendPanel.Visibility = Visibility.Visible;
-                WeekendGreeting.Text = "sigma1";
             }
             else
             {
@@ -71,7 +71,92 @@ namespace MySchool.Pages
                 // Show next class content in right section
                 NextClassPanel.Visibility = Visibility.Visible;
                 WeekendPanel.Visibility = Visibility.Collapsed;
+                
+                // Reset to default gradient for weekdays
+                SetWeatherGradient("Clear");
             }
+        }
+
+        private async Task LoadWeatherIfWeekendAsync()
+        {
+            var today = DateTime.Now.DayOfWeek;
+            bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+
+            if (!isWeekend)
+                return;
+
+            try
+            {
+                var weather = await WeatherService.GetCurrentWeatherAsync();
+
+                if (weather != null)
+                {
+                    WeatherTemperature.Text = $"{Math.Round(weather.Temperature)}°";
+                    WeatherDescription.Text = char.ToUpper(weather.Description[0]) + weather.Description.Substring(1);
+                    
+                    // Update gradient based on weather condition
+                    SetWeatherGradient(weather.Condition);
+                }
+                else
+                {
+                    WeatherTemperature.Text = "--°";
+                    WeatherDescription.Text = "Unable to load weather";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to load weather: {ex.Message}");
+                WeatherTemperature.Text = "--°";
+                WeatherDescription.Text = "Weather unavailable";
+            }
+        }
+
+        private void SetWeatherGradient(string condition)
+        {
+            Color startColor, endColor;
+
+            switch (condition.ToLower())
+            {
+                case "clear":
+                    // Sunny gradient (yellow to orange)
+                    startColor = (Color)ColorConverter.ConvertFromString("#F59E0B");
+                    endColor = (Color)ColorConverter.ConvertFromString("#F97316");
+                    break;
+
+                case "clouds":
+                    // Cloudy gradient (gray to blue-gray)
+                    startColor = (Color)ColorConverter.ConvertFromString("#6B7280");
+                    endColor = (Color)ColorConverter.ConvertFromString("#9CA3AF");
+                    break;
+
+                case "rain":
+                case "drizzle":
+                    // Rainy gradient (dark blue to blue)
+                    startColor = (Color)ColorConverter.ConvertFromString("#1E40AF");
+                    endColor = (Color)ColorConverter.ConvertFromString("#3B82F6");
+                    break;
+
+                case "snow":
+                    // Snowy gradient (light blue to white-blue)
+                    startColor = (Color)ColorConverter.ConvertFromString("#DBEAFE");
+                    endColor = (Color)ColorConverter.ConvertFromString("#93C5FD");
+                    break;
+
+                case "thunderstorm":
+                    // Storm gradient (dark purple to gray)
+                    startColor = (Color)ColorConverter.ConvertFromString("#4C1D95");
+                    endColor = (Color)ColorConverter.ConvertFromString("#6B7280");
+                    break;
+
+                default:
+                    // Default gradient (original colors)
+                    startColor = (Color)ColorConverter.ConvertFromString("#6366F1");
+                    endColor = (Color)ColorConverter.ConvertFromString("#089DDA");
+                    break;
+            }
+
+            RightSectionGradient.GradientStops[0].Color = startColor;
+            RightSectionGradient.GradientStops[1].Color = endColor;
         }
 
         private void LoadCurrentAndNextClass()
