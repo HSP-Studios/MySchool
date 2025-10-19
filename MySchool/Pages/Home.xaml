@@ -192,16 +192,11 @@
                 <!-- Upcoming events -->
                 <StackPanel Grid.Column="1" Margin="12,0,0,0">
                     <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Text="Upcoming "/><Run Language="en-au" Text="Events"/></TextBlock>
-<<<<<<< Updated upstream
                     <Border Style="{StaticResource Card}" Height="142">
-=======
-                    <Border Style="{StaticResource Card}" Height="142" Margin="0,0,0,0">
->>>>>>> Stashed changes
                         <StackPanel x:Name="UpcomingEventsPanel" />
                     </Border>
                 </StackPanel>
             </Grid>
-
             <!-- Footer note -->
         </StackPanel>
     </ScrollViewer>
