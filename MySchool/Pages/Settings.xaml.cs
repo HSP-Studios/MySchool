@@ -36,6 +36,7 @@ namespace MySchool.Pages
                 DarkModeToggle.IsChecked = App.CurrentSettings.IsDarkMode;
                 UserNameTextBox.Text = App.CurrentSettings.UserName;
                 UpdateLocationDisplay();
+                UpdateBuildInfo();
             }
             catch (Exception ex)
             {
@@ -57,6 +58,23 @@ namespace MySchool.Pages
             else
             {
                 CurrentLocationText.Text = "Using device location";
+            }
+        }
+
+        private void UpdateBuildInfo()
+        {
+            try
+            {
+                VersionText.Text = BuildInfoHelper.Version;
+                BuildNumberText.Text = BuildInfoHelper.BuildNumber;
+                BuildDateText.Text = BuildInfoHelper.BuildDate;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Failed to load build info: " + ex);
+                VersionText.Text = "Unknown";
+                BuildNumberText.Text = "Unknown";
+                BuildDateText.Text = "Unknown";
             }
         }
 
