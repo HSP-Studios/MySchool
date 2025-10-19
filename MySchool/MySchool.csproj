@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>resources\logo\ico\Dark-Icon.ico</ApplicationIcon>
   </PropertyGroup>
   
   <ItemGroup>
@@ -66,6 +67,10 @@
     <Resource Include="resources\logo\svg\Dark-Wide.svg" />
     <Resource Include="resources\logo\svg\Light-Icon.svg" />
     <Resource Include="resources\logo\svg\Light-Wide.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="resources\logo\ico\" />
   </ItemGroup>
 
 </Project>
