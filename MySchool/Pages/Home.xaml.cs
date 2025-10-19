@@ -148,30 +148,22 @@ namespace MySchool.Pages
             switch (condition.ToLower())
             {
                 case "clear":
-                    // Sunny gradient (yellow to orange)
-                    if (isDarkMode)
-                    {
-                        startColor = (Color)ColorConverter.ConvertFromString("#D97706");
-                        endColor = (Color)ColorConverter.ConvertFromString("#DC2626");
-                    }
-                    else
-                    {
-                        startColor = (Color)ColorConverter.ConvertFromString("#F59E0B");
-                        endColor = (Color)ColorConverter.ConvertFromString("#F97316");
-                    }
+                    // Clear gradient (matches center hero section)
+                    startColor = (Color)ColorConverter.ConvertFromString("#6366F1"); // blue
+                    endColor = (Color)ColorConverter.ConvertFromString("#089DDA"); // blue
                     break;
 
                 case "clouds":
                     // Cloudy gradient
                     if (isDarkMode)
                     {
-                        startColor = (Color)ColorConverter.ConvertFromString("#6B7280");
-                        endColor = (Color)ColorConverter.ConvertFromString("#475569");
+                        startColor = (Color)ColorConverter.ConvertFromString("#6B7280"); // gray
+                        endColor = (Color)ColorConverter.ConvertFromString("#475569"); // gray
                     }
                     else
                     {
-                        startColor = (Color)ColorConverter.ConvertFromString("#D1D5DB");
-                        endColor = (Color)ColorConverter.ConvertFromString("#94A3B8");
+                        startColor = (Color)ColorConverter.ConvertFromString("#D1D5DB"); // gray
+                        endColor = (Color)ColorConverter.ConvertFromString("#94A3B8"); // gray
                     }
                     break;
 
@@ -180,13 +172,13 @@ namespace MySchool.Pages
                     // Rainy gradient
                     if (isDarkMode)
                     {
-                        startColor = (Color)ColorConverter.ConvertFromString("#1E3A8A");
-                        endColor = (Color)ColorConverter.ConvertFromString("#1E40AF");
+                        startColor = (Color)ColorConverter.ConvertFromString("#1E3A8A"); // deep blue
+                        endColor = (Color)ColorConverter.ConvertFromString("#1E40AF"); // deep blue
                     }
                     else
                     {
-                        startColor = (Color)ColorConverter.ConvertFromString("#1E40AF");
-                        endColor = (Color)ColorConverter.ConvertFromString("#3B82F6");
+                        startColor = (Color)ColorConverter.ConvertFromString("#1E40AF"); // blue
+                        endColor = (Color)ColorConverter.ConvertFromString("#3B82F6"); // lighter blue
                     }
                     break;
 
@@ -194,13 +186,13 @@ namespace MySchool.Pages
                     // Snowy gradient
                     if (isDarkMode)
                     {
-                        startColor = (Color)ColorConverter.ConvertFromString("#60A5FA");
-                        endColor = (Color)ColorConverter.ConvertFromString("#3B82F6");
+                        startColor = (Color)ColorConverter.ConvertFromString("#60A5FA"); // blue; should be updated to better snowy colors
+                        endColor = (Color)ColorConverter.ConvertFromString("#3B82F6"); // blue; should be updated to better snowy colors
                     }
                     else
                     {
-                        startColor = (Color)ColorConverter.ConvertFromString("#DBEAFE");
-                        endColor = (Color)ColorConverter.ConvertFromString("#93C5FD");
+                        startColor = (Color)ColorConverter.ConvertFromString("#DBEAFE"); // blue; should be updated to better snowy colors
+                        endColor = (Color)ColorConverter.ConvertFromString("#93C5FD"); // blue; should be updated to better snowy colors
                     }
                     break;
 
