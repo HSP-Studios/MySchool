@@ -330,9 +330,12 @@ Looking for source code of a specific release?
 
 ### Branch Workflow
 
-1. **Development**: Active work happens on `main` branch
+1. **Main**: Active work is merged into `main` branch
 2. **Testing**: New features are tested in `testing/*` branches
-3. **Release**: Stable versions are tagged and source code is preserved in `releases/*` branches
+3. **Development**: New features are developed in `feature/*` branches and later merged into `main`
+4. **Bugs**: Normal bugs are worked on in `bugs/` or `bug/` branches
+5. **Hotfixes**: Hotfixes or urgent bugs are worked on in `hotfix/` branches 
+6. **Release**: Stable versions are tagged and source code is preserved in `releases/*` branches
 
 ---
 
