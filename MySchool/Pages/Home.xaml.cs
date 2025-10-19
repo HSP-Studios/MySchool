@@ -54,21 +54,6 @@ namespace MySchool.Pages
             var today = DateTime.Now.DayOfWeek;
             bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
 
-            // Check for developer mode override
-            if (App.CurrentSettings.DeveloperMode)
-            {
-                var forceMode = App.CurrentSettings.ForceLayoutMode;
-                if (forceMode == "Weekend")
-                {
-                    isWeekend = true;
-                }
-                else if (forceMode == "Weekday")
-                {
-                    isWeekend = false;
-                }
-                // else "Auto" - use actual day
-            }
-
             if (isWeekend)
             {
                 // Hide current class section on weekends
@@ -111,43 +96,12 @@ namespace MySchool.Pages
             var today = DateTime.Now.DayOfWeek;
             bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
 
-            // Check for developer mode override
-            if (App.CurrentSettings.DeveloperMode)
-            {
-                var forceMode = App.CurrentSettings.ForceLayoutMode;
-                if (forceMode == "Weekend")
-                {
-                    isWeekend = true;
-                }
-                else if (forceMode == "Weekday")
-                {
-                    isWeekend = false;
-                }
-            }
-
             if (!isWeekend)
                 return;
 
             try
             {
-                WeatherData? weather;
-
-                // Check if developer mode has forced weather
-                if (App.CurrentSettings.DeveloperMode && App.CurrentSettings.ForceWeatherEnabled)
-                {
-                    weather = new WeatherData
-                    {
-                        Temperature = App.CurrentSettings.ForcedTemperature,
-                        Description = App.CurrentSettings.ForcedWeatherDescription,
-                        Condition = App.CurrentSettings.ForcedWeatherCondition,
-                        LocationName = App.CurrentSettings.ForcedLocationName,
-                        WeatherCode = 0
-                    };
-                }
-                else
-                {
-                    weather = await WeatherService.GetCurrentWeatherAsync();
-                }
+                var weather = await WeatherService.GetCurrentWeatherAsync();
 
                 if (weather != null)
                 {

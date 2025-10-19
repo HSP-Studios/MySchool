@@ -9,15 +9,6 @@ namespace MySchool
         public bool IsDarkMode { get; set; } = false;
         public (double latitude, double longitude)? WeatherLocation { get; set; } = null;
         public string WeatherLocationName { get; set; } = string.Empty;
-        
-        // Developer Mode Settings
-        public bool DeveloperMode { get; set; } = false;
-        public string ForceLayoutMode { get; set; } = "Auto"; // Auto, Weekend, Weekday
-        public bool ForceWeatherEnabled { get; set; } = false;
-        public string ForcedWeatherCondition { get; set; } = "Clear"; // Clear, Clouds, Rain, Snow, Thunderstorm, Drizzle
-        public double ForcedTemperature { get; set; } = 23.0;
-        public string ForcedWeatherDescription { get; set; } = "Clear sky";
-        public string ForcedLocationName { get; set; } = "Test Location";
     }
 
     public static class SettingsService
