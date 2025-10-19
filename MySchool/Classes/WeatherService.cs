@@ -119,8 +119,10 @@ namespace MySchool.Classes
                     LocationName = locationName
                 };
             }
-            catch
+            catch (Exception ex)
             {
+                // Log the exception for diagnostic purposes, but return null to indicate failure.
+                Console.WriteLine($"Exception in GetWeatherAsync: {ex}");
                 return null;
             }
         }
