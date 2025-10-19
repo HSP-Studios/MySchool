@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MySchool.Pages"
+      xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="536" d:DesignWidth="928"
       Title="Schedule"
@@ -42,34 +43,10 @@
                                TextAlignment="Center"/>
                 </StackPanel>
 
-                <!-- Timetable available panel -->
-                <StackPanel x:Name="TimetableAvailablePanel"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Visibility="Collapsed">
-                    <TextBlock FontFamily="Segoe MDL2 Assets" 
-                               FontSize="64" 
-                               Text="&#xE8A5;" 
-                               HorizontalAlignment="Center"
-                               Foreground="{DynamicResource Brush.Primary}"
-                               Margin="0,0,0,16"/>
-                    <TextBlock Style="{StaticResource Text.Title}" 
-                               Text="Timetable Available" 
-                               HorizontalAlignment="Center"
-                               Margin="0,0,0,8"/>
-                    <TextBlock x:Name="TimetableFileNameText"
-                               Style="{StaticResource Text.Body}" 
-                               Text="timetable.pdf" 
-                               HorizontalAlignment="Center"
-                               Margin="0,0,0,16"
-                               TextAlignment="Center"/>
-                    <Button x:Name="OpenTimetableButton"
-                            Style="{StaticResource Button.Primary}"
-                            Content="Open Timetable"
-                            Padding="24,12"
-                            Click="OpenTimetableButton_Click"
-                            HorizontalAlignment="Center"/>
-                </StackPanel>
+                <!-- PDF Viewer (WebView2 control) -->
+                <wv2:WebView2 x:Name="PdfViewer" 
+                              Visibility="Collapsed"
+                              Margin="0"/>
             </Grid>
         </Border>
     </Grid>
