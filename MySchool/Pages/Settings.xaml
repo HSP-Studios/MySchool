@@ -15,6 +15,27 @@
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Personalization" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource Text.Body}" Text="Enter your name for a personalized greeting" Margin="0,0,0,8"/>
+                    
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBox x:Name="UserNameTextBox" 
+                                 Width="250" 
+                                 Padding="8"
+                                 VerticalContentAlignment="Center"
+                                 Style="{DynamicResource TextBox.Standard}"
+                                 TextChanged="UserNameTextBox_TextChanged"/>
+                        <TextBlock Text="(Leave empty for time-based greeting)" 
+                                   Style="{StaticResource Text.Body}" 
+                                   Margin="12,0,0,0"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                <StackPanel>
                     <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,5"/>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <CheckBox x:Name="DarkModeToggle" VerticalAlignment="Center" IsChecked="False" Checked="DarkModeToggle_Checked" Unchecked="DarkModeToggle_Unchecked"/>

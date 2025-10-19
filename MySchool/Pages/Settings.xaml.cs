@@ -34,6 +34,7 @@ namespace MySchool.Pages
             try
             {
                 DarkModeToggle.IsChecked = App.CurrentSettings.IsDarkMode;
+                UserNameTextBox.Text = App.CurrentSettings.UserName;
                 UpdateLocationDisplay();
             }
             catch (Exception ex)
@@ -75,6 +76,19 @@ namespace MySchool.Pages
             SettingsService.Save(App.CurrentSettings);
             // Apply theme with cross-fade transition (0.5s)
             ThemeManager.ApplyThemeWithTransition(isDark, 0.5);
+        }
+
+        private void UserNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                App.CurrentSettings.UserName = UserNameTextBox.Text.Trim();
+                SettingsService.Save(App.CurrentSettings);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Failed to save user name: " + ex);
+            }
         }
 
         private void UploadTimetableButton_Click(object sender, RoutedEventArgs e)
