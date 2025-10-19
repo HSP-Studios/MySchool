@@ -65,26 +65,34 @@
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Developer" Margin="0,0,0,5"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,8">
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Developer Mode" Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,12">
                         <CheckBox x:Name="DeveloperModeToggle" VerticalAlignment="Center" IsChecked="False" Checked="DeveloperModeToggle_Checked" Unchecked="DeveloperModeToggle_Unchecked"/>
                         <TextBlock Text="Enable developer mode" Style="{StaticResource Text.Body}" Margin="8,0,0,0"/>
                     </StackPanel>
 
-                    <!-- Developer Mode Options -->
-                    <StackPanel x:Name="DeveloperOptionsPanel" Visibility="Collapsed">
-                        <Separator Margin="0,8,0,12" Background="{DynamicResource Brush.Border}"/>
+                    <!-- Developer Settings (collapsed by default) -->
+                    <StackPanel x:Name="DeveloperSettings" Visibility="Collapsed">
+                        <Separator Margin="0,0,0,12" Background="{DynamicResource Brush.Border}"/>
                         
-                        <!-- Force Day & Time -->
-                        <TextBlock Style="{StaticResource Text.Title}" Text="Force Day &amp; Time" Margin="0,0,0,5" FontSize="14"/>
-                        <TextBlock Style="{StaticResource Text.Body}" Text="Override current date and time (affects home view and weather)" Margin="0,0,0,8" Opacity="0.8"/>
-                        
+                        <!-- Layout Mode Override -->
+                        <TextBlock Style="{StaticResource Text.Body}" FontWeight="SemiBold" Text="Layout Mode Override" Margin="0,0,0,8"/>
+                        <ComboBox x:Name="LayoutModeComboBox" 
+                                  Margin="0,0,0,12"
+                                  SelectionChanged="LayoutModeComboBox_SelectionChanged">
+                            <ComboBoxItem Content="Auto (Default)" Tag="Auto" IsSelected="True"/>
+                            <ComboBoxItem Content="Force Weekend Mode" Tag="Weekend"/>
+                            <ComboBoxItem Content="Force Weekday Mode" Tag="Weekday"/>
+                        </ComboBox>
+
+                        <!-- Force Weather Settings -->
+                        <TextBlock Style="{StaticResource Text.Body}" FontWeight="SemiBold" Text="Weather Override" Margin="0,0,0,8"/>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,8">
-                            <CheckBox x:Name="ForceDayTimeToggle" VerticalAlignment="Center" IsChecked="False" Checked="ForceDayTimeToggle_Checked" Unchecked="ForceDayTimeToggle_Unchecked"/>
-                            <TextBlock Text="Enable forced day/time" Style="{StaticResource Text.Body}" Margin="8,0,0,0"/>
+                            <CheckBox x:Name="ForceWeatherToggle" VerticalAlignment="Center" IsChecked="False" Checked="ForceWeatherToggle_Checked" Unchecked="ForceWeatherToggle_Unchecked"/>
+                            <TextBlock Text="Use custom weather data" Style="{StaticResource Text.Body}" Margin="8,0,0,0"/>
                         </StackPanel>
 
-                        <StackPanel x:Name="ForceDayTimePanel" Visibility="Collapsed" Margin="0,0,0,12">
+                        <StackPanel x:Name="WeatherOverrideSettings" Visibility="Collapsed" Margin="0,0,0,12">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -93,36 +101,32 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Day of Week" Style="{StaticResource Text.Body}" Margin="0,0,0,4" FontWeight="SemiBold"/>
-                                    <ComboBox x:Name="DayOfWeekComboBox" SelectionChanged="DayOfWeekComboBox_SelectionChanged">
-                                        <ComboBoxItem Content="Monday" Tag="Monday"/>
-                                        <ComboBoxItem Content="Tuesday" Tag="Tuesday"/>
-                                        <ComboBoxItem Content="Wednesday" Tag="Wednesday"/>
-                                        <ComboBoxItem Content="Thursday" Tag="Thursday"/>
-                                        <ComboBoxItem Content="Friday" Tag="Friday"/>
-                                        <ComboBoxItem Content="Saturday" Tag="Saturday"/>
-                                        <ComboBoxItem Content="Sunday" Tag="Sunday"/>
+                                    <TextBlock Style="{StaticResource Text.Body}" Text="Condition" Margin="0,0,0,4"/>
+                                    <ComboBox x:Name="WeatherConditionComboBox" SelectionChanged="WeatherConditionComboBox_SelectionChanged">
+                                        <ComboBoxItem Content="Clear" Tag="Clear" IsSelected="True"/>
+                                        <ComboBoxItem Content="Clouds" Tag="Clouds"/>
+                                        <ComboBoxItem Content="Rain" Tag="Rain"/>
+                                        <ComboBoxItem Content="Drizzle" Tag="Drizzle"/>
+                                        <ComboBoxItem Content="Snow" Tag="Snow"/>
+                                        <ComboBoxItem Content="Thunderstorm" Tag="Thunderstorm"/>
                                     </ComboBox>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock Text="Time of Day (24h)" Style="{StaticResource Text.Body}" Margin="0,0,0,4" FontWeight="SemiBold"/>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBox x:Name="HourTextBox" Grid.Column="0" Text="12" MaxLength="2" TextChanged="TimeTextBox_TextChanged"/>
-                                        <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4,0"/>
-                                        <TextBox x:Name="MinuteTextBox" Grid.Column="2" Text="00" MaxLength="2" TextChanged="TimeTextBox_TextChanged"/>
-                                    </Grid>
+                                    <TextBlock Style="{StaticResource Text.Body}" Text="Temperature (°C)" Margin="0,0,0,4"/>
+                                    <TextBox x:Name="TemperatureTextBox" Text="23" TextChanged="TemperatureTextBox_TextChanged"/>
                                 </StackPanel>
                             </Grid>
+
+                            <TextBlock Style="{StaticResource Text.Body}" Text="Description" Margin="0,8,0,4"/>
+                            <TextBox x:Name="WeatherDescriptionTextBox" Text="Clear sky" TextChanged="WeatherDescriptionTextBox_TextChanged"/>
+
+                            <TextBlock Style="{StaticResource Text.Body}" Text="Location Name" Margin="0,8,0,4"/>
+                            <TextBox x:Name="LocationNameTextBox" Text="Test Location" TextChanged="LocationNameTextBox_TextChanged"/>
                         </StackPanel>
 
-                        <!-- Quick Actions -->
-                        <TextBlock Style="{StaticResource Text.Title}" Text="Quick Actions" Margin="0,0,0,8" FontSize="14"/>
+                        <!-- Utility Buttons -->
+                        <TextBlock Style="{StaticResource Text.Body}" FontWeight="SemiBold" Text="Utilities" Margin="0,0,0,8"/>
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="OpenConfigButton" 
                                     Style="{StaticResource Button.Secondary}" 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,19 +34,14 @@ namespace MySchool.Pages
             try
             {
                 DarkModeToggle.IsChecked = App.CurrentSettings.IsDarkMode;
-                DeveloperModeToggle.IsChecked = App.CurrentSettings.IsDeveloperMode;
-                ForceDayTimeToggle.IsChecked = App.CurrentSettings.ForceDayTimeEnabled;
-                
-                // Set day of week
-                DayOfWeekComboBox.SelectedIndex = (int)App.CurrentSettings.ForcedDayOfWeek;
-                
-                // Set time
-                HourTextBox.Text = App.CurrentSettings.ForcedTimeOfDay.Hours.ToString("D2");
-                MinuteTextBox.Text = App.CurrentSettings.ForcedTimeOfDay.Minutes.ToString("D2");
-                
                 UpdateLocationDisplay();
-                UpdateDeveloperModeVisibility();
-                UpdateForceDayTimeVisibility();
+                
+                // Initialize developer mode settings
+                DeveloperModeToggle.IsChecked = App.CurrentSettings.DeveloperMode;
+                DeveloperSettings.Visibility = App.CurrentSettings.DeveloperMode ? Visibility.Visible : Visibility.Collapsed;
+                
+                // Load developer settings
+                LoadDeveloperSettings();
             }
             catch (Exception ex)
             {
@@ -56,18 +50,37 @@ namespace MySchool.Pages
             }
         }
 
-        private void UpdateDeveloperModeVisibility()
+        private void LoadDeveloperSettings()
         {
-            DeveloperOptionsPanel.Visibility = App.CurrentSettings.IsDeveloperMode 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
-        }
+            // Layout mode
+            var layoutMode = App.CurrentSettings.ForceLayoutMode;
+            foreach (ComboBoxItem item in LayoutModeComboBox.Items)
+            {
+                if (item.Tag.ToString() == layoutMode)
+                {
+                    LayoutModeComboBox.SelectedItem = item;
+                    break;
+                }
+            }
 
-        private void UpdateForceDayTimeVisibility()
-        {
-            ForceDayTimePanel.Visibility = App.CurrentSettings.ForceDayTimeEnabled 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
+            // Weather override
+            ForceWeatherToggle.IsChecked = App.CurrentSettings.ForceWeatherEnabled;
+            WeatherOverrideSettings.Visibility = App.CurrentSettings.ForceWeatherEnabled ? Visibility.Visible : Visibility.Collapsed;
+
+            // Weather settings
+            var condition = App.CurrentSettings.ForcedWeatherCondition;
+            foreach (ComboBoxItem item in WeatherConditionComboBox.Items)
+            {
+                if (item.Tag.ToString() == condition)
+                {
+                    WeatherConditionComboBox.SelectedItem = item;
+                    break;
+                }
+            }
+
+            TemperatureTextBox.Text = App.CurrentSettings.ForcedTemperature.ToString();
+            WeatherDescriptionTextBox.Text = App.CurrentSettings.ForcedWeatherDescription;
+            LocationNameTextBox.Text = App.CurrentSettings.ForcedLocationName;
         }
 
         private void UpdateLocationDisplay()
@@ -170,75 +183,83 @@ namespace MySchool.Pages
             }
         }
 
+        // Developer Mode Event Handlers
         private void DeveloperModeToggle_Checked(object sender, RoutedEventArgs e)
         {
-            App.CurrentSettings.IsDeveloperMode = true;
+            App.CurrentSettings.DeveloperMode = true;
             SettingsService.Save(App.CurrentSettings);
-            UpdateDeveloperModeVisibility();
+            DeveloperSettings.Visibility = Visibility.Visible;
         }
 
         private void DeveloperModeToggle_Unchecked(object sender, RoutedEventArgs e)
         {
-            App.CurrentSettings.IsDeveloperMode = false;
-            App.CurrentSettings.ForceDayTimeEnabled = false;
+            App.CurrentSettings.DeveloperMode = false;
             SettingsService.Save(App.CurrentSettings);
-            UpdateDeveloperModeVisibility();
+            DeveloperSettings.Visibility = Visibility.Collapsed;
         }
 
-        private void ForceDayTimeToggle_Checked(object sender, RoutedEventArgs e)
+        private void LayoutModeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            App.CurrentSettings.ForceDayTimeEnabled = true;
-            SettingsService.Save(App.CurrentSettings);
-            UpdateForceDayTimeVisibility();
-        }
-
-        private void ForceDayTimeToggle_Unchecked(object sender, RoutedEventArgs e)
-        {
-            App.CurrentSettings.ForceDayTimeEnabled = false;
-            SettingsService.Save(App.CurrentSettings);
-            UpdateForceDayTimeVisibility();
-        }
-
-        private void DayOfWeekComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (DayOfWeekComboBox.SelectedItem is ComboBoxItem item)
+            if (LayoutModeComboBox.SelectedItem is ComboBoxItem item)
             {
-                App.CurrentSettings.ForcedDayOfWeek = (DayOfWeek)DayOfWeekComboBox.SelectedIndex;
+                App.CurrentSettings.ForceLayoutMode = item.Tag.ToString();
                 SettingsService.Save(App.CurrentSettings);
             }
         }
 
-        private void TimeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void ForceWeatherToggle_Checked(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                // Check if both textboxes are initialized
-                if (HourTextBox == null || MinuteTextBox == null)
-                    return;
+            App.CurrentSettings.ForceWeatherEnabled = true;
+            SettingsService.Save(App.CurrentSettings);
+            WeatherOverrideSettings.Visibility = Visibility.Visible;
+        }
 
-                if (string.IsNullOrWhiteSpace(HourTextBox.Text) || string.IsNullOrWhiteSpace(MinuteTextBox.Text))
-                    return;
+        private void ForceWeatherToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            App.CurrentSettings.ForceWeatherEnabled = false;
+            SettingsService.Save(App.CurrentSettings);
+            WeatherOverrideSettings.Visibility = Visibility.Collapsed;
+        }
 
-                if (int.TryParse(HourTextBox.Text, out int hour) && 
-                    int.TryParse(MinuteTextBox.Text, out int minute) &&
-                    hour >= 0 && hour < 24 && minute >= 0 && minute < 60)
-                {
-                    App.CurrentSettings.ForcedTimeOfDay = new TimeSpan(hour, minute, 0);
-                    SettingsService.Save(App.CurrentSettings);
-                }
-            }
-            catch
+        private void WeatherConditionComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (WeatherConditionComboBox.SelectedItem is ComboBoxItem item)
             {
-                // Invalid time input, ignore
+                App.CurrentSettings.ForcedWeatherCondition = item.Tag.ToString();
+                SettingsService.Save(App.CurrentSettings);
             }
+        }
+
+        private void TemperatureTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (double.TryParse(TemperatureTextBox.Text, out double temp))
+            {
+                App.CurrentSettings.ForcedTemperature = temp;
+                SettingsService.Save(App.CurrentSettings);
+            }
+        }
+
+        private void WeatherDescriptionTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            App.CurrentSettings.ForcedWeatherDescription = WeatherDescriptionTextBox.Text;
+            SettingsService.Save(App.CurrentSettings);
+        }
+
+        private void LocationNameTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            App.CurrentSettings.ForcedLocationName = LocationNameTextBox.Text;
+            SettingsService.Save(App.CurrentSettings);
         }
 
         private void OpenConfigButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string configPath = System.IO.Path.Combine(SettingsService.GetDataFolderPath(), "user_settings.json");
-                if (File.Exists(configPath))
+                string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string mySchoolPath = System.IO.Path.Combine(appData, "MySchool");
+                string configPath = System.IO.Path.Combine(mySchoolPath, "user_settings.json");
+
+                if (System.IO.File.Exists(configPath))
                 {
                     System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                     {
@@ -248,7 +269,7 @@ namespace MySchool.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Config file not found.", "File Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Config file not found. It will be created on next save.", "Not Found", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
@@ -261,24 +282,20 @@ namespace MySchool.Pages
         {
             try
             {
-                string dataFolder = SettingsService.GetDataFolderPath();
-                if (Directory.Exists(dataFolder))
+                string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string mySchoolPath = System.IO.Path.Combine(appData, "MySchool");
+
+                // Create directory if it doesn't exist
+                if (!System.IO.Directory.Exists(mySchoolPath))
                 {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = dataFolder,
-                        UseShellExecute = true
-                    });
+                    System.IO.Directory.CreateDirectory(mySchoolPath);
                 }
-                else
+
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    Directory.CreateDirectory(dataFolder);
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = dataFolder,
-                        UseShellExecute = true
-                    });
-                }
+                    FileName = mySchoolPath,
+                    UseShellExecute = true
+                });
             }
             catch (Exception ex)
             {
