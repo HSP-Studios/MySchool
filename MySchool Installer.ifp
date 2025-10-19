@@ -128,11 +128,11 @@ C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projec
 N/A
 [Folder]
 [Licence_Begin]
-38322
-{\rtf1\fbidis\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}}
+38316
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}}
 {\colortbl ;\red0\green0\blue255;}
 {\*\generator Riched20 10.0.26100}\viewkind4\uc1 
-\pard\ltrpar\cf0\fs20\lang3081                     GNU AFFERO GENERAL PUBLIC LICENSE\par
+\pard\fs20\lang3081                     GNU AFFERO GENERAL PUBLIC LICENSE\par
                        Version 3, 19 November 2007\par
 \par
  Copyright (C) 2007 Free Software Foundation, Inc. <{{\field{\*\fldinst{HYPERLINK "https://fsf.org/"}}{\fldrslt{https://fsf.org/\ul0\cf0}}}}\f0\fs20 >\par
@@ -810,5 +810,5 @@ MySchool
 [Commands]
 Execute Application
 <InstallPath>\redist\windowsdesktop-runtime-9.0.10-win-x64.exe
-/install /quiet /norestart
+/install /norestart
 -wait -hide
