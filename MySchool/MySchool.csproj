@@ -27,10 +27,14 @@
     <None Remove="resources\logo\svg\Dark-Wide.svg" />
     <None Remove="resources\logo\svg\Light-Icon.svg" />
     <None Remove="resources\logo\svg\Light-Wide.svg" />
+    <None Remove="resources\prompts\timetable-generation-prompt.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="resources\data\holidays\QLD.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\prompts\timetable-generation-prompt.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

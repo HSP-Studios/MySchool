@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySchool.Windows;
 
 namespace MySchool.Pages
 {
@@ -56,6 +57,22 @@ namespace MySchool.Pages
             SettingsService.Save(App.CurrentSettings);
             // Apply theme with cross-fade transition (0.5s)
             ThemeManager.ApplyThemeWithTransition(isDark, 0.5);
+        }
+
+        private void UploadTimetableButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var dialog = new TimetableUploadDialog
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                dialog.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open upload dialog: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
