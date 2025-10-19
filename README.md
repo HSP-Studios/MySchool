@@ -409,6 +409,7 @@ Special thanks to:
 - The .NET and WPF communities for excellent documentation
 - Contributors and testers who help improve MySchool
 - Queensland Department of Education for public school calendar data
+- InstallForge's easy-to-use installer creator
 
 ---
 
