@@ -85,8 +85,10 @@ namespace MySchool.Classes
                 
                 return locationName;
             }
-            catch
+            catch (Exception ex)
             {
+                // Log the exception for diagnostics, but return a default value to degrade gracefully.
+                Console.Error.WriteLine($"Error in GetLocationNameAsync: {ex}");
                 return "Unknown Location";
             }
         }
