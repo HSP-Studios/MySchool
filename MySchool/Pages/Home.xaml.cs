@@ -21,6 +21,8 @@ namespace MySchool.Pages
     /// </summary>
     public partial class Home : Page
     {
+        private static bool hasLoadedWeather = false;
+
         public Home()
         {
             InitializeComponent();
@@ -32,7 +34,13 @@ namespace MySchool.Pages
             ConfigureWeekendLayout();
             TryRenderUpcomingEvents();
             LoadCurrentAndNextClass();
-            await LoadWeatherIfWeekendAsync();
+            
+            // Only load weather once per app session
+            if (!hasLoadedWeather)
+            {
+                await LoadWeatherIfWeekendAsync();
+                hasLoadedWeather = true;
+            }
         }
 
         private void ConfigureWeekendLayout()
