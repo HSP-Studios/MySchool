@@ -86,7 +86,8 @@
                         
                         <!-- Weekend content (Weather) -->
                         <StackPanel x:Name="WeekendPanel" Grid.Column="0" Visibility="Collapsed" VerticalAlignment="Center">
-                            <TextBlock Foreground="White" 
+                            <TextBlock x:Name="WeatherLocationLabel"
+                                       Foreground="White" 
                                        Style="{StaticResource Text.Body}" 
                                        Opacity="0.9" 
                                        HorizontalAlignment="Center" 

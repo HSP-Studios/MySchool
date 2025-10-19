@@ -110,12 +110,33 @@ namespace MySchool.Pages
                     WeatherTemperature.Text = "--°";
                     WeatherDescription.Text = "Unable to load weather";
                 }
+
+                // Update location label
+                UpdateWeatherLocationLabel();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Failed to load weather: {ex.Message}");
                 WeatherTemperature.Text = "--°";
                 WeatherDescription.Text = "Weather unavailable";
+                UpdateWeatherLocationLabel();
+            }
+        }
+
+        private void UpdateWeatherLocationLabel()
+        {
+            // Update the weather location label
+            if (App.CurrentSettings.WeatherLocation.HasValue)
+            {
+                // Use manual location name if available
+                var locationName = string.IsNullOrWhiteSpace(App.CurrentSettings.WeatherLocationName)
+                    ? "Custom Location"
+                    : App.CurrentSettings.WeatherLocationName;
+                WeatherLocationLabel.Text = locationName;
+            }
+            else
+            {
+                WeatherLocationLabel.Text = "Your Location";
             }
         }
 
