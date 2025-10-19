@@ -8,9 +8,8 @@ Ask the user to provide their school timetable information, including:
 - Room/location (if available)
 - Start and end times
 
-Once you have all the information, output ONLY a valid JSON object in this EXACT format (do not include any explanatory text or markdown formatting):
+Once you have all the information, output ONLY a valid JSON object in this EXACT format (do not include any explanatory text, markdown formatting, or code blocks):
 
-```
 {
   "timetable": [
     {
@@ -35,7 +34,6 @@ Once you have all the information, output ONLY a valid JSON object in this EXACT
     "validTo": "2024-12-31"
   }
 }
-```
 
 CRITICAL RULES:
 1. "day" must be one of: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
