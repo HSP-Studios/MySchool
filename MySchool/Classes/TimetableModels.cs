@@ -41,6 +41,9 @@ namespace MySchool.Classes
 
         [JsonPropertyName("endTime")]
         public string EndTime { get; set; } = string.Empty;
+
+        [JsonPropertyName("isBreak")]
+        public bool IsBreak { get; set; } = false;
     }
 
     public class TimetableMetadata

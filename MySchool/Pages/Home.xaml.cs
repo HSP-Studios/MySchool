@@ -43,7 +43,8 @@ namespace MySchool.Pages
                 if (current != null)
                 {
                     CurrentClassSubject.Text = current.Subject;
-                    CurrentClassRoom.Text = current.Room;
+                    // For breaks, show a dash instead of room
+                    CurrentClassRoom.Text = current.IsBreak ? "-" : (string.IsNullOrWhiteSpace(current.Room) ? "-" : current.Room);
                     CurrentClassTime.Text = $"{current.StartTime} - {current.EndTime}";
                 }
                 else
@@ -57,7 +58,8 @@ namespace MySchool.Pages
                 if (next != null)
                 {
                     NextClassSubject.Text = next.Subject;
-                    NextClassRoom.Text = next.Room;
+                    // For breaks, show a dash instead of room
+                    NextClassRoom.Text = next.IsBreak ? "-" : (string.IsNullOrWhiteSpace(next.Room) ? "-" : next.Room);
                     NextClassTime.Text = $"{next.StartTime} - {next.EndTime}";
                 }
                 else
