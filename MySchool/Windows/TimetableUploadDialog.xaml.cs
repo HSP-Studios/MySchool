@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Windows;
 using Microsoft.Win32;
+using MySchool.Classes;
 
 namespace MySchool.Windows
 {
@@ -153,23 +156,45 @@ namespace MySchool.Windows
                     return;
                 }
 
-                // Validate JSON
+                // Parse and validate JSON
+                TimetableData? timetableData;
                 try
                 {
-                    using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
+                    timetableData = JsonSerializer.Deserialize<TimetableData>(jsonResponse);
+                    
+                    if (timetableData == null || timetableData.Timetable == null || !timetableData.Timetable.Any())
                     {
-                        // Basic validation - check if timetable array exists
-                        if (!doc.RootElement.TryGetProperty("timetable", out _))
-                        {
-                            MessageBox.Show("Invalid JSON format: 'timetable' property not found.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            return;
-                        }
+                        MessageBox.Show("Invalid JSON format: 'timetable' property not found or empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
                     }
                 }
                 catch (JsonException)
                 {
                     MessageBox.Show("Invalid JSON format. Please ensure you copied the complete JSON response from the AI.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
+                }
+
+                // Check for subject names longer than 8 characters (excluding breaks)
+                var longSubjects = GetLongSubjectNames(timetableData);
+
+                if (longSubjects.Any())
+                {
+                    // Show subject shortener dialog
+                    var shortenerDialog = new SubjectShortenerDialog(longSubjects)
+                    {
+                        Owner = this
+                    };
+
+                    if (shortenerDialog.ShowDialog() == true)
+                    {
+                        // Apply shortened names to timetable data
+                        ApplyShortenedSubjectNames(timetableData, shortenerDialog.ShortenedSubjects);
+                    }
+                    else
+                    {
+                        // User cancelled, don't save
+                        return;
+                    }
                 }
 
                 // Write formatted JSON
@@ -179,8 +204,7 @@ namespace MySchool.Windows
                     return;
                 }
 
-                var jsonDoc = JsonDocument.Parse(jsonResponse);
-                string formattedJson = JsonSerializer.Serialize(jsonDoc, new JsonSerializerOptions { WriteIndented = true });
+                string formattedJson = JsonSerializer.Serialize(timetableData, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(targetJsonPath, formattedJson);
 
                 MessageBox.Show($"Timetable saved successfully!\n\nPDF: {targetPdfPath}\nJSON: {targetJsonPath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -191,6 +215,39 @@ namespace MySchool.Windows
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to save timetable: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private List<string> GetLongSubjectNames(TimetableData timetableData)
+        {
+            var longSubjects = new HashSet<string>();
+
+            foreach (var day in timetableData.Timetable)
+            {
+                foreach (var period in day.Periods)
+                {
+                    // Skip breaks and subjects with 8 or fewer characters
+                    if (!period.IsBreak && !string.IsNullOrWhiteSpace(period.Subject) && period.Subject.Length > 8)
+                    {
+                        longSubjects.Add(period.Subject);
+                    }
+                }
+            }
+
+            return longSubjects.OrderBy(s => s).ToList();
+        }
+
+        private void ApplyShortenedSubjectNames(TimetableData timetableData, Dictionary<string, string> shortenedNames)
+        {
+            foreach (var day in timetableData.Timetable)
+            {
+                foreach (var period in day.Periods)
+                {
+                    if (!string.IsNullOrWhiteSpace(period.Subject) && shortenedNames.TryGetValue(period.Subject, out var shortened))
+                    {
+                        period.Subject = shortened;
+                    }
+                }
             }
         }
 
