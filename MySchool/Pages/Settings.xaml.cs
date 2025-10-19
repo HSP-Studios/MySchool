@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,13 +35,39 @@ namespace MySchool.Pages
             try
             {
                 DarkModeToggle.IsChecked = App.CurrentSettings.IsDarkMode;
+                DeveloperModeToggle.IsChecked = App.CurrentSettings.IsDeveloperMode;
+                ForceDayTimeToggle.IsChecked = App.CurrentSettings.ForceDayTimeEnabled;
+                
+                // Set day of week
+                DayOfWeekComboBox.SelectedIndex = (int)App.CurrentSettings.ForcedDayOfWeek;
+                
+                // Set time
+                HourTextBox.Text = App.CurrentSettings.ForcedTimeOfDay.Hours.ToString("D2");
+                MinuteTextBox.Text = App.CurrentSettings.ForcedTimeOfDay.Minutes.ToString("D2");
+                
                 UpdateLocationDisplay();
+                UpdateDeveloperModeVisibility();
+                UpdateForceDayTimeVisibility();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Failed to initialize settings: " + ex);
                 DarkModeToggle.IsChecked = false; // fallback to default
             }
+        }
+
+        private void UpdateDeveloperModeVisibility()
+        {
+            DeveloperOptionsPanel.Visibility = App.CurrentSettings.IsDeveloperMode 
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
+        }
+
+        private void UpdateForceDayTimeVisibility()
+        {
+            ForceDayTimePanel.Visibility = App.CurrentSettings.ForceDayTimeEnabled 
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
         }
 
         private void UpdateLocationDisplay()
@@ -140,6 +167,115 @@ namespace MySchool.Pages
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to open location dialog: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void DeveloperModeToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            App.CurrentSettings.IsDeveloperMode = true;
+            SettingsService.Save(App.CurrentSettings);
+            UpdateDeveloperModeVisibility();
+        }
+
+        private void DeveloperModeToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            App.CurrentSettings.IsDeveloperMode = false;
+            App.CurrentSettings.ForceDayTimeEnabled = false;
+            SettingsService.Save(App.CurrentSettings);
+            UpdateDeveloperModeVisibility();
+        }
+
+        private void ForceDayTimeToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            App.CurrentSettings.ForceDayTimeEnabled = true;
+            SettingsService.Save(App.CurrentSettings);
+            UpdateForceDayTimeVisibility();
+        }
+
+        private void ForceDayTimeToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            App.CurrentSettings.ForceDayTimeEnabled = false;
+            SettingsService.Save(App.CurrentSettings);
+            UpdateForceDayTimeVisibility();
+        }
+
+        private void DayOfWeekComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (DayOfWeekComboBox.SelectedItem is ComboBoxItem item)
+            {
+                App.CurrentSettings.ForcedDayOfWeek = (DayOfWeek)DayOfWeekComboBox.SelectedIndex;
+                SettingsService.Save(App.CurrentSettings);
+            }
+        }
+
+        private void TimeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            try
+            {
+                if (int.TryParse(HourTextBox.Text, out int hour) && 
+                    int.TryParse(MinuteTextBox.Text, out int minute) &&
+                    hour >= 0 && hour < 24 && minute >= 0 && minute < 60)
+                {
+                    App.CurrentSettings.ForcedTimeOfDay = new TimeSpan(hour, minute, 0);
+                    SettingsService.Save(App.CurrentSettings);
+                }
+            }
+            catch
+            {
+                // Invalid time input, ignore
+            }
+        }
+
+        private void OpenConfigButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string configPath = System.IO.Path.Combine(SettingsService.GetDataFolderPath(), "user_settings.json");
+                if (File.Exists(configPath))
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = configPath,
+                        UseShellExecute = true
+                    });
+                }
+                else
+                {
+                    MessageBox.Show("Config file not found.", "File Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open config file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void OpenDataFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string dataFolder = SettingsService.GetDataFolderPath();
+                if (Directory.Exists(dataFolder))
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = dataFolder,
+                        UseShellExecute = true
+                    });
+                }
+                else
+                {
+                    Directory.CreateDirectory(dataFolder);
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = dataFolder,
+                        UseShellExecute = true
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open data folder: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

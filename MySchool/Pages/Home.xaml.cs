@@ -51,7 +51,7 @@ namespace MySchool.Pages
 
         private void ConfigureWeekendLayout()
         {
-            var today = DateTime.Now.DayOfWeek;
+            var today = SettingsService.GetCurrentDayOfWeek();
             bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
 
             if (isWeekend)
@@ -93,7 +93,7 @@ namespace MySchool.Pages
 
         private async Task LoadWeatherIfWeekendAsync()
         {
-            var today = DateTime.Now.DayOfWeek;
+            var today = SettingsService.GetCurrentDayOfWeek();
             bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
 
             if (!isWeekend)
@@ -233,7 +233,7 @@ namespace MySchool.Pages
         {
             try
             {
-                var today = DateTime.Now.DayOfWeek;
+                var today = SettingsService.GetCurrentDayOfWeek();
                 bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
 
                 // Skip loading class info on weekends

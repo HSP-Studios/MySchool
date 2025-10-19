@@ -9,6 +9,12 @@ namespace MySchool
         public bool IsDarkMode { get; set; } = false;
         public (double latitude, double longitude)? WeatherLocation { get; set; } = null;
         public string WeatherLocationName { get; set; } = string.Empty;
+        
+        // Developer Mode Settings
+        public bool IsDeveloperMode { get; set; } = false;
+        public bool ForceDayTimeEnabled { get; set; } = false;
+        public DayOfWeek ForcedDayOfWeek { get; set; } = DayOfWeek.Monday;
+        public TimeSpan ForcedTimeOfDay { get; set; } = new TimeSpan(12, 0, 0); // Default to 12:00 PM
     }
 
     public static class SettingsService
@@ -20,6 +26,38 @@ namespace MySchool
             string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string mySchoolPath = Path.Combine(appData, "MySchool");
             return Path.Combine(mySchoolPath, SettingsFileName);
+        }
+
+        public static string GetDataFolderPath()
+        {
+            string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            return Path.Combine(appData, "MySchool");
+        }
+
+        public static DateTime GetCurrentDateTime()
+        {
+            var settings = App.CurrentSettings;
+            
+            if (settings.IsDeveloperMode && settings.ForceDayTimeEnabled)
+            {
+                // Create a DateTime with the forced day and time
+                var today = DateTime.Today;
+                int daysToAdd = ((int)settings.ForcedDayOfWeek - (int)today.DayOfWeek + 7) % 7;
+                var forcedDate = today.AddDays(daysToAdd);
+                return forcedDate.Add(settings.ForcedTimeOfDay);
+            }
+            
+            return DateTime.Now;
+        }
+
+        public static DayOfWeek GetCurrentDayOfWeek()
+        {
+            return GetCurrentDateTime().DayOfWeek;
+        }
+
+        public static TimeSpan GetCurrentTimeOfDay()
+        {
+            return GetCurrentDateTime().TimeOfDay;
         }
 
         public static UserSettings Load()

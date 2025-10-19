@@ -91,8 +91,9 @@ namespace MySchool.Classes
                 if (timetable == null)
                     return (null, null);
 
-                var today = DateTime.Now.DayOfWeek.ToString();
-                var currentTime = DateTime.Now.TimeOfDay;
+                var currentDateTime = SettingsService.GetCurrentDateTime();
+                var today = currentDateTime.DayOfWeek.ToString();
+                var currentTime = currentDateTime.TimeOfDay;
 
                 var todaySchedule = timetable.Timetable.FirstOrDefault(d => 
                     d.Day.Equals(today, StringComparison.OrdinalIgnoreCase));
