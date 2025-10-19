@@ -38,13 +38,13 @@ namespace MySchool.Classes
             }
         }
 
-        public static string GetLatestTimetableFile()
+        public static string? GetLatestTimetableFile()
         {
             var files = GetAllTimetableFiles();
             return files.FirstOrDefault();
         }
 
-        public static T LoadTimetable<T>(string filePath)
+        public static T? LoadTimetable<T>(string filePath) where T : class
         {
             try
             {
@@ -53,7 +53,7 @@ namespace MySchool.Classes
             }
             catch
             {
-                return default;
+                return null;
             }
         }
     }
