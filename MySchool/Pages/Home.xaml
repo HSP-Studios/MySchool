@@ -120,7 +120,7 @@
             <StackPanel Orientation="Vertical" Margin="0,0,0,16">
                 <WrapPanel ItemWidth="220" ItemHeight="100" MinWidth="220" HorizontalAlignment="Left" Margin="0,0,0,15">
                     <!-- Action card 1 -->
-                    <Border Style="{StaticResource Card}" Width="200" Height="100" HorizontalAlignment="Center">
+                    <Border Style="{StaticResource Card}" Width="200" Height="100" HorizontalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="ScheduleCard_Click">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource Icon}" Text="&#xF763;" HorizontalAlignment="Center"/>

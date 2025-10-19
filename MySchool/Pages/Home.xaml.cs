@@ -358,5 +358,20 @@ namespace MySchool.Pages
                 System.Diagnostics.Debug.WriteLine($"Exception in TryRenderUpcomingEvents: {ex}");
             }
         }
+
+        private void ScheduleCard_Click(object sender, MouseButtonEventArgs e)
+        {
+            // Navigate to the Schedule tab
+            var mainWindow = Window.GetWindow(this) as MainWindow;
+            if (mainWindow != null)
+            {
+                // Find the Schedule tab button and trigger its click
+                var scheduleTab = mainWindow.FindName("ScheduleTab") as Button;
+                if (scheduleTab != null)
+                {
+                    scheduleTab.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                }
+            }
+        }
     }
 }
