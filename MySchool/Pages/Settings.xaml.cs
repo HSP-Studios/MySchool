@@ -200,55 +200,106 @@ namespace MySchool.Pages
 
         private void LayoutModeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (LayoutModeComboBox.SelectedItem is ComboBoxItem item)
-            {
-                App.CurrentSettings.ForceLayoutMode = item.Tag.ToString();
-                SettingsService.Save(App.CurrentSettings);
-            }
+            // Don't auto-save anymore - wait for Save button
         }
 
         private void ForceWeatherToggle_Checked(object sender, RoutedEventArgs e)
         {
-            App.CurrentSettings.ForceWeatherEnabled = true;
-            SettingsService.Save(App.CurrentSettings);
             WeatherOverrideSettings.Visibility = Visibility.Visible;
         }
 
         private void ForceWeatherToggle_Unchecked(object sender, RoutedEventArgs e)
         {
-            App.CurrentSettings.ForceWeatherEnabled = false;
-            SettingsService.Save(App.CurrentSettings);
             WeatherOverrideSettings.Visibility = Visibility.Collapsed;
         }
 
         private void WeatherConditionComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (WeatherConditionComboBox.SelectedItem is ComboBoxItem item)
-            {
-                App.CurrentSettings.ForcedWeatherCondition = item.Tag.ToString();
-                SettingsService.Save(App.CurrentSettings);
-            }
+            // Don't auto-save anymore - wait for Save button
         }
 
         private void TemperatureTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if (double.TryParse(TemperatureTextBox.Text, out double temp))
-            {
-                App.CurrentSettings.ForcedTemperature = temp;
-                SettingsService.Save(App.CurrentSettings);
-            }
+            // Don't auto-save anymore - wait for Save button
         }
 
         private void WeatherDescriptionTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            App.CurrentSettings.ForcedWeatherDescription = WeatherDescriptionTextBox.Text;
-            SettingsService.Save(App.CurrentSettings);
+            // Don't auto-save anymore - wait for Save button
         }
 
         private void LocationNameTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            App.CurrentSettings.ForcedLocationName = LocationNameTextBox.Text;
-            SettingsService.Save(App.CurrentSettings);
+            // Don't auto-save anymore - wait for Save button
+        }
+
+        private void SaveDeveloperSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Save layout mode
+                if (LayoutModeComboBox.SelectedItem is ComboBoxItem layoutItem)
+                {
+                    App.CurrentSettings.ForceLayoutMode = layoutItem.Tag.ToString();
+                }
+
+                // Save weather override settings
+                App.CurrentSettings.ForceWeatherEnabled = ForceWeatherToggle.IsChecked == true;
+
+                if (WeatherConditionComboBox.SelectedItem is ComboBoxItem conditionItem)
+                {
+                    App.CurrentSettings.ForcedWeatherCondition = conditionItem.Tag.ToString();
+                }
+
+                if (double.TryParse(TemperatureTextBox.Text, out double temp))
+                {
+                    App.CurrentSettings.ForcedTemperature = temp;
+                }
+
+                App.CurrentSettings.ForcedWeatherDescription = WeatherDescriptionTextBox.Text;
+                App.CurrentSettings.ForcedLocationName = LocationNameTextBox.Text;
+
+                // Save to file
+                SettingsService.Save(App.CurrentSettings);
+
+                MessageBox.Show("Developer settings saved successfully!\n\nNote: Some changes may require reloading the Home page to take effect.", 
+                    "Settings Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save developer settings: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ResetDeveloperSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Are you sure you want to reset all developer settings to defaults?", 
+                    "Reset Developer Settings", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Reset to defaults
+                    App.CurrentSettings.ForceLayoutMode = "Auto";
+                    App.CurrentSettings.ForceWeatherEnabled = false;
+                    App.CurrentSettings.ForcedWeatherCondition = "Clear";
+                    App.CurrentSettings.ForcedTemperature = 23.0;
+                    App.CurrentSettings.ForcedWeatherDescription = "Clear sky";
+                    App.CurrentSettings.ForcedLocationName = "Test Location";
+
+                    SettingsService.Save(App.CurrentSettings);
+
+                    // Reload UI
+                    LoadDeveloperSettings();
+
+                    MessageBox.Show("Developer settings have been reset to defaults.", "Reset Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to reset developer settings: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void OpenConfigButton_Click(object sender, RoutedEventArgs e)

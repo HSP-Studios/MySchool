@@ -127,7 +127,7 @@
 
                         <!-- Utility Buttons -->
                         <TextBlock Style="{StaticResource Text.Body}" FontWeight="SemiBold" Text="Utilities" Margin="0,0,0,8"/>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                             <Button x:Name="OpenConfigButton" 
                                     Style="{StaticResource Button.Secondary}" 
                                     Content="Open Config File" 
@@ -139,6 +139,22 @@
                                     Content="Open Data Folder" 
                                     Padding="16,8"
                                     Click="OpenDataFolderButton_Click"/>
+                        </StackPanel>
+
+                        <!-- Save/Reset Buttons -->
+                        <Separator Margin="0,0,0,12" Background="{DynamicResource Brush.Border}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="SaveDeveloperSettingsButton" 
+                                    Style="{StaticResource Button.Primary}" 
+                                    Content="Save Developer Settings" 
+                                    Padding="16,8"
+                                    Margin="0,0,8,0"
+                                    Click="SaveDeveloperSettingsButton_Click"/>
+                            <Button x:Name="ResetDeveloperSettingsButton" 
+                                    Style="{StaticResource Button.Secondary}" 
+                                    Content="Reset to Defaults" 
+                                    Padding="16,8"
+                                    Click="ResetDeveloperSettingsButton_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
