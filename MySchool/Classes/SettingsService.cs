@@ -7,6 +7,8 @@ namespace MySchool
     public class UserSettings
     {
         public bool IsDarkMode { get; set; } = false;
+        public (double latitude, double longitude)? WeatherLocation { get; set; } = null;
+        public string WeatherLocationName { get; set; } = string.Empty;
     }
 
     public static class SettingsService

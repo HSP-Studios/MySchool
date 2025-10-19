@@ -1,0 +1,115 @@
+<Window x:Class="MySchool.Windows.ManualLocationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Set Manual Location"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="False"
+        Background="{DynamicResource Brush.Background}"
+        Width="500"
+        Height="350"
+        WindowStartupLocation="CenterOwner"
+        FontFamily="{StaticResource Font.Main}">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="0"
+                             ResizeBorderThickness="0"
+                             CornerRadius="16"
+                             GlassFrameThickness="0"
+                             UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Border Background="{DynamicResource Brush.Background}" CornerRadius="16" BorderThickness="1" BorderBrush="{DynamicResource Brush.Primary}">
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid Grid.Row="0" Margin="0,0,0,16">
+                <TextBlock Text="Set Manual Location" Style="{StaticResource Text.Headline}"/>
+                <Button Style="{StaticResource CaptionButton.Close}" 
+                        HorizontalAlignment="Right" 
+                        Click="CloseButton_Click"
+                        ToolTip="Close">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="12" Text="&#xE8BB;"/>
+                </Button>
+            </Grid>
+
+            <!-- Instructions -->
+            <TextBlock Grid.Row="1" Style="{StaticResource Text.Body}" Margin="0,0,0,16" TextWrapping="Wrap">
+                Enter the coordinates of your location for weather forecasts. You can find your coordinates from maps.google.com or similar services.
+            </TextBlock>
+
+            <!-- Location Name -->
+            <TextBlock Grid.Row="2" Text="Location Name (Optional)" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
+            <Border Grid.Row="3" Style="{StaticResource Card}" Margin="0,0,0,16">
+                <TextBox x:Name="LocationNameTextBox" 
+                         BorderThickness="0"
+                         Background="Transparent"
+                         FontSize="14"
+                         Foreground="{DynamicResource Brush.TextPrimary}"/>
+            </Border>
+
+            <!-- Coordinates -->
+            <StackPanel Grid.Row="4">
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Latitude" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
+                        <Border Style="{StaticResource Card}">
+                            <TextBox x:Name="LatitudeTextBox" 
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     FontSize="14"
+                                     Foreground="{DynamicResource Brush.TextPrimary}"/>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Longitude" Style="{StaticResource Text.Title}" Margin="0,0,0,8"/>
+                        <Border Style="{StaticResource Card}">
+                            <TextBox x:Name="LongitudeTextBox" 
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     FontSize="14"
+                                     Foreground="{DynamicResource Brush.TextPrimary}"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Style="{StaticResource Text.Body}" 
+                           Opacity="0.7"
+                           FontSize="12"
+                           Margin="0,8,0,0"
+                           TextWrapping="Wrap">
+                    Example: Brisbane, Australia is -27.4698, 153.0251
+                </TextBlock>
+            </StackPanel>
+
+            <!-- Action Buttons -->
+            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                <Button Style="{StaticResource Button.Secondary}" 
+                        Content="Cancel" 
+                        Padding="16,8"
+                        Margin="0,0,8,0"
+                        Click="CancelButton_Click"/>
+                <Button x:Name="SaveButton" 
+                        Style="{StaticResource Button.Primary}" 
+                        Content="Save Location" 
+                        Padding="16,8"
+                        Click="SaveButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
