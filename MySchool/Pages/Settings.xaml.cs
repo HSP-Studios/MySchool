@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySchool.Windows;
+using MySchool.Classes;
 
 namespace MySchool.Pages
 {
@@ -32,11 +34,28 @@ namespace MySchool.Pages
             try
             {
                 DarkModeToggle.IsChecked = App.CurrentSettings.IsDarkMode;
+                UpdateLocationDisplay();
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Failed to initialize DarkModeToggle: " + ex);
+                System.Diagnostics.Debug.WriteLine("Failed to initialize settings: " + ex);
                 DarkModeToggle.IsChecked = false; // fallback to default
+            }
+        }
+
+        private void UpdateLocationDisplay()
+        {
+            if (App.CurrentSettings.WeatherLocation.HasValue)
+            {
+                var loc = App.CurrentSettings.WeatherLocation.Value;
+                var name = string.IsNullOrWhiteSpace(App.CurrentSettings.WeatherLocationName) 
+                    ? "Manual location" 
+                    : App.CurrentSettings.WeatherLocationName;
+                CurrentLocationText.Text = $"{name} ({loc.latitude:F2}, {loc.longitude:F2})";
+            }
+            else
+            {
+                CurrentLocationText.Text = "Using device location";
             }
         }
 
@@ -56,6 +75,72 @@ namespace MySchool.Pages
             SettingsService.Save(App.CurrentSettings);
             // Apply theme with cross-fade transition (0.5s)
             ThemeManager.ApplyThemeWithTransition(isDark, 0.5);
+        }
+
+        private void UploadTimetableButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var dialog = new TimetableUploadDialog
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                dialog.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open upload dialog: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void RequestLocationButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var location = await WeatherService.GetLocationAsync();
+                
+                if (location.HasValue)
+                {
+                    // Clear manual location to use device location
+                    App.CurrentSettings.WeatherLocation = null;
+                    App.CurrentSettings.WeatherLocationName = string.Empty;
+                    SettingsService.Save(App.CurrentSettings);
+                    UpdateLocationDisplay();
+                    
+                    MessageBox.Show($"Location permission granted!\nYour coordinates: {location.Value.latitude:F4}, {location.Value.longitude:F4}", 
+                        "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Unable to access location. Please check your location permissions in Windows Settings.", 
+                        "Location Access Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to request location: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ManualLocationButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var dialog = new ManualLocationDialog
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                
+                if (dialog.ShowDialog() == true)
+                {
+                    UpdateLocationDisplay();
+                    MessageBox.Show("Location saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open location dialog: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

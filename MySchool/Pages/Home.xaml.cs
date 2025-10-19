@@ -21,10 +21,263 @@ namespace MySchool.Pages
     /// </summary>
     public partial class Home : Page
     {
+        private static bool hasLoadedWeather = false;
+        private static WeatherData? cachedWeather = null;
+
         public Home()
         {
             InitializeComponent();
+            Loaded += Home_Loaded;
+        }
+
+        private async void Home_Loaded(object sender, RoutedEventArgs e)
+        {
+            ConfigureWeekendLayout();
             TryRenderUpcomingEvents();
+            LoadCurrentAndNextClass();
+            
+            // Load weather once or display cached data
+            if (!hasLoadedWeather)
+            {
+                await LoadWeatherIfWeekendAsync();
+                hasLoadedWeather = true;
+            }
+            else if (cachedWeather != null)
+            {
+                // Display cached weather data
+                DisplayWeatherData(cachedWeather);
+            }
+        }
+
+        private void ConfigureWeekendLayout()
+        {
+            var today = DateTime.Now.DayOfWeek;
+            bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+
+            if (isWeekend)
+            {
+                // Hide current class section on weekends
+                CurrentClassBorder.Visibility = Visibility.Collapsed;
+                LeftColumn.Width = new GridLength(0);
+                
+                // Adjust greeting border margin to expand left
+                GreetingBorder.Margin = new Thickness(0, 0, 20, 0);
+                
+                // Update center greeting for weekend
+                MainGreeting.Text = today == DayOfWeek.Saturday ? "Happy Saturday!" : "Happy Sunday!";
+                
+                // Show weekend content in right section (weather)
+                NextClassPanel.Visibility = Visibility.Collapsed;
+                WeekendPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // Show normal weekday layout
+                CurrentClassBorder.Visibility = Visibility.Visible;
+                LeftColumn.Width = GridLength.Auto;
+                
+                // Normal greeting border margin
+                GreetingBorder.Margin = new Thickness(20, 0, 20, 0);
+                
+                // Weekday greeting
+                MainGreeting.Text = "Hey Kevin!";
+                
+                // Show next class content in right section
+                NextClassPanel.Visibility = Visibility.Visible;
+                WeekendPanel.Visibility = Visibility.Collapsed;
+                
+                // Reset to default gradient for weekdays
+                SetWeatherGradient("Clear");
+            }
+        }
+
+        private async Task LoadWeatherIfWeekendAsync()
+        {
+            var today = DateTime.Now.DayOfWeek;
+            bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+
+            if (!isWeekend)
+                return;
+
+            try
+            {
+                var weather = await WeatherService.GetCurrentWeatherAsync();
+
+                if (weather != null)
+                {
+                    cachedWeather = weather;
+                    DisplayWeatherData(weather);
+                }
+                else
+                {
+                    WeatherTemperature.Text = "--°";
+                    WeatherDescription.Text = "Unable to load weather";
+                    WeatherLocationLabel.Text = "Weather";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to load weather: {ex.Message}");
+                WeatherTemperature.Text = "--°";
+                WeatherDescription.Text = "Weather unavailable";
+                WeatherLocationLabel.Text = "Weather";
+            }
+        }
+
+        private void DisplayWeatherData(WeatherData weather)
+        {
+            WeatherTemperature.Text = $"{Math.Round(weather.Temperature)}°";
+            WeatherDescription.Text = char.ToUpper(weather.Description[0]) + weather.Description.Substring(1);
+            WeatherLocationLabel.Text = weather.LocationName;
+            
+            // Update gradient based on weather condition
+            SetWeatherGradient(weather.Condition);
+        }
+
+        private void UpdateWeatherLocationLabel()
+        {
+            // This method is no longer needed as location comes from WeatherData
+            // Keeping for backwards compatibility but it won't be called
+        }
+
+        private void SetWeatherGradient(string condition)
+        {
+            Color startColor, endColor;
+            bool isDarkMode = App.CurrentSettings.IsDarkMode;
+
+            switch (condition.ToLower())
+            {
+                case "clear":
+                    // Sunny gradient (yellow to orange)
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#D97706");
+                        endColor = (Color)ColorConverter.ConvertFromString("#DC2626");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#F59E0B");
+                        endColor = (Color)ColorConverter.ConvertFromString("#F97316");
+                    }
+                    break;
+
+                case "clouds":
+                    // Cloudy gradient
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#6B7280");
+                        endColor = (Color)ColorConverter.ConvertFromString("#475569");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#D1D5DB");
+                        endColor = (Color)ColorConverter.ConvertFromString("#94A3B8");
+                    }
+                    break;
+
+                case "rain":
+                case "drizzle":
+                    // Rainy gradient
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#1E3A8A");
+                        endColor = (Color)ColorConverter.ConvertFromString("#1E40AF");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#1E40AF");
+                        endColor = (Color)ColorConverter.ConvertFromString("#3B82F6");
+                    }
+                    break;
+
+                case "snow":
+                    // Snowy gradient
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#60A5FA");
+                        endColor = (Color)ColorConverter.ConvertFromString("#3B82F6");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#DBEAFE");
+                        endColor = (Color)ColorConverter.ConvertFromString("#93C5FD");
+                    }
+                    break;
+
+                case "thunderstorm":
+                    // Storm gradient
+                    if (isDarkMode)
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#3730A3");
+                        endColor = (Color)ColorConverter.ConvertFromString("#374151");
+                    }
+                    else
+                    {
+                        startColor = (Color)ColorConverter.ConvertFromString("#4C1D95");
+                        endColor = (Color)ColorConverter.ConvertFromString("#6B7280");
+                    }
+                    break;
+
+                default:
+                    // Default gradient (original colors)
+                    startColor = (Color)ColorConverter.ConvertFromString("#6366F1");
+                    endColor = (Color)ColorConverter.ConvertFromString("#089DDA");
+                    break;
+            }
+
+            RightSectionGradient.GradientStops[0].Color = startColor;
+            RightSectionGradient.GradientStops[1].Color = endColor;
+        }
+
+        private void LoadCurrentAndNextClass()
+        {
+            try
+            {
+                var today = DateTime.Now.DayOfWeek;
+                bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+
+                // Skip loading class info on weekends
+                if (isWeekend)
+                {
+                    return;
+                }
+
+                var (current, next) = TimetableManager.GetCurrentAndNextClass();
+
+                // Update current class
+                if (current != null)
+                {
+                    CurrentClassSubject.Text = current.Subject;
+                    // For breaks, show a dash instead of room
+                    CurrentClassRoom.Text = current.IsBreak ? "-" : (string.IsNullOrWhiteSpace(current.Room) ? "-" : current.Room);
+                    CurrentClassTime.Text = $"{current.StartTime} - {current.EndTime}";
+                }
+                else
+                {
+                    CurrentClassSubject.Text = "None";
+                    CurrentClassRoom.Text = "-";
+                    CurrentClassTime.Text = "-";
+                }
+
+                // Update next class
+                if (next != null)
+                {
+                    NextClassSubject.Text = next.Subject;
+                    // For breaks, show a dash instead of room
+                    NextClassRoom.Text = next.IsBreak ? "-" : (string.IsNullOrWhiteSpace(next.Room) ? "-" : next.Room);
+                    NextClassTime.Text = $"{next.StartTime} - {next.EndTime}";
+                }
+                else
+                {
+                    NextClassSubject.Text = "None";
+                    NextClassRoom.Text = "-";
+                    NextClassTime.Text = "-";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to load class info: {ex.Message}");
+            }
         }
 
         private void TryRenderUpcomingEvents()

@@ -4,15 +4,50 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MySchool.Pages"
+      xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="536" d:DesignWidth="928"
       Title="Schedule"
       Background="{DynamicResource Brush.Background}">
 
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-        <StackPanel Margin="24">
-            <TextBlock Text="Schedule" Style="{StaticResource Text.Headline}"/>
-            <TextBlock Text="Your classes and events will appear here." Style="{StaticResource Text.Body}" Margin="0,5,0,0"/>
-        </StackPanel>
-    </ScrollViewer>
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Schedule" Style="{StaticResource Text.Headline}" Margin="0,0,0,12"/>
+
+        <!-- Content area -->
+        <Border Grid.Row="1" Style="{StaticResource Card}">
+            <Grid>
+                <!-- No timetable message -->
+                <StackPanel x:Name="NoTimetablePanel" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"
+                            Visibility="Visible">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" 
+                               FontSize="64" 
+                               Text="&#xE8A5;" 
+                               HorizontalAlignment="Center"
+                               Foreground="{DynamicResource Brush.Primary}"
+                               Margin="0,0,0,16"/>
+                    <TextBlock Style="{StaticResource Text.Title}" 
+                               Text="No Timetable Available" 
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,8"/>
+                    <TextBlock Style="{StaticResource Text.Body}" 
+                               Text="Upload your timetable in Settings to view it here." 
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"/>
+                </StackPanel>
+
+                <!-- PDF Viewer (WebView2 control) -->
+                <wv2:WebView2 x:Name="PdfViewer" 
+                              Visibility="Collapsed"
+                              Margin="0"/>
+            </Grid>
+        </Border>
+    </Grid>
 </Page>

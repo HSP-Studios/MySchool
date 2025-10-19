@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System;
 using System.Runtime.InteropServices;
 using MySchool.Pages;
+using MySchool.Classes;
  
 
 namespace MySchool
@@ -74,19 +75,28 @@ namespace MySchool
 
         private void HomeTab_Click(object sender, RoutedEventArgs e)
         {
-            if (ContentFrame != null) ContentFrame.Navigate(new Home());
+            if (ContentFrame != null)
+            {
+                PageTransition.AnimatePageTransition(ContentFrame, new Home(), 0.3);
+            }
             SetTabHighlight("Home");
         }
 
         private void ScheduleTab_Click(object sender, RoutedEventArgs e)
         {
-            if (ContentFrame != null) ContentFrame.Navigate(new Schedule());
+            if (ContentFrame != null)
+            {
+                PageTransition.AnimatePageTransition(ContentFrame, new Schedule(), 0.3);
+            }
             SetTabHighlight("Schedule");
         }
 
         private void SettingsTab_Click(object sender, RoutedEventArgs e)
         {
-            if (ContentFrame != null) ContentFrame.Navigate(new Settings());
+            if (ContentFrame != null)
+            {
+                PageTransition.AnimatePageTransition(ContentFrame, new Settings(), 0.3);
+            }
             SetTabHighlight("Settings");
         }
 

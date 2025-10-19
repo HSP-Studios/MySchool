@@ -22,6 +22,46 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Timetable" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource Text.Body}" Text="Upload your school timetable using an AI assistant (ChatGPT, Claude, etc.)" Margin="0,0,0,8"/>
+                    <Button x:Name="UploadTimetableButton" 
+                            Style="{StaticResource Button.Primary}" 
+                            Content="Upload Timetable" 
+                            Padding="16,8"
+                            HorizontalAlignment="Left"
+                            Click="UploadTimetableButton_Click"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Weather Location" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource Text.Body}" Text="Configure location for weekend weather display" Margin="0,0,0,8"/>
+                    
+                    <TextBlock x:Name="CurrentLocationText" 
+                               Style="{StaticResource Text.Body}" 
+                               Text="Using device location" 
+                               Margin="0,0,0,8"
+                               FontWeight="SemiBold"/>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="RequestLocationButton" 
+                                Style="{StaticResource Button.Primary}" 
+                                Content="Request Location Permission" 
+                                Padding="16,8"
+                                Margin="0,0,8,0"
+                                Click="RequestLocationButton_Click"/>
+                        <Button x:Name="ManualLocationButton" 
+                                Style="{StaticResource Button.Secondary}" 
+                                Content="Set Manual Location" 
+                                Padding="16,8"
+                                Click="ManualLocationButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>
