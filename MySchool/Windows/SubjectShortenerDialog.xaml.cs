@@ -51,7 +51,7 @@ namespace MySchool.Windows
                 // Arrow icon
                 var arrowText = new TextBlock
                 {
-                    Text = "?",
+                    Text = "->",
                     FontSize = 18,
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center
