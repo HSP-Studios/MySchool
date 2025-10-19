@@ -29,14 +29,57 @@ namespace MySchool.Pages
 
         private void Home_Loaded(object sender, RoutedEventArgs e)
         {
+            ConfigureWeekendLayout();
             TryRenderUpcomingEvents();
             LoadCurrentAndNextClass();
+        }
+
+        private void ConfigureWeekendLayout()
+        {
+            var today = DateTime.Now.DayOfWeek;
+            bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+
+            if (isWeekend)
+            {
+                // Hide current class section on weekends
+                CurrentClassBorder.Visibility = Visibility.Collapsed;
+                LeftColumn.Width = new GridLength(0);
+                
+                // Adjust greeting border margin to expand left
+                GreetingBorder.Margin = new Thickness(0, 0, 20, 0);
+                
+                // Show weekend content in right section
+                NextClassPanel.Visibility = Visibility.Collapsed;
+                WeekendPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // Show normal weekday layout
+                CurrentClassBorder.Visibility = Visibility.Visible;
+                LeftColumn.Width = GridLength.Auto;
+                
+                // Normal greeting border margin
+                GreetingBorder.Margin = new Thickness(20, 0, 20, 0);
+                
+                // Show next class content in right section
+                NextClassPanel.Visibility = Visibility.Visible;
+                WeekendPanel.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void LoadCurrentAndNextClass()
         {
             try
             {
+                var today = DateTime.Now.DayOfWeek;
+                bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+
+                // Skip loading class info on weekends
+                if (isWeekend)
+                {
+                    return;
+                }
+
                 var (current, next) = TimetableManager.GetCurrentAndNextClass();
 
                 // Update current class

@@ -13,14 +13,15 @@
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Margin="0,0,0,-18" Background="Transparent">
         <StackPanel Margin="24" Orientation="Vertical" VerticalAlignment="Top">
             <!-- Hero Section -->
-            <Grid Margin="0,0,0,20">
+            <Grid x:Name="HeroGrid" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition x:Name="LeftColumn" Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <!-- Hero section left -->
-                <Border CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Left" Grid.Column="0">
+                
+                <!-- Hero section left (Current Class) -->
+                <Border x:Name="CurrentClassBorder" CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Left" Grid.Column="0">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#6366F1" Offset="0"/>
@@ -38,8 +39,8 @@
                     </Grid>
                 </Border>
 
-                <!-- Hero section center -->
-                <Border CornerRadius="16" Padding="24"  Height="168" Grid.Column="1" Margin="20,0,20,0">
+                <!-- Hero section center (Greeting) -->
+                <Border x:Name="GreetingBorder" CornerRadius="16" Padding="24" Height="168" Grid.Column="1" Margin="20,0,20,0">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#FF089DDA" Offset="1"/>
@@ -49,24 +50,24 @@
                     </Border.Background>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="1" Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Center" Text="Hey Kevin!" VerticalAlignment="Center" FontSize="48"/>
+                        <TextBlock Grid.Column="0" Foreground="White" Style="{StaticResource Text.Headline}" Margin="0,4,0,8" FontWeight="Bold" HorizontalAlignment="Center" Text="Hey Kevin!" VerticalAlignment="Center" FontSize="48"/>
                         <!-- Windows Hello smile/emoji icon -->
-                        <TextBlock Foreground="White"
+                        <TextBlock Grid.Column="1"
+                                   Foreground="White"
                                    FontFamily="Segoe MDL2 Assets"
                                    FontSize="100"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    Text="&#xEB68;"
-                                   Grid.Column="2" Margin="0,0,10,0"/>
+                                   Margin="20,0,0,0"/>
                     </Grid>
                 </Border>
 
-                <!-- Hero section right -->
-                <Border CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Right" Grid.Column="2">
+                <!-- Hero section right (Next Class / Weekend Info) -->
+                <Border x:Name="RightSectionBorder" CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Right" Grid.Column="2">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#6366F1" Offset="0"/>
@@ -74,12 +75,25 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid>
-                        <StackPanel Grid.Column="0">
+                        <!-- Weekday content (Next Class) -->
+                        <StackPanel x:Name="NextClassPanel" Grid.Column="0">
                             <TextBlock Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="Next Class" FontSize="12"/>
                             <TextBlock x:Name="NextClassSubject" Foreground="White" Style="{StaticResource Text.Headline}" FontWeight="Bold" HorizontalAlignment="Center" Text="None" TextWrapping="Wrap" TextAlignment="Center"/>
                             <TextBlock x:Name="NextClassRoom" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="-"/>
                             <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
                             <TextBlock x:Name="NextClassTime" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="-"/>
+                        </StackPanel>
+                        
+                        <!-- Weekend content -->
+                        <StackPanel x:Name="WeekendPanel" Grid.Column="0" Visibility="Collapsed">
+                            <TextBlock Foreground="White" 
+                                       Style="{StaticResource Text.Headline}" 
+                                       FontWeight="Bold" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"
+                                       Text="sigma1"
+                                       TextWrapping="Wrap" 
+                                       TextAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                 </Border>
