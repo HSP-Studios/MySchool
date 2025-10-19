@@ -3,7 +3,7 @@
 ProjectFileVersion = 1.1
 [General]
 Program name = MySchool
-Program version = v1.0.0-beta1
+Program version = v1.0.0-beta2
 Windows XP = 0
 Windows Server 2003 = 1
 Windows Vista = 0
@@ -57,7 +57,7 @@ Time = 2
 PlaySound = 0
 Allow = 0
 [Build]
-File = C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\MySchool-v1.0.0-beta1-installer.exe
+File = C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\MySchool-v1.0.0-beta2-installer.exe
 SetupIconPath = ..\icons\ancient.ico
 UninstallIconPath = ..\icons\ancient.ico
 CompressionMethod = 0
@@ -76,15 +76,6 @@ RunProgs = 0
 Execdlls = 0
 [Languages]
 [Files/Dirs]
-C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\resources
-N/A
-[Folder]
-C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\runtimes
-N/A
-[Folder]
-C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\Microsoft.Web.WebView2.Core.dll
-634.6 KB
-dll
 C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\Microsoft.Web.WebView2.Core.xml
 566.1 KB
 xml
@@ -107,13 +98,13 @@ C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projec
 3 KB
 json
 C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\MySchool.dll
-17.9 MB
+18 MB
 dll
 C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\MySchool.exe
-152.5 KB
+258 KB
 exe
 C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\MySchool.pdb
-49.8 KB
+55.7 KB
 pdb
 C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\MySchool.runtimeconfig.json
 516 Byte
@@ -123,6 +114,15 @@ C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projec
 dll
 C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\WinRT.Runtime.dll
 516.5 KB
+dll
+C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\resources
+N/A
+[Folder]
+C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\runtimes
+N/A
+[Folder]
+C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\publish\Microsoft.Web.WebView2.Core.dll
+634.6 KB
 dll
 C:\Users\kevin\OneDrive - Department of Education\Documents\Visual Studio Projects\MySchool\MySchool\bin\Release\net9.0-windows\redist
 N/A
@@ -799,6 +799,12 @@ For more information on this, and how to apply and follow the GNU AGPL, see\par
 [Variables]
 [SCs]
 Startmenu
+MySchool
+<InstallPath>\MySchool.exe
+
+
+0
+Desktop
 MySchool
 <InstallPath>\MySchool.exe
 
