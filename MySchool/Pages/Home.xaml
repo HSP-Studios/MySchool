@@ -86,12 +86,13 @@
                         
                         <!-- Weekend content -->
                         <StackPanel x:Name="WeekendPanel" Grid.Column="0" Visibility="Collapsed">
-                            <TextBlock Foreground="White" 
+                            <TextBlock x:Name="WeekendGreeting"
+                                       Foreground="White" 
                                        Style="{StaticResource Text.Headline}" 
                                        FontWeight="Bold" 
                                        HorizontalAlignment="Center" 
                                        VerticalAlignment="Center"
-                                       Text="sigma1"
+                                       Text="Happy Weekend!"
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center"/>
                         </StackPanel>

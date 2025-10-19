@@ -51,6 +51,9 @@ namespace MySchool.Pages
                 // Show weekend content in right section
                 NextClassPanel.Visibility = Visibility.Collapsed;
                 WeekendPanel.Visibility = Visibility.Visible;
+                
+                // Update weekend greeting based on day
+                WeekendGreeting.Text = today == DayOfWeek.Saturday ? "Happy Saturday!" : "Happy Sunday!";
             }
             else
             {
