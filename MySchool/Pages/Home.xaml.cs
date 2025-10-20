@@ -39,7 +39,7 @@ namespace MySchool.Pages
             // Load weather once or display cached data
             if (!hasLoadedWeather)
             {
-                await LoadWeatherIfWeekendAsync();
+                await LoadWeatherIfWeekendOrAfterSchoolAsync();
                 hasLoadedWeather = true;
             }
             else if (cachedWeather != null)
@@ -79,18 +79,20 @@ namespace MySchool.Pages
         {
             var today = DateTime.Now.DayOfWeek;
             bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+            bool isAfterSchool = !isWeekend && TimetableManager.IsAfterLastPeriodForToday();
 
-            if (isWeekend)
+            if (isWeekend || isAfterSchool)
             {
-                // Hide current class section on weekends
+                // Hide current class section on weekends or after school
                 CurrentClassBorder.Visibility = Visibility.Collapsed;
                 LeftColumn.Width = new GridLength(0);
                 
                 // Adjust greeting border margin to expand left
                 GreetingBorder.Margin = new Thickness(0, 0, 20, 0);
                 
-                // Update center greeting for weekend
-                MainGreeting.Text = today == DayOfWeek.Saturday ? "Happy Saturday!" : "Happy Sunday!";
+                // Update center greeting for weekend/after-school: two words only, add '!'
+                var dayName = today.ToString();
+                MainGreeting.Text = $"Happy {dayName}!";
                 
                 // Show weekend content in right section (weather)
                 NextClassPanel.Visibility = Visibility.Collapsed;
@@ -117,12 +119,13 @@ namespace MySchool.Pages
             }
         }
 
-        private async Task LoadWeatherIfWeekendAsync()
+        private async Task LoadWeatherIfWeekendOrAfterSchoolAsync()
         {
             var today = DateTime.Now.DayOfWeek;
             bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+            bool isAfterSchool = !isWeekend && TimetableManager.IsAfterLastPeriodForToday();
 
-            if (!isWeekend)
+            if (!isWeekend && !isAfterSchool)
                 return;
 
             try
@@ -253,9 +256,10 @@ namespace MySchool.Pages
             {
                 var today = DateTime.Now.DayOfWeek;
                 bool isWeekend = today == DayOfWeek.Saturday || today == DayOfWeek.Sunday;
+                bool isAfterSchool = !isWeekend && TimetableManager.IsAfterLastPeriodForToday();
 
-                // Skip loading class info on weekends
-                if (isWeekend)
+                // Skip loading class info on weekends or after school
+                if (isWeekend || isAfterSchool)
                 {
                     return;
                 }
