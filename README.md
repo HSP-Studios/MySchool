@@ -30,14 +30,19 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🏠 **Home Dashboard** | Quick overview of current term, upcoming holidays, and key information |
-| 📅 **Schedule Management** | Organize and view class schedules with intuitive navigation |
-| ⚙️ **Settings & Customization** | Personalize your experience with theme options |
-| 🌙 **Dark Mode Support** | Easy on the eyes with automatic theme switching |
-| 🎨 **Modern UI/UX** | Clean, professional interface using SF Pro font and contemporary design patterns |
+| 🏠 **Home Dashboard** | Quick overview with personalized greeting, current class, next class, time remaining, and weather information |
+| 📅 **Schedule Management** | Organize and view class schedules with PDF viewer support and AI-powered timetable upload |
+| ⚙️ **Settings & Customization** | Personalize with your name, theme options, build info, and more |
+| 🌙 **Dark Mode Support** | Smooth animated theme transitions between light and dark modes |
+| 🎨 **Modern UI/UX** | Clean, professional interface using SF Pro font with improved button and TextBox styles |
 | 📊 **Term & Holiday Tracking** | Built-in Queensland school term dates and holiday calendars (2025-2029) |
+| ☀️ **Weather Integration** | Real-time weather display on weekends with geolocation support |
+| 📚 **Timetable Management** | Upload and process timetables with automatic period tracking and current class detection |
+| ✂️ **Subject Name Shortener** | Automatic dialog for shortening subject names over 8 characters |
+| 📍 **Location Services** | Automatic location detection with manual override option for weather |
+| 🔢 **Build Information** | Auto-generated build numbers and version display in Settings |
 | 💾 **Persistent Settings** | User preferences saved locally in AppData |
-| 🖼️ **Custom Branding** | Professional logo assets in multiple formats (SVG, PNG) |
+| 🖼️ **Custom Branding** | Professional logo assets in multiple formats (SVG, PNG, ICO) |
 
 ---
 
@@ -45,33 +50,46 @@
 
 ```
 MySchool/
-├── 📄 MySchool.sln              # Visual Studio solution file
-├── 📄 README.md                 # This file
-├── 📄 LICENSE                   # AGPL v3 License
-└── MySchool/                    # Main application project
-    ├── 📁 Classes/              # Core application logic
-    │   ├── HolidayLogic.cs      # School holiday calculations
-    │   ├── SettingsService.cs   # User settings persistence
-    │   └── ThemeManager.cs      # Dynamic theme management
-    ├── 📁 Pages/                # Application pages (WPF Pages)
-    │   ├── Home.xaml/cs         # Home dashboard page
-    │   ├── Schedule.xaml/cs     # Schedule management page
-    │   └── Settings.xaml/cs     # Settings & preferences page
-    ├── 📁 resources/            # Application assets
+├── 📄 MySchool.sln                    # Visual Studio solution file
+├── 📄 README.md                       # This file
+├── 📄 LICENSE                         # AGPL v3 License
+└── MySchool/                          # Main application project
+    ├── 📁 Classes/                    # Core application logic
+    │   ├── BuildInfoHelper.cs         # Build version and date information
+    │   ├── HolidayLogic.cs            # School holiday calculations
+    │   ├── PageTransition.cs          # Animated page navigation
+    │   ├── SettingsService.cs         # User settings persistence
+    │   ├── ThemeManager.cs            # Dynamic theme management with animations
+    │   ├── TimetableManager.cs        # Timetable file handling and period tracking
+    │   ├── TimetableModels.cs         # Data models for timetable structure
+    │   └── WeatherService.cs          # Weather and geolocation services
+    ├── 📁 Pages/                      # Application pages (WPF Pages)
+    │   ├── Home.xaml/cs               # Home dashboard with weather and class info
+    │   ├── Schedule.xaml/cs           # Schedule management with PDF viewer
+    │   └── Settings.xaml/cs           # Settings, preferences, and build info
+    ├── 📁 Windows/                    # Dialog windows
+    │   ├── ManualLocationDialog.xaml/cs      # Manual location entry
+    │   ├── SubjectShortenerDialog.xaml/cs    # Subject name shortening
+    │   └── TimetableUploadDialog.xaml/cs     # Timetable upload & processing
+    ├── 📁 resources/                  # Application assets
     │   ├── 📁 data/
-    │   │   └── holidays/
-    │   │       └── QLD.json     # Queensland school calendar data
+    │   │   ├── holidays/
+    │   │   │   └── QLD.json           # Queensland school calendar data
+    │   │   └── timetables/            # User timetables (JSON & PDF)
     │   ├── 📁 fonts/
-    │   │   └── SF-Pro.ttf       # Apple SF Pro font
-    │   └── 📁 logo/             # Branding assets
-    │       ├── png/             # PNG logos (with background)
-    │       ├── png-transparent/ # PNG logos (transparent)
-    │       ├── svg/             # SVG logos (with background)
-    │       └── svg-transparent/ # SVG logos (transparent)
-    ├── App.xaml/cs              # Application startup & global resources
-    ├── MainWindow.xaml/cs       # Main application window & navigation
-    ├── AssemblyInfo.cs          # Assembly metadata
-    └── MySchool.csproj          # Project configuration file
+    │   │   └── SF-Pro.ttf             # Apple SF Pro font
+    │   ├── 📁 logo/                   # Branding assets
+    │   │   ├── ico/                   # Application icons
+    │   │   ├── png/                   # PNG logos (with background)
+    │   │   ├── png-transparent/       # PNG logos (transparent)
+    │   │   ├── svg/                   # SVG logos (with background)
+    │   │   └── svg-transparent/       # SVG logos (transparent)
+    │   └── 📁 prompts/                # AI prompts for timetable generation
+    ├── 📄 App.xaml/cs                 # Application startup & global resources
+    ├── 📄 MainWindow.xaml/cs          # Main application window & navigation
+    ├── 📄 AssemblyInfo.cs             # Assembly metadata
+    ├── 📄 Directory.Build.targets     # Build number generation
+    └── 📄 MySchool.csproj             # Project configuration file
 ```
 
 ## 🚀 Installation
@@ -119,12 +137,47 @@ When you first launch MySchool:
 2. Default settings are created in `%AppData%/MySchool/user_settings.json`
 3. Light theme is enabled by default
 
-### Dark Mode
+### Key Features
 
+#### 🌙 Dark Mode
 Toggle dark mode in **Settings**:
-- Switches between light and dark color schemes
+- Smooth 0.5s cross-fade animation between themes
 - Preference is saved and persists across sessions
-- Dynamic color palette updates instantly
+- Improved light theme contrast for better readability
+
+#### 👤 Personalized Greeting
+Set your name in **Settings**:
+- Home page displays personalized greeting based on time of day
+- Falls back to time-based greetings if no name is set
+- Greetings: "Good Morning", "Good Afternoon", "Good Evening"
+
+#### 📚 Timetable Management
+Upload and manage your class schedule:
+1. Click "Upload Timetable" in **Schedule** tab
+2. AI processes your timetable document
+3. Automatic subject name shortening for names over 8 characters
+4. View current and next class on Home page
+5. PDF viewer for uploaded timetables
+
+#### ☀️ Weather Display
+On weekends, the Home page shows:
+- Current weather conditions and temperature
+- Your location (auto-detected or manually set)
+- Weather-based background gradient
+
+#### 🔢 Build Information
+View app version details in **Settings**:
+- Version number (e.g., 1.0.0-beta.2)
+- Auto-generated build number (format: YYMMDDRRRR)
+- Build date
+
+### Navigation
+
+| Tab | Shortcut | Description |
+|-----|----------|-------------|
+| **Home** | Click "Home" tab or schedule card | View dashboard with personalized greeting, current/next class, time remaining, and weekend weather |
+| **Schedule** | Click "Schedule" tab | Upload timetables, view PDF schedules, and manage class information |
+| **Settings** | Click "Settings" tab | Set your name, toggle dark mode, and view build information |
 
 ### Window Controls
 
@@ -148,6 +201,9 @@ Note: Window resizing has been disabled for aesthetics. If you would like resizi
 | **Language** | C# | 12.0 |
 | **Markup** | XAML | - |
 | **Serialization** | System.Text.Json | Built-in |
+| **Web Browser** | Microsoft.Web.WebView2 | For PDF viewing |
+| **Weather API** | Open-Meteo | Free weather data |
+| **Geolocation** | Nominatim (OpenStreetMap) | Reverse geocoding |
 
 ### Architecture Pattern
 
@@ -161,7 +217,7 @@ MySchool uses a **Code-Behind Pattern** with the following structure:
                │ Hosts Frame
                ▼
 ┌───────────────────────────────────────┐
-│           Page Navigation             │
+│      Animated Page Navigation         │
 │  ┌─────────┐ ┌──────────┐ ┌────────┐  │
 │  │  Home   │ │ Schedule │ │Settings│  │
 │  └─────────┘ └──────────┘ └────────┘  │
@@ -170,26 +226,43 @@ MySchool uses a **Code-Behind Pattern** with the following structure:
                ▼
 ┌──────────────────────────────────────┐
 │         Business Logic               │
-│  • ThemeManager (Dynamic Theming)    │
+│  • ThemeManager (Animated Theming)   │
+│  • TimetableManager (Period Tracking)│
+│  • WeatherService (Geolocation)      │
 │  • SettingsService (Persistence)     │
 │  • HolidayLogic (Calendar Logic)     │
+│  • PageTransition (Animations)       │
+│  • BuildInfoHelper (Version Info)    │
+└──────────────────────────────────────┘
+               │
+               ▼
+┌──────────────────────────────────────┐
+│          Dialog Windows              │
+│  • TimetableUploadDialog             │
+│  • SubjectShortenerDialog            │
+│  • ManualLocationDialog              │
 └──────────────────────────────────────┘
 ```
 
 ### Design Principles
 
 - **🎨 Material Design Inspired**: Modern, clean UI with cards, shadows, and contemporary color palettes
-- **🌐 Dynamic Resources**: Theme colors and styles defined globally and updated at runtime
-- **💾 JSON-based Configuration**: Lightweight, human-readable data storage
-- **🎯 Single Responsibility**: Each class has a focused purpose (theme management, settings, etc.)
-- **♿ Accessibility**: Uses system fonts and proper contrast ratios
+- **🌐 Dynamic Resources**: Theme colors and styles defined globally and updated at runtime with smooth animations
+- **💾 JSON-based Configuration**: Lightweight, human-readable data storage for settings and timetables
+- **🎯 Single Responsibility**: Each class has a focused purpose (theme management, weather, timetables, etc.)
+- **♿ Accessibility**: Uses system fonts and proper contrast ratios with improved light/dark mode support
+- **🔄 Real-time Updates**: Current class detection, weather updates, and dynamic UI elements
 
 ### Custom UI Components
 
 - **Custom Window**: Frameless window with custom title bar and controls
 - **Themed Scrollbars**: Rounded, modern scrollbars matching the application theme
 - **Icon Buttons**: Using Segoe MDL2 Assets for consistent Windows-native icons
-- **Smooth Navigation**: Frame-based page transitions without flickering
+- **Smooth Animations**: Fade-in/out page transitions and cross-fade theme switching
+- **Enhanced Buttons**: Primary and secondary button styles with hover/press states
+- **Modern TextBoxes**: Styled input fields with consistent padding and interaction feedback
+- **Dialog Windows**: Professional dialogs for timetable upload, subject shortening, and location entry
+- **PDF Viewer**: Integrated WebView2 for viewing timetable PDFs
 
 ---
 
@@ -216,11 +289,26 @@ The application is configured in `MySchool.csproj`:
 <PropertyGroup>
   <OutputType>WinExe</OutputType>
   <TargetFramework>net9.0-windows</TargetFramework>
+  <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
   <UseWPF>true</UseWPF>
   <ImplicitUsings>enable</ImplicitUsings>
   <Nullable>enable</Nullable>
+  <Version>1.0.0-beta.2</Version>
+  <ApplicationIcon>resources\logo\ico\Dark-Icon.ico</ApplicationIcon>
 </PropertyGroup>
 ```
+
+### Build System
+
+MySchool uses a custom build number generation system:
+
+**`Directory.Build.targets`** generates unique build numbers in format `YYMMDDRRRR`:
+- `YY`: Year (e.g., 25)
+- `MM`: Month (e.g., 10)
+- `DD`: Day (e.g., 19)
+- `RRRR`: Random 4-digit number
+
+Build information is auto-generated during compilation and accessible via `BuildInfoHelper.cs`.
 
 ### Adding New Resources
 
@@ -358,6 +446,9 @@ See the [LICENSE](LICENSE) file for the full license text.
 
 - **SF Pro Font**: © Apple Inc. (Used for educational purposes)
 - **Segoe MDL2 Assets**: © Microsoft Corporation (System font)
+- **Open-Meteo Weather API**: Free weather data service
+- **Nominatim (OpenStreetMap)**: Reverse geocoding service
+- **Microsoft WebView2**: For PDF viewing capabilities
 
 ---
 
@@ -395,11 +486,17 @@ See the [LICENSE](LICENSE) file for the full license text.
 ### Roadmap
 
 Future planned features:
+- [x] ~~Timetable management with AI processing~~
+- [x] ~~Dark mode with smooth animations~~
+- [x] ~~Weather integration~~
+- [x] ~~Personalized greetings~~
+- [x] ~~Build version tracking~~
 - [ ] Quick Notes
 - [ ] Report predictor
 - [ ] Multi-region support (NSW, VIC, SA, etc.)
 - [ ] Export/import functionality
 - [ ] Cloud synchronization
+- [ ] Mobile companion app
 
 ---
 
@@ -410,6 +507,9 @@ Special thanks to:
 - Contributors and testers who help improve MySchool
 - Queensland Department of Education for public school calendar data
 - InstallForge's easy-to-use installer creator
+- Open-Meteo for free weather API access
+- OpenStreetMap/Nominatim for geolocation services
+- GitHub Copilot for AI-assisted development
 
 ---
 
