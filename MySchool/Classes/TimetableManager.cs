@@ -147,6 +147,46 @@ namespace MySchool.Classes
                 return (null, null);
             }
         }
+
+        // Returns true if the current time is after the last period's end time for today.
+        public static bool IsAfterLastPeriodForToday()
+        {
+            try
+            {
+                var timetable = LoadLatestTimetable();
+                if (timetable == null)
+                    return false;
+
+                var todayName = DateTime.Now.DayOfWeek.ToString();
+                var todaySchedule = timetable.Timetable.FirstOrDefault(d =>
+                    d.Day.Equals(todayName, StringComparison.OrdinalIgnoreCase));
+
+                if (todaySchedule == null || todaySchedule.Periods == null || todaySchedule.Periods.Count == 0)
+                    return false;
+
+                // Find the maximum valid end time across all periods (classes and breaks)
+                TimeSpan? lastEnd = null;
+                foreach (var p in todaySchedule.Periods)
+                {
+                    if (TimeSpan.TryParse(p.EndTime, out var end))
+                    {
+                        if (lastEnd == null || end > lastEnd)
+                        {
+                            lastEnd = end;
+                        }
+                    }
+                }
+
+                if (lastEnd == null)
+                    return false;
+
+                return DateTime.Now.TimeOfDay >= lastEnd.Value;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
 
