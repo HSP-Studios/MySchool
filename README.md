@@ -73,9 +73,8 @@ MySchool/
     │   └── TimetableUploadDialog.xaml/cs     # Timetable upload & processing
     ├── 📁 resources/                  # Application assets
     │   ├── 📁 data/
-    │   │   ├── holidays/
-    │   │   │   └── QLD.json           # Queensland school calendar data
-    │   │   └── timetables/            # User timetables (JSON & PDF)
+    │   │   └── holidays/
+    │   │       └── QLD.json           # Queensland school calendar data
     │   ├── 📁 fonts/
     │   │   └── SF-Pro.ttf             # Apple SF Pro font
     │   ├── 📁 logo/                   # Branding assets
