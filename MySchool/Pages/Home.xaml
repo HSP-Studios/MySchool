@@ -19,9 +19,9 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <!-- Hero section left (Current Class) -->
-                <Border x:Name="CurrentClassBorder" CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Left" Grid.Column="0">
+                <Border x:Name="CurrentClassBorder" Grid.Column="0" CornerRadius="16" Padding="24" Height="168" Width="175" HorizontalAlignment="Center">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#6366F1" Offset="0"/>
@@ -67,7 +67,7 @@
                 </Border>
 
                 <!-- Hero section right (Next Class / Weekend Info) -->
-                <Border x:Name="RightSectionBorder" CornerRadius="16" Padding="24" Height="168" Width="145" HorizontalAlignment="Right" Grid.Column="2">
+                <Border x:Name="RightSectionBorder" CornerRadius="16" Padding="24" Height="168" Width="175" Grid.Column="2">
                     <Border.Background>
                         <LinearGradientBrush x:Name="RightSectionGradient" StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#6366F1" Offset="0"/>
@@ -83,7 +83,7 @@
                             <StackPanel Orientation="Horizontal" Margin="0,20,0,0"/>
                             <TextBlock x:Name="NextClassTime" Foreground="White" Style="{StaticResource Text.Body}" Opacity="0.9" HorizontalAlignment="Center" Text="-"/>
                         </StackPanel>
-                        
+
                         <!-- Weekend content (Weather) -->
                         <StackPanel x:Name="WeekendPanel" Grid.Column="0" Visibility="Collapsed" VerticalAlignment="Center">
                             <TextBlock x:Name="WeatherLocationLabel"
