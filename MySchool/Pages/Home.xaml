@@ -21,7 +21,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Hero section left (Current Class) -->
-                <Border x:Name="CurrentClassBorder" CornerRadius="16" Padding="24" Height="168" Width="175" HorizontalAlignment="Center">
+                <Border x:Name="CurrentClassBorder" Grid.Column="0" CornerRadius="16" Padding="24" Height="168" Width="175" HorizontalAlignment="Center">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#6366F1" Offset="0"/>
