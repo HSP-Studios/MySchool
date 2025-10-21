@@ -508,6 +508,7 @@ Special thanks to:
 - InstallForge's easy-to-use installer creator
 - Open-Meteo for free weather API access
 - OpenStreetMap/Nominatim for geolocation services
+- Velopack for the amazing auto-update system
 - GitHub Copilot for AI-assisted development
 
 ---
