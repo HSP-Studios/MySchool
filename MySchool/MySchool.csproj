@@ -8,11 +8,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>resources\logo\ico\Dark-Icon.ico</ApplicationIcon>
+	<StartupObject>MySchool.App</StartupObject>
 
     <!-- Versioning -->
 	<Version>1.0.0-beta2</Version>
 	  
   </PropertyGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Remove="App.xaml" />
+    <Page Include="App.xaml" />
+  </ItemGroup>
   
   <ItemGroup>
     <None Remove="resources\data\holidays\QLD.json" />
@@ -51,6 +57,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
+    <PackageReference Include="Velopack" Version="0.0.1298" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,5 +83,4 @@
   <ItemGroup>
     <Folder Include="resources\logo\ico\" />
   </ItemGroup>
-
 </Project>
