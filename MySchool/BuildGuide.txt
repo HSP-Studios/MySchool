@@ -5,8 +5,5 @@ TO BUILD;
 1.
 PUBLISH (SELF CONTAINED)
 
-2. RELEASE
-vpk pack --packId MySchool --packDir MySchool\bin\Release\net9.0-windows\publish --mainExe MySchool.exe --packVersion VERSION --channel stable
-
-2. BETA
-vpk pack --packId MySchool --packDir MySchool\bin\Release\net9.0-windows\publish --mainExe MySchool.exe --packVersion VERSION --channel beta
+2.
+vpk pack --packId MySchool --packDir MySchool\bin\Release\net9.0-windows\publish --mainExe MySchool.exe --packVersion VERSION
