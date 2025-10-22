@@ -47,7 +47,7 @@ namespace MySchool
         {
             try
             {
-                var mgr = new UpdateManager(new GithubSource("https://github.com/HSP-Studios/MySchool", null, false, null));
+                var mgr = new UpdateManager("raw.githubusercontent.com/HSP-Studios/MySchool/refs/heads/main/Releases/");
 
                 // download new version
                 await mgr.DownloadUpdatesAsync(updateInfo);
