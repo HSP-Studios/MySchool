@@ -124,7 +124,7 @@ namespace MySchool.Windows
             try
             {
                 Clipboard.SetText(PromptTextBox.Text);
-                CopyPromptButton.Content = "Copied!";
+                CopyPromptButton.Content = "Copied";
                 
                 // Reset button text after 2 seconds
                 var timer = new System.Windows.Threading.DispatcherTimer
