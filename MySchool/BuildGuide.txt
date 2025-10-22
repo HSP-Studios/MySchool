@@ -2,8 +2,11 @@
 
 TO BUILD;
 
-1.
-PUBLISH (SELF CONTAINED)
+1. 
+CHANGE VERSION IN CSPROJ
 
 2.
+PUBLISH (SELF CONTAINED)
+
+3.
 vpk pack --packId MySchool --packDir MySchool\bin\Release\net9.0-windows\publish --mainExe MySchool.exe --packVersion VERSION
