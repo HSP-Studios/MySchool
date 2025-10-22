@@ -174,5 +174,112 @@ namespace MySchool.Pages
                 MessageBox.Show($"Failed to open location dialog: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private async void CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
+        {
+            var checkingDialog = new Window
+            {
+                Title = "Checking for Updates",
+                Width = 400,
+                Height = 150,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this),
+                ResizeMode = ResizeMode.NoResize,
+                WindowStyle = WindowStyle.ToolWindow,
+                Background = (Brush)Application.Current.Resources["Brush.Background"]
+            };
+
+            var stackPanel = new StackPanel
+            {
+                Margin = new Thickness(20),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            var progressBar = new ProgressBar
+            {
+                IsIndeterminate = true,
+                Width = 300,
+                Height = 20,
+                Margin = new Thickness(0, 0, 0, 10)
+            };
+
+            var statusText = new TextBlock
+            {
+                Text = "Checking for updates...",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Style = (Style)Application.Current.Resources["Text.Body"]
+            };
+
+            stackPanel.Children.Add(progressBar);
+            stackPanel.Children.Add(statusText);
+            checkingDialog.Content = stackPanel;
+
+            // Disable the button while checking
+            CheckUpdatesButton.IsEnabled = false;
+
+            // Show the dialog non-modally
+            checkingDialog.Show();
+
+            try
+            {
+                var updateInfo = await App.CheckForUpdatesAsync();
+
+                checkingDialog.Close();
+
+                if (updateInfo != null)
+                {
+                    var result = MessageBox.Show(
+                        $"A new version of MySchool is available!\n\n" +
+                        $"New Version: {updateInfo.TargetFullRelease.Version}\n\n" +
+                        $"Would you like to download and install the update now?\n" +
+                        $"The application will restart after the update.",
+                        "Update Available",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        statusText.Text = "Downloading update...";
+                        checkingDialog.Show();
+
+                        bool success = await App.DownloadAndApplyUpdateAsync(updateInfo);
+ 
+                        checkingDialog.Close();
+
+                        if (!success)
+                        {
+                            MessageBox.Show(
+                                "Failed to download or apply the update. Please try again later or download manually from GitHub.",
+                                "Update Failed",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+                        }
+                        // If success, app will restart automatically
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "You are running the latest version of MySchool!",
+                        "No Updates Available",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                checkingDialog.Close();
+                MessageBox.Show(
+                    $"Failed to check for updates: {ex.Message}\n\nPlease check your internet connection and try again.",
+                    "Update Check Failed",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            finally
+            {
+                CheckUpdatesButton.IsEnabled = true;
+            }
+        }
     }
 }

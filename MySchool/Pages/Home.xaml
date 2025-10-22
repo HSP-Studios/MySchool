@@ -143,8 +143,8 @@
                     <Border Style="{StaticResource Card}" Width="200" Height="100" Margin="0,0,0,0">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource Icon}" Text="&#xE716;"/>
-                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Attendance"/><Run Language="en-au" Text=" Tracker"/></TextBlock>
+                                <TextBlock Style="{StaticResource Icon}" Text="&#xE90F;"/>
+                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Language="en-au" Text="Toolbox"/></TextBlock>
                             </StackPanel>
                             <TextBlock Style="{StaticResource Text.Body}" Margin="0,6,0,0"><Run Language="en-au" Text="Coming Soon!"/></TextBlock>
                         </StackPanel>
