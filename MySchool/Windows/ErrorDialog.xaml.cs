@@ -3,7 +3,7 @@ using System.Windows;
 namespace MySchool.Windows
 {
     /// <summary>
- /// Custom error dialog with "Open Logs Folder" and "Ok" buttons
+    /// Custom error dialog with "Open Logs Folder" and "Ok" buttons
     /// </summary>
     public partial class ErrorDialog : Window
     {
@@ -11,30 +11,30 @@ namespace MySchool.Windows
 
         public ErrorDialog(string title, string message)
         {
-  InitializeComponent();
+            InitializeComponent();
             TitleTextBlock.Text = title;
-    MessageTextBlock.Text = message;
+            MessageTextBlock.Text = message;
         }
 
         private void OpenLogsButton_Click(object sender, RoutedEventArgs e)
         {
-        OpenLogsRequested = true;
+            OpenLogsRequested = true;
             DialogResult = true;
             Close();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
- OpenLogsRequested = false;
-     DialogResult = true;
-   Close();
+            OpenLogsRequested = false;
+            DialogResult = true;
+            Close();
         }
 
-  private void CloseButton_Click(object sender, RoutedEventArgs e)
-   {
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
             OpenLogsRequested = false;
             DialogResult = false;
             Close();
-}
+        }
     }
 }
