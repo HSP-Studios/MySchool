@@ -270,8 +270,23 @@ namespace MySchool.Pages
             catch (Exception ex)
             {
                 checkingDialog.Close();
+                
+                // Provide detailed error message based on exception type
+                string errorMessage = ex.Message;
+                
+                // Add helpful suggestions based on the error
+                if (errorMessage.Contains("internet connection") || 
+                     errorMessage.Contains("timed out") || 
+                     errorMessage.Contains("connect"))
+                {
+                    errorMessage += "\n\nPlease ensure:\n" +
+                                   "• You are connected to the internet\n" +
+                                   "• Your firewall isn't blocking the connection\n" +
+                                   "• GitHub.com is accessible from your network";
+                }
+        
                 MessageBox.Show(
-                    $"Failed to check for updates: {ex.Message}\n\nPlease check your internet connection and try again.",
+                    errorMessage,
                     "Update Check Failed",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
