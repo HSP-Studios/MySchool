@@ -10,3 +10,12 @@ PUBLISH (SELF CONTAINED)
 
 3.
 vpk pack --packId MySchool --packDir MySchool\bin\Release\net9.0-windows\publish --mainExe MySchool.exe --packVersion VERSION
+
+4. UPLOAD TO GITHUB
+- assets.win.json
+- releases.win.json
+- MySchool-win-Setup.exe
+- MySchool-win-Portable.zip
+- MySchool-v*-full.nupkg
+- MySchool-v*-delta.nupkg
+
