@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace MySchool.Classes
 {
@@ -84,28 +79,28 @@ namespace MySchool.Classes
                             }
                         }
 
-                    // school_holidays: add a single event per term with start-end range
-                    if (yearObj.TryGetProperty("school_holidays", out var holidays))
-                    {
-                        foreach (var termProp in holidays.EnumerateObject())
+                        // school_holidays: add a single event per term with start-end range
+                        if (yearObj.TryGetProperty("school_holidays", out var holidays))
                         {
-                            var termName = NormalizeTermName(termProp.Name);
-                            var termNode = termProp.Value;
-                            if (termNode.TryGetProperty("start", out var sEl) && termNode.TryGetProperty("end", out var eEl))
+                            foreach (var termProp in holidays.EnumerateObject())
                             {
-                                if (TryParseIsoDate(sEl.GetString(), out var s) && TryParseIsoDate(eEl.GetString(), out var e))
+                                var termName = NormalizeTermName(termProp.Name);
+                                var termNode = termProp.Value;
+                                if (termNode.TryGetProperty("start", out var sEl) && termNode.TryGetProperty("end", out var eEl))
                                 {
-                                    results.Add(new UpcomingEvent
+                                    if (TryParseIsoDate(sEl.GetString(), out var s) && TryParseIsoDate(eEl.GetString(), out var e))
                                     {
-                                        Title = $"{termName} Holidays",
-                                        Date = s,
-                                        EndDate = e,
-                                        Kind = EventKind.SchoolHoliday
-                                    });
+                                        results.Add(new UpcomingEvent
+                                        {
+                                            Title = $"{termName} Holidays",
+                                            Date = s,
+                                            EndDate = e,
+                                            Kind = EventKind.SchoolHoliday
+                                        });
+                                    }
                                 }
                             }
                         }
-                    }
                     }
 
                     // staff_development_days (structure may vary per year/term)

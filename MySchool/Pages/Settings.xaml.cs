@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySchool.Classes;
+using MySchool.Windows;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MySchool.Windows;
-using MySchool.Classes;
-using System.IO;
-using System.Diagnostics;
 
 namespace MySchool.Pages
 {
@@ -52,8 +41,8 @@ namespace MySchool.Pages
             if (App.CurrentSettings.WeatherLocation.HasValue)
             {
                 var loc = App.CurrentSettings.WeatherLocation.Value;
-                var name = string.IsNullOrWhiteSpace(App.CurrentSettings.WeatherLocationName) 
-                    ? "Manual location" 
+                var name = string.IsNullOrWhiteSpace(App.CurrentSettings.WeatherLocationName)
+                    ? "Manual location"
                     : App.CurrentSettings.WeatherLocationName;
                 CurrentLocationText.Text = $"{name} ({loc.latitude:F2}, {loc.longitude:F2})";
             }
@@ -132,7 +121,7 @@ namespace MySchool.Pages
             try
             {
                 var location = await WeatherService.GetLocationAsync();
-                
+
                 if (location.HasValue)
                 {
                     // Clear manual location to use device location
@@ -140,13 +129,13 @@ namespace MySchool.Pages
                     App.CurrentSettings.WeatherLocationName = string.Empty;
                     SettingsService.Save(App.CurrentSettings);
                     UpdateLocationDisplay();
-                    
-                    MessageBox.Show($"Location permission granted!\nYour coordinates: {location.Value.latitude:F4}, {location.Value.longitude:F4}", 
+
+                    MessageBox.Show($"Location permission granted!\nYour coordinates: {location.Value.latitude:F4}, {location.Value.longitude:F4}",
                         "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Unable to access location. Please check your location permissions in Windows Settings.", 
+                    MessageBox.Show("Unable to access location. Please check your location permissions in Windows Settings.",
                         "Location Access Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
@@ -164,7 +153,7 @@ namespace MySchool.Pages
                 {
                     Owner = Window.GetWindow(this)
                 };
-                
+
                 if (dialog.ShowDialog() == true)
                 {
                     UpdateLocationDisplay();
@@ -183,7 +172,7 @@ namespace MySchool.Pages
             {
                 string logPath = Logger.GetLogFilePath();
                 string logFolder = System.IO.Path.GetDirectoryName(logPath) ?? string.Empty;
-                
+
                 if (Directory.Exists(logFolder))
                 {
                     Process.Start("explorer.exe", logFolder);
@@ -205,225 +194,225 @@ namespace MySchool.Pages
         private async void CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
         {
             Logger.Info("Settings", "User initiated manual update check");
-            
+
             var checkingDialog = new Window
             {
-          Title = "Checking for Updates",
-    Width = 400,
+                Title = "Checking for Updates",
+                Width = 400,
                 Height = 150,
-     WindowStartupLocation = WindowStartupLocation.CenterOwner,
-       Owner = Window.GetWindow(this),
-            ResizeMode = ResizeMode.NoResize,
-       WindowStyle = WindowStyle.ToolWindow,
-    Background = (Brush)Application.Current.Resources["Brush.Background"]
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this),
+                ResizeMode = ResizeMode.NoResize,
+                WindowStyle = WindowStyle.ToolWindow,
+                Background = (Brush)Application.Current.Resources["Brush.Background"]
             };
 
-      var stackPanel = new StackPanel
-{
+            var stackPanel = new StackPanel
+            {
                 Margin = new Thickness(20),
-     HorizontalAlignment = HorizontalAlignment.Center,
-     VerticalAlignment = VerticalAlignment.Center
-         };
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
 
             var progressBar = new ProgressBar
             {
-      IsIndeterminate = true,
-      Width = 300,
-  Height = 20,
-       Margin = new Thickness(0, 0, 0, 10)
-     };
+                IsIndeterminate = true,
+                Width = 300,
+                Height = 20,
+                Margin = new Thickness(0, 0, 0, 10)
+            };
 
-      var statusText = new TextBlock
-    {
-      Text = "Checking for updates...",
-    HorizontalAlignment = HorizontalAlignment.Center,
-     Style = (Style)Application.Current.Resources["Text.Body"]
-    };
+            var statusText = new TextBlock
+            {
+                Text = "Checking for updates...",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Style = (Style)Application.Current.Resources["Text.Body"]
+            };
 
             stackPanel.Children.Add(progressBar);
-  stackPanel.Children.Add(statusText);
-     checkingDialog.Content = stackPanel;
+            stackPanel.Children.Add(statusText);
+            checkingDialog.Content = stackPanel;
 
-  // Track dialog state
+            // Track dialog state
             bool dialogClosed = false;
-          checkingDialog.Closed += (s, args) => dialogClosed = true;
+            checkingDialog.Closed += (s, args) => dialogClosed = true;
 
-  // Disable the button while checking
-         CheckUpdatesButton.IsEnabled = false;
-       Logger.Debug("Settings", "Update check button disabled during operation");
+            // Disable the button while checking
+            CheckUpdatesButton.IsEnabled = false;
+            Logger.Debug("Settings", "Update check button disabled during operation");
 
- // Show the dialog non-modally
+            // Show the dialog non-modally
             checkingDialog.Show();
 
-     // Helper method to safely close the dialog
-         void SafeCloseDialog()
+            // Helper method to safely close the dialog
+            void SafeCloseDialog()
             {
-       try
-  {
-             if (!dialogClosed && checkingDialog.IsLoaded)
-           {
-        checkingDialog.Close();
-            dialogClosed = true;
-      Logger.Debug("Settings", "Progress dialog closed successfully");
-     }
-            }
-      catch (Exception ex)
-   {
-         Logger.Warning("Settings", "Error closing progress dialog", ex);
-        // Ignore errors when closing dialog
-             }
-            }
-
-      try
-            {
-    Logger.Info("Settings", "Starting update check process");
-        var updateInfo = await App.CheckForUpdatesAsync();
-
-     SafeCloseDialog();
-
-       if (updateInfo != null)
+                try
                 {
-         Logger.Info("Settings", $"Update available: Version {updateInfo.TargetFullRelease.Version}");
-      
-     var result = MessageBox.Show(
-      $"A new version of MySchool is available!\n\n" +
-      $"New Version: {updateInfo.TargetFullRelease.Version}\n\n" +
-      $"Would you like to download and install the update now?\n" +
-$"The application will restart after the update.",
-    "Update Available",
-        MessageBoxButton.YesNo,
-         MessageBoxImage.Information);
+                    if (!dialogClosed && checkingDialog.IsLoaded)
+                    {
+                        checkingDialog.Close();
+                        dialogClosed = true;
+                        Logger.Debug("Settings", "Progress dialog closed successfully");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warning("Settings", "Error closing progress dialog", ex);
+                    // Ignore errors when closing dialog
+                }
+            }
 
-            if (result == MessageBoxResult.Yes)
-   {
-            Logger.Info("Settings", "User accepted update installation");
-                 
+            try
+            {
+                Logger.Info("Settings", "Starting update check process");
+                var updateInfo = await App.CheckForUpdatesAsync();
 
-            // Update status and show dialog again
-              statusText.Text = "Downloading update...";
-    checkingDialog.Show();
-             dialogClosed = false;
-      checkingDialog.Closed += (s, args) => dialogClosed = true;
-
-       Logger.Info("Settings", "Starting update download and installation");
-    bool success = await App.DownloadAndApplyUpdateAsync(updateInfo);
- 
-           // Close dialog BEFORE restart to prevent the error
                 SafeCloseDialog();
 
-        if (!success)
-          {
-  Logger.Error("Settings", "Update installation failed");
-       
-       // Get log file path for user reference
-           string logPath = Logger.GetLogFilePath();
-          
-     var failResult = MessageBox.Show(
- "Failed to download or apply the update.\n\n" +
-           "Possible causes:\n" +
-          "• Network connection interrupted\n" +
-       "• Insufficient disk space\n" +
-          "• Permission denied\n\n" +
-      $"Check the log file for details:\n{logPath}\n\n" +
-               "You can also download the update manually from:\n" +
-      "https://github.com/HSP-Studios/MySchool/releases\n\n" +
-      "Would you like to open the log folder?",
-        "Update Failed",
-      MessageBoxButton.YesNo,
-   MessageBoxImage.Error);
-      
-        if (failResult == MessageBoxResult.Yes)
-       {
-   OpenLogFolder();
-  }
-      }
-    // If success, app will restart automatically and we won't reach here
-            else
-      {
-      Logger.Info("Settings", "Update completed successfully - application should restart");
-         }
-   }
-        else
-                  {
-           Logger.Info("Settings", "User declined update installation");
-  }
-         }
+                if (updateInfo != null)
+                {
+                    Logger.Info("Settings", $"Update available: Version {updateInfo.TargetFullRelease.Version}");
+
+                    var result = MessageBox.Show(
+                     $"A new version of MySchool is available!\n\n" +
+                     $"New Version: {updateInfo.TargetFullRelease.Version}\n\n" +
+                     $"Would you like to download and install the update now?\n" +
+               $"The application will restart after the update.",
+                   "Update Available",
+                       MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Logger.Info("Settings", "User accepted update installation");
+
+
+                        // Update status and show dialog again
+                        statusText.Text = "Downloading update...";
+                        checkingDialog.Show();
+                        dialogClosed = false;
+                        checkingDialog.Closed += (s, args) => dialogClosed = true;
+
+                        Logger.Info("Settings", "Starting update download and installation");
+                        bool success = await App.DownloadAndApplyUpdateAsync(updateInfo);
+
+                        // Close dialog BEFORE restart to prevent the error
+                        SafeCloseDialog();
+
+                        if (!success)
+                        {
+                            Logger.Error("Settings", "Update installation failed");
+
+                            // Get log file path for user reference
+                            string logPath = Logger.GetLogFilePath();
+
+                            var failResult = MessageBox.Show(
+                        "Failed to download or apply the update.\n\n" +
+                                  "Possible causes:\n" +
+                                 "• Network connection interrupted\n" +
+                              "• Insufficient disk space\n" +
+                                 "• Permission denied\n\n" +
+                             $"Check the log file for details:\n{logPath}\n\n" +
+                                      "You can also download the update manually from:\n" +
+                             "https://github.com/HSP-Studios/MySchool/releases\n\n" +
+                             "Would you like to open the log folder?",
+                               "Update Failed",
+                             MessageBoxButton.YesNo,
+                          MessageBoxImage.Error);
+
+                            if (failResult == MessageBoxResult.Yes)
+                            {
+                                OpenLogFolder();
+                            }
+                        }
+                        // If success, app will restart automatically and we won't reach here
+                        else
+                        {
+                            Logger.Info("Settings", "Update completed successfully - application should restart");
+                        }
+                    }
+                    else
+                    {
+                        Logger.Info("Settings", "User declined update installation");
+                    }
+                }
                 else
-        {
-    Logger.Info("Settings", "No updates available - user is on latest version");
-           MessageBox.Show(
-       "You are running the latest version of MySchool!",
-          "No Updates Available",
-             MessageBoxButton.OK,
-          MessageBoxImage.Information);
-      }
+                {
+                    Logger.Info("Settings", "No updates available - user is on latest version");
+                    MessageBox.Show(
+                "You are running the latest version of MySchool!",
+                   "No Updates Available",
+                      MessageBoxButton.OK,
+                   MessageBoxImage.Information);
+                }
             }
- catch (Exception ex)
+            catch (Exception ex)
             {
-       SafeCloseDialog();
-         
-        Logger.Error("Settings", "Update check failed with exception", ex);
-     
-         // Provide detailed error message based on exception type
-    string errorTitle = "Update Check Failed";
-          string errorMessage = ex.Message;
-     
-    // Get log file path for user reference
-       string logPath = Logger.GetLogFilePath();
-        
-             // Add helpful suggestions based on the error
-  if (errorMessage.Contains("internet connection") || 
-    errorMessage.Contains("timed out") || 
-     errorMessage.Contains("connect") ||
-        ex is System.Net.Http.HttpRequestException ||
-    ex is System.Net.WebException ||
-        ex is TaskCanceledException)
-          {
-    Logger.Warning("Settings", "Update check failed due to network issues");
-              
-        errorMessage += "\n\nTroubleshooting steps:\n" +
-         "• Verify you are connected to the internet\n" +
-      "• Check if your firewall is blocking the connection\n" +
-             "• Ensure GitHub.com is accessible from your network\n" +
-          "• Try again in a few moments\n\n" +
-  "You can also check for updates manually at:\n" +
-"https://github.com/HSP-Studios/MySchool/releases";
-     }
-      else if (ex is UnauthorizedAccessException || errorMessage.Contains("permission"))
-   {
-   Logger.Warning("Settings", "Update check failed due to permission issues");
-     errorTitle = "Permission Denied";
-          errorMessage += "\n\nThe application may need elevated permissions.\n" +
-             "Try running the application as Administrator.";
-         }
-      else
-      {
-    Logger.Warning("Settings", $"Update check failed with unexpected error: {ex.GetType().Name}");
+                SafeCloseDialog();
+
+                Logger.Error("Settings", "Update check failed with exception", ex);
+
+                // Provide detailed error message based on exception type
+                string errorTitle = "Update Check Failed";
+                string errorMessage = ex.Message;
+
+                // Get log file path for user reference
+                string logPath = Logger.GetLogFilePath();
+
+                // Add helpful suggestions based on the error
+                if (errorMessage.Contains("internet connection") ||
+                  errorMessage.Contains("timed out") ||
+                   errorMessage.Contains("connect") ||
+                      ex is System.Net.Http.HttpRequestException ||
+                  ex is System.Net.WebException ||
+                      ex is TaskCanceledException)
+                {
+                    Logger.Warning("Settings", "Update check failed due to network issues");
+
+                    errorMessage += "\n\nTroubleshooting steps:\n" +
+                     "• Verify you are connected to the internet\n" +
+                  "• Check if your firewall is blocking the connection\n" +
+                         "• Ensure GitHub.com is accessible from your network\n" +
+                      "• Try again in a few moments\n\n" +
+              "You can also check for updates manually at:\n" +
+            "https://github.com/HSP-Studios/MySchool/releases";
+                }
+                else if (ex is UnauthorizedAccessException || errorMessage.Contains("permission"))
+                {
+                    Logger.Warning("Settings", "Update check failed due to permission issues");
+                    errorTitle = "Permission Denied";
+                    errorMessage += "\n\nThe application may need elevated permissions.\n" +
+                       "Try running the application as Administrator.";
+                }
+                else
+                {
+                    Logger.Warning("Settings", $"Update check failed with unexpected error: {ex.GetType().Name}");
                     errorMessage += $"\n\nError Type: {ex.GetType().Name}\n\n" +
      "Please try again later. If the problem persists,\n" +
           "you can download updates manually from:\n" +
   "https://github.com/HSP-Studios/MySchool/releases";
-      }
-    
-            errorMessage += $"\n\nLog file location:\n{logPath}\n\n" +
-    "Would you like to open the log folder?";
-   
-        var errorResult = MessageBox.Show(
-     errorMessage,
-     errorTitle,
-      MessageBoxButton.YesNo,
-         MessageBoxImage.Error);
-      
-     if (errorResult == MessageBoxResult.Yes)
+                }
+
+                errorMessage += $"\n\nLog file location:\n{logPath}\n\n" +
+        "Would you like to open the log folder?";
+
+                var errorResult = MessageBox.Show(
+             errorMessage,
+             errorTitle,
+              MessageBoxButton.YesNo,
+                 MessageBoxImage.Error);
+
+                if (errorResult == MessageBoxResult.Yes)
                 {
- OpenLogFolder();
- }
-       }
-     finally
-          {
-          CheckUpdatesButton.IsEnabled = true;
-            Logger.Debug("Settings", "Update check button re-enabled");
- }
+                    OpenLogFolder();
+                }
+            }
+            finally
+            {
+                CheckUpdatesButton.IsEnabled = true;
+                Logger.Debug("Settings", "Update check button re-enabled");
+            }
         }
- }
+    }
 }

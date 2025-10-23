@@ -1,7 +1,5 @@
-using System;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 
 namespace MySchool.Classes
@@ -26,10 +24,10 @@ namespace MySchool.Classes
             try
             {
                 var geolocator = new Geolocator();
-                
+
                 // Request access to location
                 var accessStatus = await Geolocator.RequestAccessAsync();
-                
+
                 if (accessStatus != GeolocationAccessStatus.Allowed)
                 {
                     return null;
@@ -37,8 +35,8 @@ namespace MySchool.Classes
 
                 // Get current position
                 var position = await geolocator.GetGeopositionAsync();
-                
-                return (position.Coordinate.Point.Position.Latitude, 
+
+                return (position.Coordinate.Point.Position.Latitude,
                         position.Coordinate.Point.Position.Longitude);
             }
             catch
@@ -57,14 +55,14 @@ namespace MySchool.Classes
                 var url = $"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}&zoom=10";
                 httpClient.DefaultRequestHeaders.UserAgent.Clear();
                 httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("MySchool/1.0");
-                
+
                 var response = await httpClient.GetStringAsync(url);
                 var json = JsonDocument.Parse(response);
-                
+
                 var address = json.RootElement.GetProperty("address");
-                
+
                 string locationName = "Unknown Location";
-                
+
                 // Try to get city, town, or village
                 if (address.TryGetProperty("city", out var city))
                     locationName = city.GetString() ?? "Unknown Location";
@@ -74,7 +72,7 @@ namespace MySchool.Classes
                     locationName = village.GetString() ?? "Unknown Location";
                 else if (address.TryGetProperty("suburb", out var suburb))
                     locationName = suburb.GetString() ?? "Unknown Location";
-                
+
                 // Clean up common suffixes
                 locationName = locationName
                     .Replace(" City", "", StringComparison.OrdinalIgnoreCase)
@@ -82,7 +80,7 @@ namespace MySchool.Classes
                     .Replace(" Municipality", "", StringComparison.OrdinalIgnoreCase)
                     .Replace(" Region", "", StringComparison.OrdinalIgnoreCase)
                     .Trim();
-                
+
                 return locationName;
             }
             catch (Exception ex)
@@ -106,7 +104,7 @@ namespace MySchool.Classes
                 var weatherCode = current.GetProperty("weather_code").GetInt32();
 
                 var (description, condition) = GetWeatherDescription(weatherCode);
-                
+
                 // Get location name
                 var locationName = await GetLocationNameAsync(latitude, longitude);
 
