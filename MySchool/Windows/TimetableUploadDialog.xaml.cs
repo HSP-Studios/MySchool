@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Windows;
 using Microsoft.Win32;
 using MySchool.Classes;
+using System.IO;
+using System.Text.Json;
+using System.Windows;
 
 namespace MySchool.Windows
 {
@@ -76,7 +73,7 @@ namespace MySchool.Windows
             // Generate the file paths with timestamp
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string mySchoolPath = Path.Combine(appDataPath, "MySchool", "timetables");
-            
+
             if (!Directory.Exists(mySchoolPath))
             {
                 Directory.CreateDirectory(mySchoolPath);
@@ -125,7 +122,7 @@ namespace MySchool.Windows
             {
                 Clipboard.SetText(PromptTextBox.Text);
                 CopyPromptButton.Content = "Copied";
-                
+
                 // Reset button text after 2 seconds
                 var timer = new System.Windows.Threading.DispatcherTimer
                 {
@@ -161,7 +158,7 @@ namespace MySchool.Windows
                 try
                 {
                     timetableData = JsonSerializer.Deserialize<TimetableData>(jsonResponse);
-                    
+
                     if (timetableData == null || timetableData.Timetable == null || !timetableData.Timetable.Any())
                     {
                         MessageBox.Show("Invalid JSON format: 'timetable' property not found or empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -208,7 +205,7 @@ namespace MySchool.Windows
                 File.WriteAllText(targetJsonPath, formattedJson);
 
                 MessageBox.Show($"Timetable saved successfully!\n\nPDF: {targetPdfPath}\nJSON: {targetJsonPath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                
+
                 DialogResult = true;
                 Close();
             }

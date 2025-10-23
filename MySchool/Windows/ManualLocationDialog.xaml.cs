@@ -1,5 +1,4 @@
 using MySchool.Classes;
-using System;
 using System.Globalization;
 using System.Windows;
 
@@ -13,7 +12,7 @@ namespace MySchool.Windows
         public ManualLocationDialog()
         {
             InitializeComponent();
-            
+
             // Load existing location if available
             if (App.CurrentSettings.WeatherLocation.HasValue)
             {

@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySchool.Classes;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MySchool.Classes;
 
 namespace MySchool.Pages
 {
@@ -35,7 +26,7 @@ namespace MySchool.Pages
             ConfigureWeekendLayout();
             TryRenderUpcomingEvents();
             LoadCurrentAndNextClass();
-            
+
             // Load weather once or display cached data
             if (!hasLoadedWeather)
             {
@@ -52,15 +43,15 @@ namespace MySchool.Pages
         private string GetWeekdayGreeting()
         {
             string userName = App.CurrentSettings.UserName;
-            
+
             if (!string.IsNullOrWhiteSpace(userName))
             {
                 return $"Hey {userName}!";
             }
-            
+
             // Use time-based greeting if no name is set
             var hour = DateTime.Now.Hour;
-            
+
             if (hour >= 5 && hour < 12)
             {
                 return "Good Morning!";
@@ -86,14 +77,14 @@ namespace MySchool.Pages
                 // Hide current class section on weekends or after school
                 CurrentClassBorder.Visibility = Visibility.Collapsed;
                 LeftColumn.Width = new GridLength(0);
-                
+
                 // Adjust greeting border margin to expand left
                 GreetingBorder.Margin = new Thickness(0, 0, 20, 0);
-                
+
                 // Update center greeting for weekend/after-school: two words only, add '!'
                 var dayName = today.ToString();
                 MainGreeting.Text = $"Happy {dayName}!";
-                
+
                 // Show weekend content in right section (weather)
                 NextClassPanel.Visibility = Visibility.Collapsed;
                 WeekendPanel.Visibility = Visibility.Visible;
@@ -103,17 +94,17 @@ namespace MySchool.Pages
                 // Show normal weekday layout
                 CurrentClassBorder.Visibility = Visibility.Visible;
                 LeftColumn.Width = GridLength.Auto;
-                
+
                 // Normal greeting border margin
                 GreetingBorder.Margin = new Thickness(20, 0, 20, 0);
-                
+
                 // Weekday greeting
                 MainGreeting.Text = GetWeekdayGreeting();
-                
+
                 // Show next class content in right section
                 NextClassPanel.Visibility = Visibility.Visible;
                 WeekendPanel.Visibility = Visibility.Collapsed;
-                
+
                 // Reset to default gradient for weekdays
                 SetWeatherGradient("Clear");
             }
@@ -158,7 +149,7 @@ namespace MySchool.Pages
             WeatherTemperature.Text = $"{Math.Round(weather.Temperature)}°";
             WeatherDescription.Text = char.ToUpper(weather.Description[0]) + weather.Description.Substring(1);
             WeatherLocationLabel.Text = weather.LocationName;
-            
+
             // Update gradient based on weather condition
             SetWeatherGradient(weather.Condition);
         }

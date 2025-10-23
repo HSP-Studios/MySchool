@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Web.WebView2.Core;
+using MySchool.Classes;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MySchool.Classes;
-using Microsoft.Web.WebView2.Core;
 
 namespace MySchool.Pages
 {
@@ -39,28 +27,28 @@ namespace MySchool.Pages
             try
             {
                 var pdfPath = TimetableManager.GetLatestTimetablePdf();
-                
+
                 if (!string.IsNullOrEmpty(pdfPath) && File.Exists(pdfPath))
                 {
                     // Show PDF viewer, hide no timetable message
                     NoTimetablePanel.Visibility = Visibility.Collapsed;
                     PdfViewer.Visibility = Visibility.Visible;
-                    
+
                     // Set up WebView2 environment with user data folder in AppData
                     string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                     string webViewDataPath = System.IO.Path.Combine(appData, "MySchool", "WebView2");
-                    
+
                     if (!Directory.Exists(webViewDataPath))
                     {
                         Directory.CreateDirectory(webViewDataPath);
                     }
-                    
+
                     var environment = await CoreWebView2Environment.CreateAsync(
                         userDataFolder: webViewDataPath);
-                    
+
                     // Ensure WebView2 is initialized with custom environment
                     await PdfViewer.EnsureCoreWebView2Async(environment);
-                    
+
                     // Navigate to the PDF file
                     PdfViewer.Source = new Uri(pdfPath);
                 }

@@ -1,9 +1,5 @@
 ﻿using MySchool.Classes;
-using System;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Text.Json;
 using System.Windows;
 using Velopack;
 using Velopack.Sources;
@@ -227,7 +223,7 @@ namespace MySchool
 
                     var result = MessageBox.Show(
                     $"A new version of MySchool is available!\n\n" +
-                                   $"Current Version: {updateInfo.TargetFullRelease.Version}\n\n" +
+                          $"Current Version: {updateInfo.TargetFullRelease.Version}\n\n" +
                     $"Would you like to download and install the update now?\n" +
                    $"The application will restart after the update.",
                      "Update Available",

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace MySchool.Classes
 {
@@ -15,12 +9,12 @@ namespace MySchool.Classes
         {
             string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string timetablesPath = Path.Combine(appData, "MySchool", "timetables");
-            
+
             if (!Directory.Exists(timetablesPath))
             {
                 Directory.CreateDirectory(timetablesPath);
             }
-            
+
             return timetablesPath;
         }
 
@@ -97,7 +91,7 @@ namespace MySchool.Classes
                 var today = DateTime.Now.DayOfWeek.ToString();
                 var currentTime = DateTime.Now.TimeOfDay;
 
-                var todaySchedule = timetable.Timetable.FirstOrDefault(d => 
+                var todaySchedule = timetable.Timetable.FirstOrDefault(d =>
                     d.Day.Equals(today, StringComparison.OrdinalIgnoreCase));
 
                 if (todaySchedule == null)
@@ -111,7 +105,7 @@ namespace MySchool.Classes
                 for (int i = 0; i < sortedPeriods.Count; i++)
                 {
                     var period = sortedPeriods[i];
-                    
+
                     if (!TimeSpan.TryParse(period.StartTime, out var startTime) ||
                         !TimeSpan.TryParse(period.EndTime, out var endTime))
                         continue;
