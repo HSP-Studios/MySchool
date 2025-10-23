@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySchool.Windows;
 using MySchool.Classes;
+using System.IO;
+using System.Diagnostics;
 
 namespace MySchool.Pages
 {
@@ -175,6 +177,31 @@ namespace MySchool.Pages
             }
         }
 
+        private void OpenLogFolder()
+        {
+            try
+            {
+                string logPath = Logger.GetLogFilePath();
+                string logFolder = System.IO.Path.GetDirectoryName(logPath) ?? string.Empty;
+                
+                if (Directory.Exists(logFolder))
+                {
+                    Process.Start("explorer.exe", logFolder);
+                    Logger.Info("Settings", $"Opened log folder: {logFolder}");
+                }
+                else
+                {
+                    Logger.Warning("Settings", $"Log folder does not exist: {logFolder}");
+                    MessageBox.Show($"Log folder not found:\n{logFolder}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Settings", "Failed to open log folder", ex);
+                MessageBox.Show($"Failed to open log folder: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private async void CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
         {
             Logger.Info("Settings", "User initiated manual update check");
@@ -225,7 +252,7 @@ namespace MySchool.Pages
          CheckUpdatesButton.IsEnabled = false;
        Logger.Debug("Settings", "Update check button disabled during operation");
 
-// Show the dialog non-modally
+ // Show the dialog non-modally
             checkingDialog.Show();
 
      // Helper method to safely close the dialog
@@ -290,101 +317,113 @@ $"The application will restart after the update.",
        
        // Get log file path for user reference
            string logPath = Logger.GetLogFilePath();
-
-   MessageBox.Show(
-          "Failed to download or apply the update.\n\n" +
+          
+     var failResult = MessageBox.Show(
+ "Failed to download or apply the update.\n\n" +
            "Possible causes:\n" +
-  "• Network connection interrupted\n" +
-            "• Insufficient disk space\n" +
-      "• Permission denied\n\n" +
+          "• Network connection interrupted\n" +
+       "• Insufficient disk space\n" +
+          "• Permission denied\n\n" +
       $"Check the log file for details:\n{logPath}\n\n" +
-         "You can also download the update manually from:\n" +
-        "https://github.com/HSP-Studios/MySchool/releases",
-       "Update Failed",
-            MessageBoxButton.OK,
-         MessageBoxImage.Error);
-       }
-              // If success, app will restart automatically and we won't reach here
-     else
-        {
-                 Logger.Info("Settings", "Update completed successfully - application should restart");
-                }
-          }
-         else
-          {
-              Logger.Info("Settings", "User declined update installation");
-     }
-        }
- else
-                {
-   Logger.Info("Settings", "No updates available - user is on latest version");
- MessageBox.Show(
-              "You are running the latest version of MySchool!",
-   "No Updates Available",
-        MessageBoxButton.OK,
-        MessageBoxImage.Information);
+               "You can also download the update manually from:\n" +
+      "https://github.com/HSP-Studios/MySchool/releases\n\n" +
+      "Would you like to open the log folder?",
+        "Update Failed",
+      MessageBoxButton.YesNo,
+   MessageBoxImage.Error);
+      
+        if (failResult == MessageBoxResult.Yes)
+       {
+   OpenLogFolder();
+  }
+      }
+    // If success, app will restart automatically and we won't reach here
+            else
+      {
+      Logger.Info("Settings", "Update completed successfully - application should restart");
+         }
    }
+        else
+                  {
+           Logger.Info("Settings", "User declined update installation");
+  }
+         }
+                else
+        {
+    Logger.Info("Settings", "No updates available - user is on latest version");
+           MessageBox.Show(
+       "You are running the latest version of MySchool!",
+          "No Updates Available",
+             MessageBoxButton.OK,
+          MessageBoxImage.Information);
+      }
             }
  catch (Exception ex)
-   {
-                SafeCloseDialog();
-     
-        Logger.Error("Settings", "Update check failed with exception", ex);
-            
-    // Provide detailed error message based on exception type
-                string errorTitle = "Update Check Failed";
-       string errorMessage = ex.Message;
-     
-            // Get log file path for user reference
-       string logPath = Logger.GetLogFilePath();
-
-       // Add helpful suggestions based on the error
-  if (errorMessage.Contains("internet connection") || 
-   errorMessage.Contains("timed out") || 
-errorMessage.Contains("connect") ||
-         ex is System.Net.Http.HttpRequestException ||
-      ex is System.Net.WebException ||
-           ex is TaskCanceledException)
-           {
-       Logger.Warning("Settings", "Update check failed due to network issues");
+            {
+       SafeCloseDialog();
          
-    errorMessage += "\n\nTroubleshooting steps:\n" +
-   "• Verify you are connected to the internet\n" +
-       "• Check if your firewall is blocking the connection\n" +
-    "• Ensure GitHub.com is accessible from your network\n" +
-            "• Try again in a few moments\n\n" +
- "You can also check for updates manually at:\n" +
-              "https://github.com/HSP-Studios/MySchool/releases";
-  }
-      else if (ex is UnauthorizedAccessException || errorMessage.Contains("permission"))
-        {
-           Logger.Warning("Settings", "Update check failed due to permission issues");
-  errorTitle = "Permission Denied";
-          errorMessage += "\n\nThe application may need elevated permissions.\n" +
-         "Try running the application as Administrator.";
-          }
-        else
-         {
-  Logger.Warning("Settings", $"Update check failed with unexpected error: {ex.GetType().Name}");
-      errorMessage += $"\n\nError Type: {ex.GetType().Name}\n\n" +
-              "Please try again later. If the problem persists,\n" +
-   "you can download updates manually from:\n" +
-         "https://github.com/HSP-Studios/MySchool/releases";
+        Logger.Error("Settings", "Update check failed with exception", ex);
+     
+         // Provide detailed error message based on exception type
+    string errorTitle = "Update Check Failed";
+          string errorMessage = ex.Message;
+     
+    // Get log file path for user reference
+       string logPath = Logger.GetLogFilePath();
+        
+             // Add helpful suggestions based on the error
+  if (errorMessage.Contains("internet connection") || 
+    errorMessage.Contains("timed out") || 
+     errorMessage.Contains("connect") ||
+        ex is System.Net.Http.HttpRequestException ||
+    ex is System.Net.WebException ||
+        ex is TaskCanceledException)
+          {
+    Logger.Warning("Settings", "Update check failed due to network issues");
+              
+        errorMessage += "\n\nTroubleshooting steps:\n" +
+         "• Verify you are connected to the internet\n" +
+      "• Check if your firewall is blocking the connection\n" +
+             "• Ensure GitHub.com is accessible from your network\n" +
+          "• Try again in a few moments\n\n" +
+  "You can also check for updates manually at:\n" +
+"https://github.com/HSP-Studios/MySchool/releases";
      }
-                
-    errorMessage += $"\n\nLog file location:\n{logPath}";
-       
-     MessageBox.Show(
+      else if (ex is UnauthorizedAccessException || errorMessage.Contains("permission"))
+   {
+   Logger.Warning("Settings", "Update check failed due to permission issues");
+     errorTitle = "Permission Denied";
+          errorMessage += "\n\nThe application may need elevated permissions.\n" +
+             "Try running the application as Administrator.";
+         }
+      else
+      {
+    Logger.Warning("Settings", $"Update check failed with unexpected error: {ex.GetType().Name}");
+                    errorMessage += $"\n\nError Type: {ex.GetType().Name}\n\n" +
+     "Please try again later. If the problem persists,\n" +
+          "you can download updates manually from:\n" +
+  "https://github.com/HSP-Studios/MySchool/releases";
+      }
+    
+            errorMessage += $"\n\nLog file location:\n{logPath}\n\n" +
+    "Would you like to open the log folder?";
+   
+        var errorResult = MessageBox.Show(
      errorMessage,
-      errorTitle,
-        MessageBoxButton.OK,
-   MessageBoxImage.Error);
-            }
-  finally
-         {
+     errorTitle,
+      MessageBoxButton.YesNo,
+         MessageBoxImage.Error);
+      
+     if (errorResult == MessageBoxResult.Yes)
+                {
+ OpenLogFolder();
+ }
+       }
+     finally
+          {
           CheckUpdatesButton.IsEnabled = true;
-          Logger.Debug("Settings", "Update check button re-enabled");
-          }
+            Logger.Debug("Settings", "Update check button re-enabled");
+ }
         }
-    }
+ }
 }
