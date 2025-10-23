@@ -36,10 +36,25 @@ namespace MySchool
                 var newVersion = await mgr.CheckForUpdatesAsync();
                 return newVersion;
             }
+            catch (System.Net.WebException webEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"Update check failed (network): {webEx.Message}");
+                throw new Exception("Unable to connect to the update server. Please check your internet connection and try again.", webEx);
+            }
+            catch (System.Net.Http.HttpRequestException httpEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"Update check failed (HTTP): {httpEx.Message}");
+                throw new Exception("Unable to reach the update server. Please check your internet connection and try again.", httpEx);
+            }
+            catch (TaskCanceledException)
+            {
+                System.Diagnostics.Debug.WriteLine("Update check timed out");
+                throw new Exception("The update check timed out. Please check your internet connection and try again.");
+            }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Update check failed: {ex.Message}");
-                return null;
+                throw new Exception($"Failed to check for updates: {ex.Message}", ex);
             }
         }
 
@@ -47,7 +62,7 @@ namespace MySchool
         {
             try
             {
-                var mgr = new UpdateManager("raw.githubusercontent.com/HSP-Studios/MySchool/refs/heads/main/Releases/");
+                var mgr = new UpdateManager(new GithubSource("https://github.com/HSP-Studios/MySchool", null, true, null));
 
                 // download new version
                 await mgr.DownloadUpdatesAsync(updateInfo);
