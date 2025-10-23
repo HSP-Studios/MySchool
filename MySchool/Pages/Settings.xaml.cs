@@ -307,21 +307,22 @@ namespace MySchool.Pages
                             // Get log file path for user reference
                             string logPath = Logger.GetLogFilePath();
 
-                            var failResult = MessageBox.Show(
-                        "Failed to download or apply the update.\n\n" +
-                                  "Possible causes:\n" +
-                                 "• Network connection interrupted\n" +
-                              "• Insufficient disk space\n" +
-                                 "• Permission denied\n\n" +
-                             $"Check the log file for details:\n{logPath}\n\n" +
-                                      "You can also download the update manually from:\n" +
-                             "https://github.com/HSP-Studios/MySchool/releases\n\n" +
-                             "Would you like to open the log folder?",
-                               "Update Failed",
-                             MessageBoxButton.YesNo,
-                          MessageBoxImage.Error);
+                            string failMessage = "Failed to download or apply the update.\n\n" +
+                            "Possible causes:\n" +
+                              "• Network connection interrupted\n" +
+                           "• Insufficient disk space\n" +
+                            "• Permission denied\n\n" +
+                            $"Check the log file for details:\n{logPath}\n\n" +
+                                  "You can also download the update manually from:\n" +
+            "https://github.com/HSP-Studios/MySchool/releases";
 
-                            if (failResult == MessageBoxResult.Yes)
+                            var errorDialog = new ErrorDialog("Update Failed", failMessage)
+                            {
+                                Owner = Window.GetWindow(this)
+                            };
+                            errorDialog.ShowDialog();
+
+                            if (errorDialog.OpenLogsRequested)
                             {
                                 OpenLogFolder();
                             }
@@ -394,16 +395,15 @@ namespace MySchool.Pages
   "https://github.com/HSP-Studios/MySchool/releases";
                 }
 
-                errorMessage += $"\n\nLog file location:\n{logPath}\n\n" +
-        "Would you like to open the log folder?";
+                errorMessage += $"\n\nLog file location:\n{logPath}";
 
-                var errorResult = MessageBox.Show(
-             errorMessage,
-             errorTitle,
-              MessageBoxButton.YesNo,
-                 MessageBoxImage.Error);
+                var errorDialog = new ErrorDialog(errorTitle, errorMessage)
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                errorDialog.ShowDialog();
 
-                if (errorResult == MessageBoxResult.Yes)
+                if (errorDialog.OpenLogsRequested)
                 {
                     OpenLogFolder();
                 }

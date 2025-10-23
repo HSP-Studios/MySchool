@@ -1,0 +1,129 @@
+<Window x:Class="MySchool.Windows.ErrorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Error"
+    SizeToContent="Height"
+     Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Window.Resources>
+        <!-- Danger color for error icon -->
+      <SolidColorBrush x:Key="Brush.Danger" Color="#DC2626"/>
+        
+  <!-- Icon button style -->
+    <Style x:Key="Button.Icon" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+          <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+       <Setter.Value>
+       <ControlTemplate TargetType="Button">
+     <Border x:Name="ButtonBorder" 
+         Background="{TemplateBinding Background}"
+          CornerRadius="6"
+          Padding="4">
+          <ContentPresenter HorizontalAlignment="Center"
+          VerticalAlignment="Center"/>
+        </Border>
+         <ControlTemplate.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+          <Setter TargetName="ButtonBorder" Property="Background" Value="#1A000000"/>
+        </Trigger>
+   <Trigger Property="IsPressed" Value="True">
+ <Setter TargetName="ButtonBorder" Property="Background" Value="#33000000"/>
+     </Trigger>
+     </ControlTemplate.Triggers>
+            </ControlTemplate>
+      </Setter.Value>
+            </Setter>
+</Style>
+    </Window.Resources>
+
+    <Border CornerRadius="12"
+    BorderThickness="1"
+   Background="{DynamicResource Brush.Background}"
+            BorderBrush="{DynamicResource Brush.Border}">
+        <Border.Effect>
+    <DropShadowEffect BlurRadius="20" 
+  ShadowDepth="0" 
+         Opacity="0.3"
+  Color="Black"/>
+        </Border.Effect>
+
+        <Grid Margin="24">
+      <Grid.RowDefinitions>
+     <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+         <!-- Title Bar -->
+     <Grid Grid.Row="0" Margin="0,0,0,16">
+    <Grid.ColumnDefinitions>
+   <ColumnDefinition Width="Auto"/>
+ <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+ </Grid.ColumnDefinitions>
+
+   <!-- Error Icon -->
+       <Viewbox Grid.Column="0" Width="24" Height="24" Margin="0,0,12,0">
+         <Path Fill="{StaticResource Brush.Danger}"
+     Data="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M13,17H11V15H13V17M13,13H11V7H13V13Z"/>
+    </Viewbox>
+
+   <!-- Title -->
+     <TextBlock Grid.Column="1"
+          x:Name="TitleTextBlock"
+     Text="Error"
+             Style="{StaticResource Text.Title}"
+  VerticalAlignment="Center"/>
+
+        <!-- Close Button -->
+          <Button Grid.Column="2"
+      Click="CloseButton_Click"
+   Width="32"
+       Height="32"
+     Style="{StaticResource Button.Icon}">
+         <Viewbox Width="16" Height="16">
+     <Path Fill="{DynamicResource Brush.TextSecondary}"
+ Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+      </Viewbox>
+       </Button>
+            </Grid>
+
+            <!-- Message Content -->
+  <ScrollViewer Grid.Row="1" 
+            MaxHeight="300"
+      VerticalScrollBarVisibility="Auto"
+       Margin="0,0,0,24">
+                <TextBlock x:Name="MessageTextBlock"
+   TextWrapping="Wrap"
+           Style="{StaticResource Text.Body}"
+        LineHeight="20"/>
+    </ScrollViewer>
+
+     <!-- Buttons -->
+       <StackPanel Grid.Row="2"
+      Orientation="Horizontal"
+     HorizontalAlignment="Right">
+     <Button x:Name="OpenLogsButton"
+   Content="Open Logs Folder"
+     Click="OpenLogsButton_Click"
+Style="{StaticResource Button.Secondary}"
+         Margin="0,0,12,0"
+        Padding="16,10"
+     MinWidth="140"/>
+      <Button x:Name="OkButton"
+            Content="Ok"
+     Click="OkButton_Click"
+ Style="{StaticResource Button.Primary}"
+        Padding="16,10"
+               MinWidth="100"/>
+       </StackPanel>
+      </Grid>
+    </Border>
+</Window>
