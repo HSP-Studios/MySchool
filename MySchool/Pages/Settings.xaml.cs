@@ -215,17 +215,38 @@ namespace MySchool.Pages
             stackPanel.Children.Add(statusText);
             checkingDialog.Content = stackPanel;
 
+            // Track dialog state
+            bool dialogClosed = false;
+            checkingDialog.Closed += (s, args) => dialogClosed = true;
+
             // Disable the button while checking
             CheckUpdatesButton.IsEnabled = false;
 
             // Show the dialog non-modally
             checkingDialog.Show();
 
+            // Helper method to safely close the dialog
+            void SafeCloseDialog()
+            {
+                try
+                {
+                    if (!dialogClosed && checkingDialog.IsLoaded)
+                    {
+                        checkingDialog.Close();
+                        dialogClosed = true;
+                    }
+                }
+                catch (Exception)
+                {
+                    // Ignore errors when closing dialog
+                }
+            }
+
             try
             {
                 var updateInfo = await App.CheckForUpdatesAsync();
 
-                checkingDialog.Close();
+                SafeCloseDialog();
 
                 if (updateInfo != null)
                 {
@@ -242,10 +263,13 @@ namespace MySchool.Pages
                     {
                         statusText.Text = "Downloading update...";
                         checkingDialog.Show();
+                        dialogClosed = false;
+                        checkingDialog.Closed += (s, args) => dialogClosed = true;
 
                         bool success = await App.DownloadAndApplyUpdateAsync(updateInfo);
  
-                        checkingDialog.Close();
+                        // Close dialog BEFORE restart to prevent the error
+                        SafeCloseDialog();
 
                         if (!success)
                         {
@@ -255,7 +279,7 @@ namespace MySchool.Pages
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Error);
                         }
-                        // If success, app will restart automatically
+                        // If success, app will restart automatically and we won't reach here
                     }
                 }
                 else
@@ -269,11 +293,11 @@ namespace MySchool.Pages
             }
             catch (Exception ex)
             {
-                checkingDialog.Close();
+                SafeCloseDialog();
                 
                 // Provide detailed error message based on exception type
                 string errorMessage = ex.Message;
-                
+        
                 // Add helpful suggestions based on the error
                 if (errorMessage.Contains("internet connection") || 
                      errorMessage.Contains("timed out") || 
