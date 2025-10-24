@@ -50,16 +50,14 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Wide logo that changes based on theme -->
-                <Image x:Name="AppLogo"  
-                       Height="36"
-                       VerticalAlignment="Center"
-                       Stretch="Uniform"
-                       RenderOptions.BitmapScalingMode="HighQuality"
-      RenderOptions.EdgeMode="Aliased"
-      UseLayoutRounding="True"
-    SnapsToDevicePixels="True"
-                       Source="resources/logo/png-transparent/Light-Wide-Short.png"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="36" Height="36" CornerRadius="8" BorderThickness="0" VerticalAlignment="Center">
+                        <Border.Background>
+                            <ImageBrush ImageSource="resources/logo/png/Dark-Icon.png" Stretch="UniformToFill"/>
+                        </Border.Background>
+                    </Border>
+                    <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{DynamicResource Brush.TextPrimary}" VerticalAlignment="Center"/>
+                </StackPanel>
 
                 <!-- Center tab icons: Schedule | Home | Settings -->
                 <Border Style="{StaticResource Card}" Grid.Column="2" CornerRadius="18" Padding="6,2" HorizontalAlignment="Center" VerticalAlignment="Center">
