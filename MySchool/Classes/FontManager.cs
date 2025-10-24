@@ -166,97 +166,106 @@ foreach (var file in filesInDir)
         public static FontFamily GetFontFamily(string fontName)
         {
       Logger.Debug("FontManager", $"=== GetFontFamily START for '{fontName}' ===");
-            
-       try
+ 
+try
             {
       Logger.Info("FontManager", $"Attempting to create FontFamily for '{fontName}'");
-    
-                var fontPath = GetFontPath(fontName);
-        Logger.Info("FontManager", $"Font path retrieved: {fontPath}");
+          
+           var fontPath = GetFontPath(fontName);
+       Logger.Info("FontManager", $"Font path retrieved: {fontPath}");
 
-    Logger.Debug("FontManager", "Creating URI from font path");
-       var uri = new Uri(fontPath, UriKind.Absolute);
-       Logger.Info("FontManager", $"URI created: {uri}");
-      Logger.Info("FontManager", $"URI.AbsolutePath: {uri.AbsolutePath}");
-    Logger.Info("FontManager", $"URI.Scheme: {uri.Scheme}");
-
-          Logger.Debug("FontManager", $"Creating FontFamily with URI and name '{fontName}'");
-   var fontFamily = new FontFamily(uri, fontName);
-     Logger.Info("FontManager", $"FontFamily created successfully");
-    Logger.Info("FontManager", $"FontFamily.Source: {fontFamily.Source}");
-     Logger.Info("FontManager", $"FontFamily.BaseUri: {fontFamily.BaseUri}");
-        Logger.Info("FontManager", $"FontFamily.FamilyNames count: {fontFamily.FamilyNames.Count}");
-     
-     foreach (var kvp in fontFamily.FamilyNames)
+     // Get directory containing the font
+  var directory = Path.GetDirectoryName(fontPath);
+   if (directory == null)
       {
-       Logger.Debug("FontManager", $"  FamilyName [{kvp.Key}]: {kvp.Value}");
-  }
+      throw new Exception("Could not determine font directory");
+   }
+     Logger.Info("FontManager", $"Font directory: {directory}");
+ 
+  // Create directory URI with trailing separator
+   var directoryUri = new Uri(directory + Path.DirectorySeparatorChar, UriKind.Absolute);
+    Logger.Info("FontManager", $"Directory URI: {directoryUri}");
+       
+    // Create FontFamily using directory as base and font name as fragment
+   // Format: file:///path/to/directory/#FontName
+      Logger.Debug("FontManager", $"Creating FontFamily with directory URI and fragment ./#  {fontName}'");
+        var fontFamily = new FontFamily(directoryUri, "./#" + fontName);
+      
+     Logger.Info("FontManager", $"FontFamily created successfully");
+        Logger.Info("FontManager", $"FontFamily.Source: {fontFamily.Source}");
+        Logger.Info("FontManager", $"FontFamily.BaseUri: {fontFamily.BaseUri}");
+    Logger.Info("FontManager", $"FontFamily.FamilyNames count: {fontFamily.FamilyNames.Count}");
+       
+     foreach (var kvp in fontFamily.FamilyNames)
+     {
+ Logger.Debug("FontManager", $"  FamilyName [{kvp.Key}]: {kvp.Value}");
+      }
 
-             Logger.Debug("FontManager", "Attempting to get typefaces");
-     try
-   {
-          var typefaces = fontFamily.GetTypefaces();
+  Logger.Debug("FontManager", "Attempting to get typefaces");
+   try
+            {
+ var typefaces = fontFamily.GetTypefaces();
         Logger.Debug("FontManager", "GetTypefaces() succeeded");
-        
-                  var typefacesList = typefaces.ToList();
-       var count = typefacesList.Count;
-      Logger.Info("FontManager", $"Font '{fontName}' has {count} typeface(s)");
+
+           var typefacesList = typefaces.ToList();
+         var count = typefacesList.Count;
+  Logger.Info("FontManager", $"Font '{fontName}' has {count} typeface(s)");
 
       if (count == 0)
-            {
-     Logger.Error("FontManager", $"CRITICAL: Font '{fontName}' has ZERO typefaces - font will not render!");
- throw new Exception("Font has no typefaces");
-       }
+        {
+      Logger.Error("FontManager", $"CRITICAL: Font '{fontName}' has ZERO typefaces - font will not render!");
+     throw new Exception("Font has no typefaces");
+   }
 
-                for (int i = 0; i < Math.Min(count, 3); i++)
-          {
-      var tf = typefacesList[i];
-      Logger.Info("FontManager", $"  Typeface {i}: Weight={tf.Weight}, Style={tf.Style}, Stretch={tf.Stretch}");
-     
-       try
-     {
-       var glyphTypeface = tf.TryGetGlyphTypeface(out var glyph);
-            Logger.Debug("FontManager", $"    TryGetGlyphTypeface: {glyphTypeface}");
-           if (glyphTypeface && glyph != null)
+      for (int i = 0; i < Math.Min(count, 3); i++)
    {
-         Logger.Debug("FontManager", $"    GlyphCount: {glyph.GlyphCount}");
-      Logger.Debug("FontManager", $"    DesignerName: {glyph.Copyrights?.FirstOrDefault().Value}");
-     }
-      }
-         catch (Exception ex)
-    {
-    Logger.Warning("FontManager", $"    Failed to get glyph typeface details", ex);
-      }
-             }
-
-     Logger.Info("FontManager", $"? Font '{fontName}' loaded and verified successfully");
-            Logger.Debug("FontManager", $"=== GetFontFamily END - SUCCESS ===");
-  return fontFamily;
-         }
-   catch (Exception ex)
-   {
-  Logger.Error("FontManager", $"Font '{fontName}' failed typeface verification", ex);
-            Logger.Error("FontManager", $"Exception type: {ex.GetType().Name}");
-         Logger.Error("FontManager", $"Exception message: {ex.Message}");
-    if (ex.InnerException != null)
+     var tf = typefacesList[i];
+         Logger.Info("FontManager", $"  Typeface {i}: Weight={tf.Weight}, Style={tf.Style}, Stretch={tf.Stretch}");
+       
+         try
+      {
+ var glyphTypeface = tf.TryGetGlyphTypeface(out var glyph);
+  Logger.Debug("FontManager", $"    TryGetGlyphTypeface: {glyphTypeface}");
+        if (glyphTypeface && glyph != null)
          {
-               Logger.Error("FontManager", $"Inner exception: {ex.InnerException.Message}");
-         }
-      throw;
-    }
-          }
-            catch (Exception ex)
-   {
-       Logger.Error("FontManager", $"? Failed to create FontFamily for '{fontName}'", ex);
-      Logger.Error("FontManager", $"Exception type: {ex.GetType().Name}");
-    Logger.Error("FontManager", $"Exception message: {ex.Message}");
-           Logger.Error("FontManager", $"Stack trace: {ex.StackTrace}");
+         Logger.Debug("FontManager", $"    GlyphCount: {glyph.GlyphCount}");
+        Logger.Debug("FontManager", $"    DesignerName: {glyph.Copyrights?.FirstOrDefault().Value}");
+      }
+        }
+         catch (Exception ex)
+     {
+           Logger.Warning("FontManager", $"    Failed to get glyph typeface details", ex);
+        }
+        }
 
-    Logger.Warning("FontManager", "Falling back to Segoe UI system font");
-       var fallback = new FontFamily("Segoe UI");
-              Logger.Info("FontManager", $"Fallback font created: {fallback.Source}");
-         Logger.Debug("FontManager", $"=== GetFontFamily END - FALLBACK ===");
-      return fallback;
+        Logger.Info("FontManager", $"? Font '{fontName}' loaded and verified successfully");
+      Logger.Debug("FontManager", $"=== GetFontFamily END - SUCCESS ===");
+      return fontFamily;
+       }
+  catch (Exception ex)
+       {
+      Logger.Error("FontManager", $"Font '{fontName}' failed typeface verification", ex);
+        Logger.Error("FontManager", $"Exception type: {ex.GetType().Name}");
+      Logger.Error("FontManager", $"Exception message: {ex.Message}");
+      if (ex.InnerException != null)
+     {
+   Logger.Error("FontManager", $"Inner exception: {ex.InnerException.Message}");
+   }
+     throw;
+     }
+       }
+     catch (Exception ex)
+   {
+        Logger.Error("FontManager", $"? Failed to create FontFamily for '{fontName}'", ex);
+    Logger.Error("FontManager", $"Exception type: {ex.GetType().Name}");
+      Logger.Error("FontManager", $"Exception message: {ex.Message}");
+  Logger.Error("FontManager", $"Stack trace: {ex.StackTrace}");
+
+      Logger.Warning("FontManager", "Falling back to Segoe UI system font");
+ var fallback = new FontFamily("Segoe UI");
+        Logger.Info("FontManager", $"Fallback font created: {fallback.Source}");
+ Logger.Debug("FontManager", $"=== GetFontFamily END - FALLBACK ===");
+       return fallback;
    }
         }
 
