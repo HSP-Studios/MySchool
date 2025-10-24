@@ -244,17 +244,37 @@ namespace MySchool
                     SettingsService.Save(CurrentSettings);
                 }
 
-                var fontFamily = FontManager.GetFontFamily(fontName);
+                // Get the font URI
+                var fontUri = FontManager.GetFontUri(fontName);
+                Logger.Info("Application", $"Font URI: {fontUri}");
+
+                // Create the FontFamily object
+                var fontFamily = new System.Windows.Media.FontFamily(fontUri);
+                Logger.Info("Application", $"FontFamily created: {fontFamily.Source}");
 
                 // Update the Font.Main resource
                 if (Resources.Contains("Font.Main"))
                 {
+                    var oldFont = Resources["Font.Main"];
+                    Logger.Debug("Application", $"Old Font.Main: {oldFont}");
+
                     Resources["Font.Main"] = fontFamily;
-                    Logger.Info("Application", $"Font.Main resource updated to {fontName}");
+
+                    var newFont = Resources["Font.Main"];
+                    Logger.Info("Application", $"Font.Main resource updated - Old: {oldFont}, New: {newFont}");
                 }
                 else
                 {
-                    Logger.Warning("Application", "Font.Main resource not found in App.xaml");
+                    Logger.Error("Application", "Font.Main resource not found in App.xaml - adding it manually");
+                    Resources.Add("Font.Main", fontFamily);
+                    Logger.Info("Application", $"Font.Main resource added with value: {fontFamily.Source}");
+                }
+
+                // Verify the resource was set
+                if (Resources.Contains("Font.Main"))
+                {
+                    var verifyFont = Resources["Font.Main"];
+                    Logger.Info("Application", $"Verification: Font.Main now contains: {verifyFont}");
                 }
             }
             catch (Exception ex)
