@@ -181,6 +181,147 @@ namespace MySchool.Classes
                 return false;
             }
         }
+
+        /// <summary>
+        /// Groups consecutive periods with the same subject name into a single period.
+        /// Returns a list of descriptions of what was changed.
+        /// </summary>
+        public static (TimetableData processedData, List<string> changes) GroupConsecutivePeriods(TimetableData timetableData)
+        {
+            Logger.Info("TimetableManager", "Starting to group consecutive periods");
+            var changes = new List<string>();
+
+            try
+            {
+                foreach (var day in timetableData.Timetable)
+                {
+                    Logger.Debug("TimetableManager", $"Processing day: {day.Day}");
+                    var newPeriods = new List<Period>();
+                    Period? currentGroup = null;
+
+                    for (int i = 0; i < day.Periods.Count; i++)
+                    {
+                        var period = day.Periods[i];
+
+                        // If this is the first period or subject is different from current group
+                        if (currentGroup == null ||
+                            !period.Subject.Equals(currentGroup.Subject, StringComparison.OrdinalIgnoreCase) ||
+                            period.IsBreak != currentGroup.IsBreak)
+                        {
+                            // Save the previous group if it exists
+                            if (currentGroup != null)
+                            {
+                                newPeriods.Add(currentGroup);
+                            }
+
+                            // Start a new group
+                            currentGroup = new Period
+                            {
+                                PeriodNumber = period.PeriodNumber,
+                                Subject = period.Subject,
+                                Teacher = period.Teacher,
+                                Room = period.Room,
+                                StartTime = period.StartTime,
+                                EndTime = period.EndTime,
+                                IsBreak = period.IsBreak
+                            };
+                        }
+                        else
+                        {
+                            // Extend the current group's end time
+                            string oldEndTime = currentGroup.EndTime;
+                            currentGroup.EndTime = period.EndTime;
+
+                            // Log the grouping
+                            string changeMessage = $"{day.Day}: Grouped consecutive '{period.Subject}' periods " +
+                                    $"(Period {currentGroup.PeriodNumber} extended from {oldEndTime} to {period.EndTime})";
+                            changes.Add(changeMessage);
+                            Logger.Info("TimetableManager", changeMessage);
+                        }
+                    }
+
+                    // Add the last group
+                    if (currentGroup != null)
+                    {
+                        newPeriods.Add(currentGroup);
+                    }
+
+                    // Replace the day's periods with the grouped periods
+                    day.Periods = newPeriods;
+                }
+
+                if (changes.Count == 0)
+                {
+                    Logger.Info("TimetableManager", "No consecutive periods found to group");
+                }
+                else
+                {
+                    Logger.Info("TimetableManager", $"Grouped {changes.Count} consecutive period(s)");
+                }
+
+                return (timetableData, changes);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("TimetableManager", "Failed to group consecutive periods", ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Processes a timetable by grouping consecutive periods.
+        /// Saves the processed timetable to a new file with the same timestamp.
+        /// Returns the list of changes made.
+        /// </summary>
+        public static List<string> ProcessAndSaveTimetable(string sourceFilePath)
+        {
+            Logger.Info("TimetableManager", $"Processing timetable file: {sourceFilePath}");
+
+            try
+            {
+                // Load the timetable
+                var timetableData = LoadTimetable<TimetableData>(sourceFilePath);
+                if (timetableData == null)
+                {
+                    Logger.Error("TimetableManager", "Failed to load timetable data from file");
+                    throw new InvalidOperationException("Failed to load timetable data");
+                }
+
+                // Process the timetable
+                var (processedData, changes) = GroupConsecutivePeriods(timetableData);
+
+                // Save back to the same file
+                string formattedJson = JsonSerializer.Serialize(processedData, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(sourceFilePath, formattedJson);
+
+                Logger.Info("TimetableManager", $"Saved processed timetable to: {sourceFilePath}");
+
+                return changes;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("TimetableManager", "Failed to process and save timetable", ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Re-processes the latest timetable file by grouping consecutive periods.
+        /// Returns the list of changes made.
+        /// </summary>
+        public static List<string> ReprocessLatestTimetable()
+        {
+            Logger.Info("TimetableManager", "Starting to re-process latest timetable");
+
+            var latestFile = GetLatestTimetableFile();
+            if (string.IsNullOrEmpty(latestFile))
+            {
+                Logger.Warning("TimetableManager", "No timetable file found to re-process");
+                throw new FileNotFoundException("No timetable file found");
+            }
+
+            return ProcessAndSaveTimetable(latestFile);
+        }
     }
 }
 
