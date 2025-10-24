@@ -11,8 +11,11 @@ PUBLISH (SELF CONTAINED)
 3.
 vpk pack `
 --packId MySchool `
+--packAuthors HSP-Studios `
 --packDir MySchool\bin\Publish `
 --mainExe MySchool.exe `
+--icon MySchool\resources\logo\ico\Dark-Icon.ico `
+--splashImage MySchool\resources\logo\png\Dark-Wide.png `
 --packVersion VERSION 
 
 4. UPLOAD TO GITHUB
