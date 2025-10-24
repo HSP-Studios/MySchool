@@ -194,12 +194,17 @@ namespace MySchool
                 CurrentSettings = SettingsService.Load();
                 Logger.Info("Application", $"Settings loaded - Dark mode: {CurrentSettings.IsDarkMode}, Font: {CurrentSettings.FontFamily}");
 
-                // Apply user's font preference
+                // Apply user's font preference BEFORE creating MainWindow
                 ApplyFontPreference();
 
                 // Apply theme
                 Logger.Info("Application", "Applying theme...");
                 ThemeManager.ApplyTheme(CurrentSettings.IsDarkMode);
+
+                // Now create and show the MainWindow
+                Logger.Info("Application", "Creating MainWindow...");
+                var mainWindow = new MainWindow();
+                mainWindow.Show();
 
                 // Check for updates on startup
                 await CheckForUpdatesOnStartup();
@@ -209,7 +214,9 @@ namespace MySchool
             catch (Exception ex)
             {
                 Logger.Error("Application", "Error during application startup", ex);
-                // Ignore any IO exceptions on startup; app can still run without the folder
+                // Show error and exit
+                MessageBox.Show($"Failed to start application: {ex.Message}", "Startup Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown();
             }
         }
 
