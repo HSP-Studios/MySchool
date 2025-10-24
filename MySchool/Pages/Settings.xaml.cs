@@ -166,6 +166,127 @@ namespace MySchool.Pages
             }
         }
 
+        private async void ReprocessTimetableButton_Click(object sender, RoutedEventArgs e)
+        {
+            Logger.Info("Settings", "User initiated timetable re-processing");
+
+            // Create progress dialog
+            var progressDialog = new Window
+            {
+                Title = "Re-processing Timetable",
+                Width = 400,
+                Height = 150,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this),
+                ResizeMode = ResizeMode.NoResize,
+                WindowStyle = WindowStyle.ToolWindow,
+                Background = (Brush)Application.Current.Resources["Brush.Background"]
+            };
+
+            var stackPanel = new StackPanel
+            {
+                Margin = new Thickness(20),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            var progressBar = new ProgressBar
+            {
+                IsIndeterminate = true,
+                Width = 300,
+                Height = 20,
+                Margin = new Thickness(0, 0, 0, 10)
+            };
+
+            var statusText = new TextBlock
+            {
+                Text = "Processing timetable...",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Style = (Style)Application.Current.Resources["Text.Body"]
+            };
+
+            stackPanel.Children.Add(progressBar);
+            stackPanel.Children.Add(statusText);
+            progressDialog.Content = stackPanel;
+
+            // Disable the button while processing
+            ReprocessTimetableButton.IsEnabled = false;
+            Logger.Debug("Settings", "Re-process button disabled during operation");
+
+            // Show the dialog non-modally
+            progressDialog.Show();
+
+            try
+            {
+                // Run processing on a background task
+                var changes = await Task.Run(() => TimetableManager.ReprocessLatestTimetable());
+
+                // Close progress dialog
+                progressDialog.Close();
+
+                // Show results
+                string resultMessage;
+                if (changes.Any())
+                {
+                    resultMessage = $"Timetable re-processed successfully!\n\n" +
+                 $"Grouped {changes.Count} consecutive period(s):\n\n"
+                 + string.Join("\n", changes.Take(5));
+
+                    if (changes.Count > 5)
+                    {
+                        resultMessage += $"\n... and {changes.Count - 5} more";
+                    }
+
+                    Logger.Info("Settings", $"Timetable re-processed successfully with {changes.Count} change(s)");
+                }
+                else
+                {
+                    resultMessage = "Timetable re-processed successfully!\n\n" +
+ "No consecutive periods were found to group.\n" +
+     "Your timetable is already optimized.";
+                    Logger.Info("Settings", "Timetable re-processed - no changes needed");
+                }
+
+                MessageBox.Show(resultMessage, "Re-processing Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (FileNotFoundException)
+            {
+                progressDialog.Close();
+                Logger.Warning("Settings", "No timetable file found for re-processing");
+                MessageBox.Show(
+            "No timetable found to re-process.\n\n" +
+           "Please upload a timetable first using the 'Upload Timetable' button.",
+                 "No Timetable Found",
+              MessageBoxButton.OK,
+                   MessageBoxImage.Warning);
+            }
+            catch (Exception ex)
+            {
+                progressDialog.Close();
+                Logger.Error("Settings", "Failed to re-process timetable", ex);
+
+                string logPath = Logger.GetLogFilePath();
+                string errorMessage = $"Failed to re-process timetable:\n\n{ex.Message}\n\n" +
+                     $"Log file location:\n{logPath}";
+
+                var errorDialog = new ErrorDialog("Re-processing Failed", errorMessage)
+                 {
+                      Owner = Window.GetWindow(this)
+                      };
+               errorDialog.ShowDialog();
+
+                if (errorDialog.OpenLogsRequested)
+                 {
+            OpenLogFolder();
+     }
+            }
+ finally
+            {
+        ReprocessTimetableButton.IsEnabled = true;
+    Logger.Debug("Settings", "Re-process button re-enabled");
+          }
+        }
+
         private void OpenLogFolder()
         {
             try

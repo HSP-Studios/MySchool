@@ -59,6 +59,32 @@
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Troubleshooting" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource Text.Body}" 
+                               Text="Re-process your timetable to fix display issues or apply updated grouping rules" 
+                               Margin="0,0,0,8"/>
+                    <TextBlock Style="{StaticResource Text.Body}" 
+                               Text="This will group consecutive periods with the same subject name into single periods and save the changes to your timetable." 
+                               Margin="0,0,0,8"
+                               Opacity="0.8"
+                               TextWrapping="Wrap"/>
+                    <TextBlock Style="{StaticResource Text.Body}" 
+                               Text="Use this if: periods are appearing incorrectly split, or the app updated with new timetable processing features." 
+                               Margin="0,0,0,8"
+                               Opacity="0.8"
+                               FontStyle="Italic"
+                               TextWrapping="Wrap"/>
+                    <Button x:Name="ReprocessTimetableButton" 
+                            Style="{StaticResource Button.Secondary}" 
+                            Content="Re-run Timetable Processing" 
+                            Padding="16,8"
+                            HorizontalAlignment="Left"
+                            Click="ReprocessTimetableButton_Click"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                <StackPanel>
                     <TextBlock Style="{StaticResource Text.Title}" Text="Weather Location" Margin="0,0,0,5"/>
                     <TextBlock Style="{StaticResource Text.Body}" Text="Configure location for weekend weather display" Margin="0,0,0,8"/>
                     
