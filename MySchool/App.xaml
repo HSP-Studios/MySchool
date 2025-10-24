@@ -9,7 +9,7 @@
 
         <!-- Default TextBlock font and color so pages without explicit styles still use the app font and themed text color -->
         <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+            <Setter Property="FontFamily" Value="{DynamicResource Font.Main}"/>
             <!-- Use DynamicResource because Brush.TextPrimary is defined later in this dictionary -->
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         </Style>
@@ -26,19 +26,19 @@
 
         <!-- Typography helpers -->
         <Style x:Key="Text.Headline" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+            <Setter Property="FontFamily" Value="{DynamicResource Font.Main}"/>
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         </Style>
         <Style x:Key="Text.Title" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+            <Setter Property="FontFamily" Value="{DynamicResource Font.Main}"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         </Style>
         <Style x:Key="Text.Body" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+            <Setter Property="FontFamily" Value="{DynamicResource Font.Main}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -152,7 +152,7 @@
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Padding" Value="12,8"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+            <Setter Property="FontFamily" Value="{DynamicResource Font.Main}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Template">
