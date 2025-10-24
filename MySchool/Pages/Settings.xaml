@@ -46,6 +46,85 @@
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Font" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource Text.Body}" 
+                               Text="Choose your preferred font for the application. The app must be restarted to apply font changes." 
+                               Margin="0,0,0,8"
+                               TextWrapping="Wrap"/>
+  
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <ComboBox x:Name="FontComboBox" 
+                                  Width="250" 
+                                  Height="40"
+                                  Background="{DynamicResource Brush.Surface}"
+                                  Foreground="{DynamicResource Brush.TextPrimary}"
+                                  BorderBrush="{DynamicResource Brush.Primary}"
+                                  BorderThickness="2"
+                                  Padding="12,8"
+                                  FontSize="14"
+                                  FontFamily="{StaticResource Font.Main}"
+                                  SelectionChanged="FontComboBox_SelectionChanged">
+                            <ComboBox.Resources>
+                                <!-- ComboBox popup background -->
+                                <Style TargetType="Border" x:Key="ComboBoxPopupBorder">
+                                    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="CornerRadius" Value="8"/>
+                                </Style>
+                            </ComboBox.Resources>
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+                                    <Setter Property="Padding" Value="12,8"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ComboBoxItem">
+                                                <Border x:Name="ItemBorder"
+                                                       Background="{TemplateBinding Background}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       CornerRadius="4"
+                                                       Margin="4,2">
+                                                    <ContentPresenter/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ItemBorder" Property="Background">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="{Binding Source={StaticResource Brush.Primary}, Path=Color}" Opacity="0.1"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="ItemBorder" Property="Background">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="{Binding Source={StaticResource Brush.Primary}, Path=Color}" Opacity="0.2"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+          
+                        <Button x:Name="RestartAppButton" 
+                                Style="{StaticResource Button.Primary}" 
+                                Content="Restart App" 
+                                Padding="16,8"
+                                Margin="12,0,0,0"
+                                Visibility="Collapsed"
+                                Click="RestartAppButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+                <StackPanel>
                     <TextBlock Style="{StaticResource Text.Title}" Text="Timetable" Margin="0,0,0,5"/>
                     <TextBlock Style="{StaticResource Text.Body}" Text="Upload your school timetable using an AI assistant (ChatGPT, Claude, etc.)" Margin="0,0,0,8"/>
                     <Button x:Name="UploadTimetableButton" 

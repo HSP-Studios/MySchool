@@ -13,6 +13,8 @@ namespace MySchool.Pages
     /// </summary>
     public partial class Settings : Page
     {
+        private string _initialFontFamily = string.Empty;
+
         public Settings()
         {
             InitializeComponent();
@@ -28,11 +30,44 @@ namespace MySchool.Pages
                 UserNameTextBox.Text = App.CurrentSettings.UserName;
                 UpdateLocationDisplay();
                 UpdateBuildInfo();
+                InitializeFontPicker();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Failed to initialize settings: " + ex);
                 DarkModeToggle.IsChecked = false; // fallback to default
+            }
+        }
+
+        private void InitializeFontPicker()
+        {
+            try
+            {
+                Logger.Info("Settings", "Initializing font picker");
+
+                // Load available fonts
+                var availableFonts = FontManager.GetAvailableFonts();
+                FontComboBox.ItemsSource = availableFonts;
+
+                // Set current font selection
+                var currentFont = App.CurrentSettings.FontFamily;
+                if (string.IsNullOrWhiteSpace(currentFont) || !FontManager.IsFontAvailable(currentFont))
+                {
+                    Logger.Warning("Settings", $"Invalid or missing font setting '{currentFont}', defaulting to SF Pro");
+                    currentFont = "SF Pro";
+                    App.CurrentSettings.FontFamily = currentFont;
+                    SettingsService.Save(App.CurrentSettings);
+                }
+
+                FontComboBox.SelectedItem = currentFont;
+                _initialFontFamily = currentFont;
+
+                Logger.Info("Settings", $"Font picker initialized with {availableFonts.Count} fonts, current: {currentFont}");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Settings", "Failed to initialize font picker", ex);
+                MessageBox.Show($"Failed to load font settings: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -535,5 +570,94 @@ namespace MySchool.Pages
                 Logger.Debug("Settings", "Update check button re-enabled");
             }
         }
+
+        private void FontComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (FontComboBox.SelectedItem is string selectedFont)
+                {
+                    Logger.Info("Settings", $"Font selection changed to: {selectedFont}");
+
+                    // Save the new font preference
+                    App.CurrentSettings.FontFamily = selectedFont;
+                    SettingsService.Save(App.CurrentSettings);
+
+                    // Show restart button if font has changed from initial value
+                    if (selectedFont != _initialFontFamily)
+                    {
+                        Logger.Debug("Settings", "Font changed from initial, showing restart button");
+                        RestartAppButton.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        Logger.Debug("Settings", "Font matches initial, hiding restart button");
+                        RestartAppButton.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Settings", "Failed to handle font selection change", ex);
+                MessageBox.Show($"Failed to save font preference: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void RestartAppButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Logger.Info("Settings", "User initiated application restart to apply font change");
+
+                var result = MessageBox.Show(
+        "The application will now restart to apply the new font.\n\nDo you want to continue?",
+    "Restart Application",
+    MessageBoxButton.YesNo,
+         MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    Logger.Info("Settings", "User confirmed restart");
+
+                    // Get the current executable path
+                    var exePath = Environment.ProcessPath;
+
+                    if (!string.IsNullOrEmpty(exePath))
+                    {
+                        Logger.Info("Settings", $"Restarting application: {exePath}");
+
+                        // Start a new instance
+                        Process.Start(new ProcessStartInfo
+          {
+            FileName = exePath,
+             UseShellExecute = true
+    });
+
+                 Logger.Info("Settings", "New instance started, shutting down current instance");
+
+      // Shutdown the current instance
+             Application.Current.Shutdown();
+  }
+            else
+ {
+        Logger.Error("Settings", "Failed to get executable path for restart");
+  MessageBox.Show("Failed to restart the application. Please restart manually.", 
+      "Restart Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+ }
+    }
+            else
+             {
+   Logger.Info("Settings", "User cancelled restart");
+    }
+     }
+         catch (Exception ex)
+      {
+   Logger.Error("Settings", "Failed to restart application", ex);
+     MessageBox.Show($"Failed to restart application: {ex.Message}\n\nPlease restart manually.", 
+         "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // ...existing code...
     }
 }
