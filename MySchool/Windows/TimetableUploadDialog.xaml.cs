@@ -194,6 +194,10 @@ namespace MySchool.Windows
                     }
                 }
 
+                // Group consecutive periods with the same name
+                Logger.Info("TimetableUploadDialog", "Grouping consecutive periods");
+                var (processedData, changes) = TimetableManager.GroupConsecutivePeriods(timetableData);
+
                 // Write formatted JSON
                 if (string.IsNullOrEmpty(targetJsonPath))
                 {
@@ -201,16 +205,33 @@ namespace MySchool.Windows
                     return;
                 }
 
-                string formattedJson = JsonSerializer.Serialize(timetableData, new JsonSerializerOptions { WriteIndented = true });
+                string formattedJson = JsonSerializer.Serialize(processedData, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(targetJsonPath, formattedJson);
 
-                MessageBox.Show($"Timetable saved successfully!\n\nPDF: {targetPdfPath}\nJSON: {targetJsonPath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Show success message with grouping info
+                string successMessage = $"Timetable saved successfully!\n\nPDF: {targetPdfPath}\nJSON: {targetJsonPath}";
+                if (changes.Any())
+                {
+                    successMessage += $"\n\nGrouped {changes.Count} consecutive period(s):\n" + string.Join("\n", changes.Take(5));
+                    if (changes.Count > 5)
+                    {
+                        successMessage += $"\n... and {changes.Count - 5} more";
+                    }
+                }
+                else
+                {
+                    successMessage += "\n\nNo consecutive periods were found to group.";
+                }
+
+                Logger.Info("TimetableUploadDialog", "Timetable saved successfully");
+                MessageBox.Show(successMessage, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 DialogResult = true;
                 Close();
             }
             catch (Exception ex)
             {
+                Logger.Error("TimetableUploadDialog", "Failed to save timetable", ex);
                 MessageBox.Show($"Failed to save timetable: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
