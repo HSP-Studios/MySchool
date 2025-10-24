@@ -8,11 +8,22 @@
         <!-- Reference the embedded font file explicitly and use its internal family name -->
         <FontFamily x:Key="Font.Main">pack://application:,,,/MySchool;component/resources/fonts/SF-Pro.ttf#SF Pro</FontFamily>
 
+        <!-- Global Window style with text rendering improvements -->
+        <Style TargetType="Window">
+            <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        </Style>
+
         <!-- Default TextBlock font and color so pages without explicit styles still use the app font and themed text color -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <!-- Use DynamicResource because Brush.TextPrimary is defined later in this dictionary -->
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
         </Style>
 
         <!-- Color palette -->
