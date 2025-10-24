@@ -9,6 +9,7 @@ namespace MySchool.Classes
         public (double latitude, double longitude)? WeatherLocation { get; set; } = null;
         public string WeatherLocationName { get; set; } = string.Empty;
         public string UserName { get; set; } = string.Empty;
+        public string FontFamily { get; set; } = "SF Pro"; // Default font
     }
 
     public static class SettingsService
