@@ -39,12 +39,12 @@
     <None Remove="resources\logo\svg\Dark-Wide.svg" />
     <None Remove="resources\logo\svg\Light-Icon.svg" />
     <None Remove="resources\logo\svg\Light-Wide.svg" />
-    <None Remove="resources\prompts\timetable-generation-prompt.txt" />
+ <None Remove="resources\prompts\timetable-generation-prompt.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="resources\data\holidays\QLD.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\prompts\timetable-generation-prompt.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -61,7 +61,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\fonts\SF-Pro.ttf" />
+    <!-- Fonts - All embedded as Resources -->
+    <Resource Include="resources\fonts\**\*.ttf" />
+    
+    <!-- Logos and images -->
     <Resource Include="resources\logo\png-transparent\Dark-Icon.png" />
     <Resource Include="resources\logo\png-transparent\Dark-Wide.png" />
     <Resource Include="resources\logo\png-transparent\Light-Icon.png" />
