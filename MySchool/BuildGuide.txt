@@ -9,7 +9,11 @@ CHANGE VERSION IN CSPROJ
 PUBLISH (SELF CONTAINED)
 
 3.
-vpk pack --packId MySchool --packDir MySchool\bin\Publish --mainExe MySchool.exe --packVersion VERSION
+vpk pack `
+--packId MySchool `
+--packDir MySchool\bin\Publish `
+--mainExe MySchool.exe `
+--packVersion VERSION 
 
 4. UPLOAD TO GITHUB
 - assets.win.json
