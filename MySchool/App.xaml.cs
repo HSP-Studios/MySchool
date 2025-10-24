@@ -244,13 +244,9 @@ namespace MySchool
                     SettingsService.Save(CurrentSettings);
                 }
 
-                // Get the font URI
-                var fontUri = FontManager.GetFontUri(fontName);
-                Logger.Info("Application", $"Font URI: {fontUri}");
-
-                // Create the FontFamily object
-                var fontFamily = new System.Windows.Media.FontFamily(fontUri);
-                Logger.Info("Application", $"FontFamily created: {fontFamily.Source}");
+                // Get the FontFamily from file system
+                var fontFamily = FontManager.GetFontFamily(fontName);
+                Logger.Info("Application", $"FontFamily loaded: {fontFamily.Source}");
 
                 // Update the Font.Main resource
                 if (Resources.Contains("Font.Main"))
