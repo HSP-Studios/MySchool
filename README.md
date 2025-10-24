@@ -215,7 +215,7 @@ Note: Window resizing has been disabled for aesthetics. If you would like resizi
 |-----------|-----------|---------|
 | **Framework** | .NET | 9.0 |
 | **UI Framework** | WPF (Windows Presentation Foundation) | 9.0 |
-| **Target Platform** | Windows | net9.0-windows10.0.19041.0 |
+| **Target Platform** | Windows | net9.0-windows |
 | **Language** | C# | 12.0 |
 | **Markup** | XAML | - |
 | **Serialization** | System.Text.Json | Built-in |
