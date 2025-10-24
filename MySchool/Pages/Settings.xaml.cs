@@ -229,8 +229,8 @@ namespace MySchool.Pages
                 if (changes.Any())
                 {
                     resultMessage = $"Timetable re-processed successfully!\n\n" +
-                 $"Grouped {changes.Count} consecutive period(s):\n\n" +
-                   string.Join("\n", changes.Take(5));
+                 $"Grouped {changes.Count} consecutive period(s):\n\n"
+                 + string.Join("\n", changes.Take(5));
 
                     if (changes.Count > 5)
                     {
