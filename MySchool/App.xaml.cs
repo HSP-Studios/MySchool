@@ -189,11 +189,15 @@ namespace MySchool
                     Logger.Info("Application", "Application data directory created successfully");
                 }
 
-                // Load settings and apply theme
+                // Load settings
                 Logger.Info("Application", "Loading user settings...");
                 CurrentSettings = SettingsService.Load();
-                Logger.Info("Application", $"Settings loaded - Dark mode: {CurrentSettings.IsDarkMode}");
+                Logger.Info("Application", $"Settings loaded - Dark mode: {CurrentSettings.IsDarkMode}, Font: {CurrentSettings.FontFamily}");
 
+                // Apply user's font preference
+                ApplyFontPreference();
+
+                // Apply theme
                 Logger.Info("Application", "Applying theme...");
                 ThemeManager.ApplyTheme(CurrentSettings.IsDarkMode);
 
@@ -206,6 +210,49 @@ namespace MySchool
             {
                 Logger.Error("Application", "Error during application startup", ex);
                 // Ignore any IO exceptions on startup; app can still run without the folder
+            }
+        }
+
+        private void ApplyFontPreference()
+        {
+            try
+            {
+                var fontName = CurrentSettings.FontFamily;
+
+                if (string.IsNullOrWhiteSpace(fontName))
+                {
+                    Logger.Info("Application", "No font preference set, using default SF Pro");
+                    fontName = "SF Pro";
+                    CurrentSettings.FontFamily = fontName;
+                    SettingsService.Save(CurrentSettings);
+                }
+
+                Logger.Info("Application", $"Applying font preference: {fontName}");
+
+                if (!FontManager.IsFontAvailable(fontName))
+                {
+                    Logger.Warning("Application", $"Font '{fontName}' not available, falling back to SF Pro");
+                    fontName = "SF Pro";
+                    CurrentSettings.FontFamily = fontName;
+                    SettingsService.Save(CurrentSettings);
+                }
+
+                var fontFamily = FontManager.GetFontFamily(fontName);
+
+                // Update the Font.Main resource
+                if (Resources.Contains("Font.Main"))
+                {
+                    Resources["Font.Main"] = fontFamily;
+                    Logger.Info("Application", $"Font.Main resource updated to {fontName}");
+                }
+                else
+                {
+                    Logger.Warning("Application", "Font.Main resource not found in App.xaml");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Application", "Failed to apply font preference, using default", ex);
             }
         }
 
