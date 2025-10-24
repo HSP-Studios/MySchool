@@ -43,6 +43,9 @@
 | 🔢 **Build Information** | Auto-generated build numbers and version display in Settings |
 | 💾 **Persistent Settings** | User preferences saved locally in AppData |
 | 🖼️ **Custom Branding** | Professional logo assets in multiple formats (SVG, PNG, ICO) |
+| 📝 **Comprehensive Logging** | Date-based log files with automatic cleanup (keeps last 7 days) stored in AppData |
+| 🔄 **Auto-Update System** | Built-in update checker with GitHub integration for seamless app updates |
+| ⚠️ **Error Handling** | User-friendly error dialogs with quick access to log files for troubleshooting |
 
 ---
 
@@ -57,6 +60,7 @@ MySchool/
     ├── 📁 Classes/                    # Core application logic
     │   ├── BuildInfoHelper.cs         # Build version and date information
     │   ├── HolidayLogic.cs            # School holiday calculations
+    │   ├── Logger.cs                  # Centralized logging utility with file persistence
     │   ├── PageTransition.cs          # Animated page navigation
     │   ├── SettingsService.cs         # User settings persistence
     │   ├── ThemeManager.cs            # Dynamic theme management with animations
@@ -68,6 +72,7 @@ MySchool/
     │   ├── Schedule.xaml/cs           # Schedule management with PDF viewer
     │   └── Settings.xaml/cs           # Settings, preferences, and build info
     ├── 📁 Windows/                    # Dialog windows
+    │   ├── ErrorDialog.xaml/cs        # Error dialog with log folder access
     │   ├── ManualLocationDialog.xaml/cs      # Manual location entry
     │   ├── SubjectShortenerDialog.xaml/cs    # Subject name shortening
     │   └── TimetableUploadDialog.xaml/cs     # Timetable upload & processing
@@ -166,9 +171,16 @@ On weekends, the Home page shows:
 
 #### 🔢 Build Information
 View app version details in **Settings**:
-- Version number (e.g., 1.0.0-beta.2)
+- Version number (e.g., 1.0.0-beta7)
 - Auto-generated build number (format: YYMMDDRRRR)
 - Build date
+
+#### 🔄 Auto-Update System
+MySchool automatically checks for updates on startup:
+- Seamlessly downloads and installs updates from GitHub
+- Supports prerelease versions (beta updates)
+- Comprehensive error handling with detailed logging
+- Restart prompted after successful update installation
 
 ### Navigation
 
@@ -177,6 +189,13 @@ View app version details in **Settings**:
 | **Home** | Click "Home" tab or schedule card | View dashboard with personalized greeting, current/next class, time remaining, and weekend weather |
 | **Schedule** | Click "Schedule" tab | Upload timetables, view PDF schedules, and manage class information |
 | **Settings** | Click "Settings" tab | Set your name, toggle dark mode, and view build information |
+
+#### 📝 Logging & Error Handling
+MySchool includes comprehensive logging:
+- Date-based log files stored in `%AppData%/MySchool/logs/`
+- Automatic cleanup of logs older than 7 days
+- Error dialogs with "Open Logs Folder" button for easy troubleshooting
+- Detailed logging of updates, errors, warnings, and debug information
 
 ### Window Controls
 
@@ -200,7 +219,8 @@ Note: Window resizing has been disabled for aesthetics. If you would like resizi
 | **Language** | C# | 12.0 |
 | **Markup** | XAML | - |
 | **Serialization** | System.Text.Json | Built-in |
-| **Web Browser** | Microsoft.Web.WebView2 | For PDF viewing |
+| **Web Browser** | Microsoft.Web.WebView2 | 1.0.3537.50 |
+| **Auto-Update** | Velopack | 0.0.1298 |
 | **Weather API** | Open-Meteo | Free weather data |
 | **Geolocation** | Nominatim (OpenStreetMap) | Reverse geocoding |
 
@@ -232,6 +252,7 @@ MySchool uses a **Code-Behind Pattern** with the following structure:
 │  • HolidayLogic (Calendar Logic)     │
 │  • PageTransition (Animations)       │
 │  • BuildInfoHelper (Version Info)    │
+│  • Logger (Centralized Logging)      │
 └──────────────────────────────────────┘
                │
                ▼
@@ -240,6 +261,7 @@ MySchool uses a **Code-Behind Pattern** with the following structure:
 │  • TimetableUploadDialog             │
 │  • SubjectShortenerDialog            │
 │  • ManualLocationDialog              │
+│  • ErrorDialog (with Log Access)     │
 └──────────────────────────────────────┘
 ```
 
@@ -248,9 +270,11 @@ MySchool uses a **Code-Behind Pattern** with the following structure:
 - **🎨 Material Design Inspired**: Modern, clean UI with cards, shadows, and contemporary color palettes
 - **🌐 Dynamic Resources**: Theme colors and styles defined globally and updated at runtime with smooth animations
 - **💾 JSON-based Configuration**: Lightweight, human-readable data storage for settings and timetables
-- **🎯 Single Responsibility**: Each class has a focused purpose (theme management, weather, timetables, etc.)
+- **🎯 Single Responsibility**: Each class has a focused purpose (theme management, weather, timetables, logging, etc.)
 - **♿ Accessibility**: Uses system fonts and proper contrast ratios with improved light/dark mode support
-- **🔄 Real-time Updates**: Current class detection, weather updates, and dynamic UI elements
+- **🔄 Real-time Updates**: Current class detection, weather updates, dynamic UI elements, and automatic app updates
+- **📝 Comprehensive Logging**: Centralized logging with automatic log rotation and easy access for troubleshooting
+- **⚠️ Robust Error Handling**: User-friendly error messages with detailed logging and quick log access
 
 ### Custom UI Components
 
@@ -287,12 +311,12 @@ The application is configured in `MySchool.csproj`:
 ```xml
 <PropertyGroup>
   <OutputType>WinExe</OutputType>
-  <TargetFramework>net9.0-windows</TargetFramework>
+  <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
   <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
   <UseWPF>true</UseWPF>
   <ImplicitUsings>enable</ImplicitUsings>
   <Nullable>enable</Nullable>
-  <Version>1.0.0-beta.2</Version>
+  <Version>1.0.0-beta7</Version>
   <ApplicationIcon>resources\logo\ico\Dark-Icon.ico</ApplicationIcon>
 </PropertyGroup>
 ```
@@ -328,6 +352,31 @@ Build information is auto-generated during compilation and accessible via `Build
 1. Add to `resources/data/`
 2. Set **Build Action** to `Content` and **Copy to Output Directory** to `Always`
 3. Access at runtime from output directory
+
+### Logging System
+
+MySchool includes a comprehensive logging system via the `Logger` class:
+
+**Log Levels:**
+- `Logger.Info()` - Informational messages
+- `Logger.Warning()` - Warning messages with optional exception details
+- `Logger.Error()` - Error messages with full stack traces
+- `Logger.Debug()` - Debug messages (console only, not written to file)
+
+**Log File Location:**
+- Default: `%AppData%/MySchool/logs/myschool_YYYY-MM-DD.log`
+- Fallback: `%TEMP%/myschool.log` if AppData is inaccessible
+
+**Log Management:**
+- Automatic daily log rotation
+- Keeps logs for last 7 days
+- Thread-safe file writing
+
+**Usage Example:**
+```csharp
+Logger.Info("Updates", "Checking for updates...");
+Logger.Error("Updates", "Failed to check for updates", exception);
+```
 
 ### Code Style
 
