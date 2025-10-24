@@ -9,6 +9,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>resources\logo\ico\Dark-Icon.ico</ApplicationIcon>
 	<StartupObject>MySchool.App</StartupObject>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
 
     <!-- Versioning -->
 	<Version>1.0.0-beta8</Version>
