@@ -4,6 +4,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Svg;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 
 namespace MySchool
@@ -25,6 +30,64 @@ namespace MySchool
             // Navigate to Home on startup
             ContentFrame.Navigate(new Home());
             SetTabHighlight("Home");
+            
+            // Subscribe to theme changes
+            ThemeManager.PropertyChanged += ThemeManager_PropertyChanged;
+            
+            // Set initial logo based on current theme
+            UpdateLogo();
+        }
+
+        private void ThemeManager_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ThemeManager.CurrentTheme))
+            {
+                UpdateLogo();
+            }
+        }
+
+        private void UpdateLogo()
+        {
+            if (AppLogo == null) return;
+            
+            bool isDark = ThemeManager.CurrentTheme == "Dark";
+            string logoPath = isDark
+                ? "resources/logo/svg-transparent/Dark-Wide-Short.svg"
+                : "resources/logo/svg-transparent/Light-Wide-Short.svg";
+            
+            // Convert SVG to high-quality BitmapImage
+            AppLogo.Source = LoadSvgAsBitmap(logoPath, 1000, 300);
+        }
+
+        private BitmapImage LoadSvgAsBitmap(string svgPath, int width, int height)
+        {
+            try
+            {
+                var svgDocument = SvgDocument.Open(svgPath);
+                svgDocument.Width = width;
+                svgDocument.Height = height;
+
+                using var bitmap = svgDocument.Draw(width, height);
+                using var memory = new MemoryStream();
+      
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = memory;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
+            catch
+            {
+                // Fallback to PNG if SVG loading fails
+                return new BitmapImage(new Uri("resources/logo/png-transparent/" + 
+                 (ThemeManager.CurrentTheme == "Dark" ? "Dark" : "Light") + "-Wide-Short.png", UriKind.Relative));
+            }
         }
 
         private void MainWindow_StateChanged(object? sender, EventArgs e)
@@ -58,11 +121,11 @@ namespace MySchool
 
         private void SetTabHighlight(string selected)
         {
-            var blue = (Brush)FindResource("Brush.Primary");
-            var gray = (Brush)FindResource("Brush.TextSecondary");
+     var blue = (System.Windows.Media.Brush)FindResource("Brush.Primary");
+   var gray = (System.Windows.Media.Brush)FindResource("Brush.TextSecondary");
             if (ScheduleTabIcon != null) ScheduleTabIcon.Foreground = selected == "Schedule" ? blue : gray;
             if (HomeTabIcon != null) HomeTabIcon.Foreground = selected == "Home" ? blue : gray;
-            if (SettingsTabIcon != null) SettingsTabIcon.Foreground = selected == "Settings" ? blue : gray;
+     if (SettingsTabIcon != null) SettingsTabIcon.Foreground = selected == "Settings" ? blue : gray;
         }
 
         private void HomeTab_Click(object sender, RoutedEventArgs e)
