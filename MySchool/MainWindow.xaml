@@ -13,7 +13,12 @@
         AllowsTransparency="False"
         d:DesignHeight="600" d:DesignWidth="928"
         Icon="resources/logo/png/Dark-Icon.png"
-        FontFamily="{StaticResource Font.Main}">
+        FontFamily="{StaticResource Font.Main}"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="0"
                              ResizeBorderThickness="6"
