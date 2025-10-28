@@ -18,9 +18,9 @@ namespace MySchool
             InitializeComponent();
             StateChanged += MainWindow_StateChanged;
             this.MinWidth = 928;
-            this.MinHeight = 600;
+            this.MinHeight = 614;
             this.MaxWidth = 928;
-            this.MaxHeight = 600;
+            this.MaxHeight = 614;
             this.ResizeMode = ResizeMode.NoResize;
             // Navigate to Home on startup
             ContentFrame.Navigate(new Home());

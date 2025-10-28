@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MySchool.Pages"
       mc:Ignorable="d" 
-      d:DesignWidth="928"
+      d:DesignHeight="550" d:DesignWidth="928"
       Title="Settings"
       Background="{DynamicResource Brush.Background}">
 
