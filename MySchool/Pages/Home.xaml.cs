@@ -311,7 +311,7 @@ namespace MySchool.Pages
 
                 foreach (var e in events)
                 {
-                    var row = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 0, 10) };
+                    var row = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 0, 14) };
 
                     var ellipse = new Ellipse { Width = 10, Height = 10, VerticalAlignment = VerticalAlignment.Center };
                     // Color by event kind to match original design accents

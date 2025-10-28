@@ -169,33 +169,33 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Announcements -->
+                <!-- Quick Notes -->
                 <StackPanel Grid.Column="0" Margin="0,0,12,0">
                     <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Language="en-au" Text="Quick Notes"/></TextBlock>
-                    <Border Style="{StaticResource Card}" Height="160">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Coming Soon!" Foreground="{StaticResource Brush.TextPrimary}"/>
-                            </StackPanel>
-                            <TextBlock Style="{StaticResource Text.Body}" Margin="0,0,0,10" TextWrapping="Wrap" Text="Coming Soon!"/>
-                            <Separator Margin="0,0,0,10" Background="#30FFFFFF"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                                <TextBlock Style="{StaticResource Icon}" Text=""/>
-                                <TextBlock Text="Coming Soon!" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Brush.TextPrimary}"/>
-                            </StackPanel>
-                            <TextBlock Style="{StaticResource Text.Body}" Text="Coming Soon!" TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
+                  <Border Style="{StaticResource Card}" Height="160">
+                            <StackPanel VerticalAlignment="Top" Margin="0,8,0,0">
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+            <TextBlock Style="{StaticResource Icon}" Text=""/>
+          <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Coming Soon!" Foreground="{StaticResource Brush.TextPrimary}"/>
+           </StackPanel>
+              <TextBlock Style="{StaticResource Text.Body}" Margin="0,0,0,16" TextWrapping="Wrap" Text="Coming Soon!"/>
+                            <Separator Margin="0,0,0,16" Background="#30FFFFFF"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                          <TextBlock Style="{StaticResource Icon}" Text=""/>
+                        <TextBlock Text="Coming Soon!" FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Brush.TextPrimary}"/>
+                     </StackPanel>
+                   <TextBlock Style="{StaticResource Text.Body}" Text="Coming Soon!" TextWrapping="Wrap"/>
+            </StackPanel>
+                  </Border>
+                 </StackPanel>
 
                 <!-- Upcoming events -->
                 <StackPanel Grid.Column="1" Margin="12,0,0,0">
                     <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Text="Upcoming "/><Run Language="en-au" Text="Events"/></TextBlock>
-                    <Border Style="{StaticResource Card}" Height="160">
-                        <StackPanel x:Name="UpcomingEventsPanel" />
-                    </Border>
-                </StackPanel>
+             <Border Style="{StaticResource Card}" Height="160">
+                <StackPanel x:Name="UpcomingEventsPanel" VerticalAlignment="Top" Margin="0,8,0,0" />
+                      </Border>
+          </StackPanel>
             </Grid>
             <!-- Footer note -->
         </StackPanel>
