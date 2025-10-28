@@ -34,7 +34,7 @@
 | 📅 **Schedule Management** | Organize and view class schedules with PDF viewer support and AI-powered timetable upload |
 | ⚙️ **Settings & Customization** | Personalize with your name, theme options, build info, and more |
 | 🌙 **Dark Mode Support** | Smooth animated theme transitions between light and dark modes |
-| 🎨 **Modern UI/UX** | Clean, professional interface using SF Pro font with improved button and TextBox styles |
+| 🎨 **Modern UI/UX** | Clean, professional interface using Inter font with improved button and TextBox styles |
 | 📊 **Term & Holiday Tracking** | Built-in Queensland school term dates and holiday calendars (2025-2029) |
 | ☀️ **Weather Integration** | Real-time weather display on weekends with geolocation support |
 | 📚 **Timetable Management** | Upload and process timetables with automatic period tracking and current class detection |
@@ -79,10 +79,11 @@ MySchool/
     ├── 📁 resources/                  # Application assets
     │   ├── 📁 data/
     │   │   └── holidays/
-    │   │       └── QLD.json           # Queensland school calendar data
+    │   │       └── QLD.json       # Queensland school calendar data
     │   ├── 📁 fonts/
-    │   │   └── SF-Pro.ttf             # Apple SF Pro font
-    │   ├── 📁 logo/                   # Branding assets
+    │   │   └── Inter/    # Inter font family
+    │ │       └── Inter.ttc          # Inter font file
+    │   ├── 📁 logo/   # Branding assets
     │   │   ├── ico/                   # Application icons
     │   │   ├── png/                   # PNG logos (with background)
     │   │   ├── png-transparent/       # PNG logos (transparent)
@@ -492,7 +493,7 @@ See the [LICENSE](LICENSE) file for the full license text.
 
 ### Third-Party Assets
 
-- **SF Pro Font**: © Apple Inc. (Used for educational purposes)
+- **Inter Font**: © The Inter Project Authors (SIL Open Font License 1.1)
 - **Segoe MDL2 Assets**: © Microsoft Corporation (System font)
 - **Open-Meteo Weather API**: Free weather data service
 - **Nominatim (OpenStreetMap)**: Reverse geocoding service

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:MySchool.Pages"
       xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
       mc:Ignorable="d" 
-      d:DesignHeight="536" d:DesignWidth="928"
+      d:DesignHeight="550" d:DesignWidth="928"
       Title="Schedule"
       Background="{DynamicResource Brush.Background}">
 

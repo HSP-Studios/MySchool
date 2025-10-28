@@ -11,9 +11,14 @@
         WindowStyle="None"
         ResizeMode="CanResize"
         AllowsTransparency="False"
-        d:DesignHeight="600" d:DesignWidth="928"
+        d:DesignHeight="614" d:DesignWidth="928"
         Icon="resources/logo/png/Dark-Icon.png"
-        FontFamily="{StaticResource Font.Main}">
+        FontFamily="{StaticResource Font.Main}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        RenderOptions.ClearTypeHint="Enabled"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="0"
                              ResizeBorderThickness="6"
@@ -56,7 +61,7 @@
                             <ImageBrush ImageSource="resources/logo/png/Dark-Icon.png" Stretch="UniformToFill"/>
                         </Border.Background>
                     </Border>
-                    <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{DynamicResource Brush.TextPrimary}" VerticalAlignment="Center"/>
+                    <TextBlock Text="MySchool" FontFamily="{StaticResource Font.Brand}" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{DynamicResource Brush.TextPrimary}" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <!-- Center tab icons: Schedule | Home | Settings -->
