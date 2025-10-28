@@ -172,7 +172,7 @@
                 <!-- Announcements -->
                 <StackPanel Grid.Column="0" Margin="0,0,12,0">
                     <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Language="en-au" Text="Quick Notes"/></TextBlock>
-                    <Border Style="{StaticResource Card}" Height="143">
+                    <Border Style="{StaticResource Card}" Height="163">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                                 <TextBlock Style="{StaticResource Icon}" Text=""/>
@@ -192,7 +192,7 @@
                 <!-- Upcoming events -->
                 <StackPanel Grid.Column="1" Margin="12,0,0,0">
                     <TextBlock Style="{StaticResource Text.Title}" Margin="0,0,0,8" Foreground="{StaticResource Brush.TextPrimary}"><Run Text="Upcoming "/><Run Language="en-au" Text="Events"/></TextBlock>
-                    <Border Style="{StaticResource Card}" Height="143">
+                    <Border Style="{StaticResource Card}" Height="163">
                         <StackPanel x:Name="UpcomingEventsPanel" />
                     </Border>
                 </StackPanel>
