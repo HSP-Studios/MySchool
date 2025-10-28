@@ -61,7 +61,7 @@
                             <ImageBrush ImageSource="resources/logo/png/Dark-Icon.png" Stretch="UniformToFill"/>
                         </Border.Background>
                     </Border>
-                    <TextBlock Text="MySchool" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{DynamicResource Brush.TextPrimary}" VerticalAlignment="Center"/>
+                    <TextBlock Text="MySchool" FontFamily="{StaticResource Font.Brand}" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0" Foreground="{DynamicResource Brush.TextPrimary}" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <!-- Center tab icons: Schedule | Home | Settings -->
