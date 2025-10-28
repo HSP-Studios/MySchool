@@ -13,6 +13,12 @@
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <!-- Use DynamicResource because Brush.TextPrimary is defined later in this dictionary -->
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <!-- ClearType and text rendering enhancements for better font clarity -->
+            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+            <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
         </Style>
 
         <!-- Color palette -->
@@ -31,18 +37,30 @@
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+            <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
         </Style>
         <Style x:Key="Text.Title" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+            <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
         </Style>
         <Style x:Key="Text.Body" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+            <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
         </Style>
 
         <!-- Cards -->
