@@ -192,7 +192,7 @@ namespace MySchool
                 // Load settings and apply theme
                 Logger.Info("Application", "Loading user settings...");
                 CurrentSettings = SettingsService.Load();
-                
+
                 // Use ThemeName property, fallback to IsDarkMode for migration
                 string themeName = CurrentSettings.ThemeName;
                 if (string.IsNullOrWhiteSpace(themeName))
@@ -203,7 +203,7 @@ namespace MySchool
                     CurrentSettings.ThemeName = themeName;
                     SettingsService.Save(CurrentSettings);
                 }
-                
+
                 Logger.Info("Application", $"Settings loaded - Theme: {themeName}");
 
                 Logger.Info("Application", "Applying theme...");

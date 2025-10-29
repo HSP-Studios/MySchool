@@ -7,7 +7,7 @@ namespace MySchool.Classes
     {
         [Obsolete("Use ThemeName instead")]
         public bool IsDarkMode { get; set; } = false;
-        
+
         public string ThemeName { get; set; } = "Light";
         public (double latitude, double longitude)? WeatherLocation { get; set; } = null;
         public string WeatherLocationName { get; set; } = string.Empty;
@@ -40,7 +40,7 @@ namespace MySchool.Classes
 
                 var json = File.ReadAllText(path);
                 var settings = JsonSerializer.Deserialize<UserSettings>(json);
-    
+
                 if (settings != null)
                 {
                     // Migration: If ThemeName is not set but IsDarkMode is true, migrate to "Dark"
@@ -53,7 +53,7 @@ namespace MySchool.Classes
                     }
                     return settings;
                 }
- 
+
                 return new UserSettings();
             }
             catch

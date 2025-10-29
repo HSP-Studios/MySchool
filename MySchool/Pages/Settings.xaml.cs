@@ -350,21 +350,21 @@ namespace MySchool.Pages
                      $"Log file location:\n{logPath}";
 
                 var errorDialog = new ErrorDialog("Re-processing Failed", errorMessage)
-                 {
-                      Owner = Window.GetWindow(this)
-                      };
-               errorDialog.ShowDialog();
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                errorDialog.ShowDialog();
 
                 if (errorDialog.OpenLogsRequested)
-                 {
-            OpenLogFolder();
-     }
+                {
+                    OpenLogFolder();
+                }
             }
- finally
+            finally
             {
-        ReprocessTimetableButton.IsEnabled = true;
-    Logger.Debug("Settings", "Re-process button re-enabled");
-          }
+                ReprocessTimetableButton.IsEnabled = true;
+                Logger.Debug("Settings", "Re-process button re-enabled");
+            }
         }
 
         private void OpenLogFolder()
