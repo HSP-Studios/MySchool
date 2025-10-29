@@ -12,14 +12,42 @@ namespace MySchool
     public partial class App : Application
     {
         public static UserSettings CurrentSettings { get; private set; } = new UserSettings();
+        private static Mutex? _instanceMutex;
+        private const string MutexName = "MySchool_SingleInstance_Mutex";
 
         [STAThread]
         private static void Main(string[] args)
         {
-            VelopackApp.Build().Run();
-            App app = new();
-            app.InitializeComponent();
-            app.Run();
+            // Check for existing instance
+            bool createdNew;
+            _instanceMutex = new Mutex(true, MutexName, out createdNew);
+
+            if (!createdNew)
+            {
+                // Another instance is already running
+                MessageBox.Show(
+    "MySchool is already running. Only one instance of the application can be open at a time.",
+            "Application Already Running",
+        MessageBoxButton.OK,
+MessageBoxImage.Information);
+
+                // Exit this instance
+                return;
+            }
+
+            try
+            {
+                VelopackApp.Build().Run();
+                App app = new();
+                app.InitializeComponent();
+                app.Run();
+            }
+            finally
+            {
+                // Release the mutex when the application exits
+                _instanceMutex?.ReleaseMutex();
+                _instanceMutex?.Dispose();
+            }
         }
 
         public static async Task<UpdateInfo?> CheckForUpdatesAsync()
