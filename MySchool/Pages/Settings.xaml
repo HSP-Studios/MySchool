@@ -36,36 +36,74 @@
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,5"/>
-                    <TextBlock Style="{StaticResource Text.Body}" Text="Choose your theme" Margin="0,0,0,12"/>
-  
-                    <!-- Discord-style theme switcher -->
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,16"/>
+              
+                    <!-- Discord-style theme switcher with labels -->
                     <StackPanel Orientation="Horizontal">
-                        <RadioButton x:Name="LightThemeButton" 
-                                     GroupName="ThemeSelector"
-                                     Style="{StaticResource ThemeSwitcherRadioButton}"
-                                     Tag="{StaticResource Theme.Light.Preview}"
-                                     Checked="ThemeButton_Checked"
-                                     ToolTip="Light theme"/>
-                        <RadioButton x:Name="DarkThemeButton" 
-                                     GroupName="ThemeSelector"
-                                     Style="{StaticResource ThemeSwitcherRadioButton}"
-                                     Tag="{StaticResource Theme.Dark.Preview}"
-                                     Checked="ThemeButton_Checked"
-                                     ToolTip="Dark theme"/>
-                        <RadioButton x:Name="MidnightThemeButton" 
-                                     GroupName="ThemeSelector"
-                                     Style="{StaticResource ThemeSwitcherRadioButton}"
-                                     Tag="{StaticResource Theme.Midnight.Preview}"
-                                     Checked="ThemeButton_Checked"
-                                     ToolTip="Midnight theme (Purple/Pink)"/>
-                        <RadioButton x:Name="NordThemeButton" 
-                                     GroupName="ThemeSelector"
-                                     Style="{StaticResource ThemeSwitcherRadioButton}"
-                                     Tag="{StaticResource Theme.Nord.Preview}"
-                                     Checked="ThemeButton_Checked"
-                                     ToolTip="Nord theme (Arctic)"/>
-                    </StackPanel>
+                         <!-- Light Theme -->
+                     <StackPanel Margin="0,0,8,0">
+                     <TextBlock Text="Light" 
+                      Style="{StaticResource Text.Body}" 
+                  FontSize="12"
+                 HorizontalAlignment="Center"
+                          Margin="0,0,0,6"/>
+                           <RadioButton x:Name="LightThemeButton" 
+     GroupName="ThemeSelector"
+       Style="{StaticResource ThemeSwitcherRadioButton}"
+              Tag="{StaticResource Theme.Light.Preview}"
+     Checked="ThemeButton_Checked"
+    Margin="0"
+              ToolTip="Light theme"/>
+                 </StackPanel>
+    
+                         <!-- Dark Theme -->
+                     <StackPanel Margin="0,0,8,0">
+                             <TextBlock Text="Dark" 
+                         Style="{StaticResource Text.Body}" 
+                  FontSize="12"
+                     HorizontalAlignment="Center"
+                    Margin="0,0,0,6"/>
+                  <RadioButton x:Name="DarkThemeButton" 
+        GroupName="ThemeSelector"
+       Style="{StaticResource ThemeSwitcherRadioButton}"
+           Tag="{StaticResource Theme.Dark.Preview}"
+    Checked="ThemeButton_Checked"
+                 Margin="0"
+               ToolTip="Dark theme"/>
+            </StackPanel>
+         
+          <!-- Midnight Theme -->
+                 <StackPanel Margin="0,0,8,0">
+         <TextBlock Text="Midnight" 
+                  Style="{StaticResource Text.Body}" 
+           FontSize="12"
+    HorizontalAlignment="Center"
+      Margin="0,0,0,6"/>
+         <RadioButton x:Name="MidnightThemeButton" 
+        GroupName="ThemeSelector"
+                 Style="{StaticResource ThemeSwitcherRadioButton}"
+        Tag="{StaticResource Theme.Midnight.Preview}"
+          Checked="ThemeButton_Checked"
+       Margin="0"
+       ToolTip="Midnight theme (Purple/Pink)"/>
+      </StackPanel>
+    
+          <!-- Nord Theme -->
+            <StackPanel>
+        <TextBlock Text="Nord" 
+          Style="{StaticResource Text.Body}" 
+   FontSize="12"
+  HorizontalAlignment="Center"
+         Margin="0,0,0,6"/>
+ <RadioButton x:Name="NordThemeButton" 
+            GroupName="ThemeSelector"
+      Style="{StaticResource ThemeSwitcherRadioButton}"
+         Tag="{StaticResource Theme.Nord.Preview}"
+       Checked="ThemeButton_Checked"
+        Margin="0"
+             ToolTip="Nord theme (Arctic)"/>
+                  </StackPanel>
+                </StackPanel>
                 </StackPanel>
             </Border>
 
