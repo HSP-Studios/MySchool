@@ -30,13 +30,15 @@
 
 New to MySchool? Follow this step-by-step guide to get up and running in minutes!
 
-### Step 1: Install Prerequisites
+### Step 1: Check System Requirements
 
 Before you begin, ensure your system meets these requirements:
 
 - **Operating System**: Windows 10 or Windows 11 (64-bit)
-- **Framework**: [.NET 9.0 Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) (for running pre-built releases)
-  - Or [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (for building from source)
+
+That's it! The pre-built releases are self-contained and include everything you need.
+
+> **Note for Developers**: If you plan to build from source, you'll also need the [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 
 ### Step 2: Download MySchool
 
