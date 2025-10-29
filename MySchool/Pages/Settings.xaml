@@ -38,8 +38,13 @@
                 <StackPanel>
                     <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,5"/>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <CheckBox x:Name="DarkModeToggle" VerticalAlignment="Center" IsChecked="False" Checked="DarkModeToggle_Checked" Unchecked="DarkModeToggle_Unchecked"/>
-                        <TextBlock Text="Enable dark mode" Style="{StaticResource Text.Body}" Margin="8,0,0,0"/>
+                        <ToggleButton x:Name="DarkModeToggle" 
+                                      Style="{StaticResource ToggleSwitch}"
+                                      VerticalAlignment="Center" 
+                                      IsChecked="False" 
+                                      Checked="DarkModeToggle_Checked" 
+                                      Unchecked="DarkModeToggle_Unchecked"/>
+                        <TextBlock Text="Enable dark mode" Style="{StaticResource Text.Body}" Margin="12,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
