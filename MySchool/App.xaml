@@ -16,6 +16,8 @@
         <SolidColorBrush x:Key="Theme.Dark.Preview" Color="#0B1220"/>
         <SolidColorBrush x:Key="Theme.Midnight.Preview" Color="#1A1A2E"/>
         <SolidColorBrush x:Key="Theme.Nord.Preview" Color="#2E3440"/>
+        <SolidColorBrush x:Key="Theme.Ocean.Preview" Color="#F0F9FF"/>
+        <SolidColorBrush x:Key="Theme.Forest.Preview" Color="#F0FDF4"/>
 
         <!-- Default TextBlock font and color so pages without explicit styles still use the app font and themed text color -->
         <Style TargetType="TextBlock">
