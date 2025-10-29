@@ -98,7 +98,6 @@ namespace MySchool.Classes
             resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
             resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
             resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D1D5DB"));
-            resources["Brush.ButtonText"] = new SolidColorBrush(Colors.White);
         }
 
         private static void ApplyDarkTheme(ResourceDictionary resources)
@@ -113,7 +112,6 @@ namespace MySchool.Classes
             resources["Brush.TextPrimary"] = new SolidColorBrush(Colors.White);
             resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C7D2FE"));
             resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4B5563"));
-            resources["Brush.ButtonText"] = new SolidColorBrush(Colors.White);
         }
 
         private static void ApplyMidnightTheme(ResourceDictionary resources)
@@ -128,7 +126,6 @@ namespace MySchool.Classes
             resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E9D5FF"));
             resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C4B5FD"));
             resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
-            resources["Brush.ButtonText"] = new SolidColorBrush(Colors.White);
         }
 
         private static void ApplyNordTheme(ResourceDictionary resources)
@@ -143,7 +140,6 @@ namespace MySchool.Classes
             resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECEFF4"));
             resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D8DEE9"));
             resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4C566A"));
-            resources["Brush.ButtonText"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2E3440"));
         }
 
         private static void ApplyOceanTheme(ResourceDictionary resources)
@@ -157,7 +153,6 @@ namespace MySchool.Classes
             resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
             resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
             resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CBD5E1"));
-            resources["Brush.ButtonText"] = new SolidColorBrush(Colors.White);
         }
 
         private static void ApplyForestTheme(ResourceDictionary resources)
@@ -171,7 +166,6 @@ namespace MySchool.Classes
             resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
             resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
             resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D1D5DB"));
-            resources["Brush.ButtonText"] = new SolidColorBrush(Colors.White);
         }
 
         /// <summary>
