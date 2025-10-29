@@ -40,37 +40,37 @@
               
                     <!-- Discord-style theme switcher with labels -->
                     <StackPanel Orientation="Horizontal">
-       <!-- Light Theme -->
-         <StackPanel Margin="0,0,8,0">
-    <TextBlock Text="Light" 
-           Style="{StaticResource Text.Body}" 
-              FontSize="12"
-   HorizontalAlignment="Center"
-        Margin="0,0,0,6"/>
-                  <RadioButton x:Name="LightThemeButton" 
-     GroupName="ThemeSelector"
-       Style="{StaticResource ThemeSwitcherRadioButton}"
-        Tag="{StaticResource Theme.Light.Preview}"
-     Checked="ThemeButton_Checked"
-    Margin="0"
-  ToolTip="Light theme"/>
-     </StackPanel>
-    
- <!-- Ocean Theme -->
-      <StackPanel Margin="0,0,8,0">
-  <TextBlock Text="Ocean" 
-    Style="{StaticResource Text.Body}" 
-        FontSize="12"
-HorizontalAlignment="Center"
-  Margin="0,0,0,6"/>
-    <RadioButton x:Name="OceanThemeButton" 
-        GroupName="ThemeSelector"
-    Style="{StaticResource ThemeSwitcherRadioButton}"
-          Tag="{StaticResource Theme.Ocean.Preview}"
-   Checked="ThemeButton_Checked"
-  Margin="0"
-        ToolTip="Ocean theme (Teal/Coral)"/>
-    </StackPanel>
+                        <!-- Light Theme -->
+                        <StackPanel Margin="0,0,8,0">
+                            <TextBlock Text="Light"
+                                       Style="{StaticResource Text.Body}"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,6"/>
+                            <RadioButton x:Name="LightThemeButton"
+                                         GroupName="ThemeSelector"
+                                         Style="{StaticResource ThemeSwitcherRadioButton}"
+                                         Tag="{StaticResource Theme.Light.Preview}"
+                                         Checked="ThemeButton_Checked"
+                                         Margin="0"
+                                         ToolTip="Light theme"/>
+                        </StackPanel>
+
+                        <!-- Ocean Theme -->
+                        <StackPanel Margin="0,0,8,0">
+                            <TextBlock Text="Ocean"
+                                       Style="{StaticResource Text.Body}"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,6"/>
+                            <RadioButton x:Name="OceanThemeButton"
+                                         GroupName="ThemeSelector"
+                                         Style="{StaticResource ThemeSwitcherRadioButton}"
+                                         Tag="{StaticResource Theme.Ocean.Preview}"
+                                         Checked="ThemeButton_Checked"
+                                         Margin="0"
+                                         ToolTip="Ocean theme (Teal/Coral)"/>
+                        </StackPanel>
   
    <!-- Forest Theme -->
       <StackPanel Margin="0,0,8,0">
