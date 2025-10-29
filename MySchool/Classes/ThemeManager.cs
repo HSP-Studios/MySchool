@@ -45,7 +45,7 @@ namespace MySchool.Classes
         }
 
         /// <summary>
-        /// Apply a named theme (Light, Dark, Midnight, Nord)
+        /// Apply a named theme (Light, Dark, Midnight, Nord, Ocean, Forest)
         /// </summary>
         public static void ApplyTheme(string themeName)
         {
@@ -66,6 +66,12 @@ namespace MySchool.Classes
                     break;
                 case "nord":
                     ApplyNordTheme(resources);
+                    break;
+                case "ocean":
+                    ApplyOceanTheme(resources);
+                    break;
+                case "forest":
+                    ApplyForestTheme(resources);
                     break;
                 default:
                     ApplyLightTheme(resources);
@@ -136,10 +142,36 @@ namespace MySchool.Classes
             resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4C566A"));
         }
 
+        private static void ApplyOceanTheme(ResourceDictionary resources)
+        {
+            resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#14B8A6"));
+            resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0D9488"));
+            resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F97316"));
+            var bg = (Color)ColorConverter.ConvertFromString("#F0F9FF");
+            resources["Brush.Background"] = new SolidColorBrush(bg);
+            resources["Brush.Surface"] = new SolidColorBrush(Colors.White);
+            resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
+            resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
+            resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CBD5E1"));
+        }
+
+        private static void ApplyForestTheme(ResourceDictionary resources)
+        {
+            resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#10B981"));
+            resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#059669"));
+            resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F59E0B"));
+            var bg = (Color)ColorConverter.ConvertFromString("#F0FDF4");
+            resources["Brush.Background"] = new SolidColorBrush(bg);
+            resources["Brush.Surface"] = new SolidColorBrush(Colors.White);
+            resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
+            resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
+            resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D1D5DB"));
+        }
+
         /// <summary>
         /// Applies the theme with a cross-fade transition over the specified duration.
         /// </summary>
-        /// <param name="themeName">The name of the theme (Light, Dark, Midnight, Nord)</param>
+        /// <param name="themeName">The name of the theme (Light, Dark, Midnight, Nord, Ocean, Forest)</param>
         /// <param name="durationSeconds">Length of the fade in seconds. Default 0.5s.</param>
         public static void ApplyThemeWithTransition(string themeName, double durationSeconds = 0.5)
         {
