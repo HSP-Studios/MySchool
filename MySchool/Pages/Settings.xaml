@@ -121,20 +121,20 @@ Checked="ThemeButton_Checked"
       </StackPanel>
  
     <!-- Nord Theme -->
-<StackPanel>
- <TextBlock Text="Nord" 
- Style="{StaticResource Text.Body}" 
-   FontSize="12"
-  HorizontalAlignment="Center"
-  Margin="0,0,0,6"/>
- <RadioButton x:Name="NordThemeButton" 
- GroupName="ThemeSelector"
-   Style="{StaticResource ThemeSwitcherRadioButton}"
-         Tag="{StaticResource Theme.Nord.Preview}"
-       Checked="ThemeButton_Checked"
+<StackPanel Margin="0,0,8,0">
+    <TextBlock Text="Nord" 
+        Style="{StaticResource Text.Body}" 
+        FontSize="12"
+        HorizontalAlignment="Center"
+        Margin="0,0,0,6"/>
+    <RadioButton x:Name="NordThemeButton" 
+        GroupName="ThemeSelector"
+        Style="{StaticResource ThemeSwitcherRadioButton}"
+        Tag="{StaticResource Theme.Nord.Preview}"
+        Checked="ThemeButton_Checked"
         Margin="0"
-             ToolTip="Nord theme (Arctic)"/>
-    </StackPanel>
+        ToolTip="Nord theme (Arctic)"/>
+</StackPanel>
            </StackPanel>
                 </StackPanel>
             </Border>
