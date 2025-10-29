@@ -288,51 +288,62 @@
 
         <!-- Theme Switcher RadioButton Style (Discord-like) -->
         <Style x:Key="ThemeSwitcherRadioButton" TargetType="RadioButton">
-            <Setter Property="Width" Value="72"/>
-            <Setter Property="Height" Value="72"/>
+    <Setter Property="Width" Value="72"/>
+        <Setter Property="Height" Value="72"/>
             <Setter Property="Margin" Value="0,0,8,0"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
-                        <Grid>
-                            <Border x:Name="OuterBorder"
-                                    Background="{TemplateBinding Tag}"
-                                    CornerRadius="16"
-                                    BorderThickness="3"
-                                    BorderBrush="Transparent">
-                                <Grid>
-                                    <!-- Checkmark icon (Segoe MDL2 Assets) -->
-                                    <TextBlock x:Name="CheckIcon"
-                                               Text="&#xE73E;"
-                                               FontFamily="Segoe MDL2 Assets"
-                                               FontSize="28"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Foreground="White"
-                                               Opacity="0"/>
-                                </Grid>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.Primary}"/>
-                                <Setter TargetName="CheckIcon" Property="Opacity" Value="1"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True"/>
-                                    <Condition Property="IsChecked" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.PrimaryDark}"/>
-                            </MultiTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+<Setter Property="Template">
+        <Setter.Value>
+         <ControlTemplate TargetType="RadioButton">
+    <Grid>
+ <Border x:Name="OuterBorder"
+   Background="{TemplateBinding Tag}"
+      CornerRadius="16"
+         BorderThickness="3"
+        BorderBrush="Transparent">
+      <Grid>
+      <!-- Inner border for visibility -->
+          <Border x:Name="InnerBorder"
+   CornerRadius="13"
+        BorderThickness="1"
+    BorderBrush="{DynamicResource Brush.Border}"
+           Opacity="0.3"
+         Margin="2"/>
+         
+     <!-- Checkmark icon (Segoe MDL2 Assets) -->
+  <TextBlock x:Name="CheckIcon"
+        Text="&#xE73E;"
+        FontFamily="Segoe MDL2 Assets"
+           FontSize="28"
+             HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+       Foreground="White"
+                Opacity="0"/>
+          </Grid>
+     </Border>
+                </Grid>
+   <ControlTemplate.Triggers>
+    <Trigger Property="IsChecked" Value="True">
+     <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.Primary}"/>
+           <Setter TargetName="CheckIcon" Property="Opacity" Value="1"/>
+          <Setter TargetName="InnerBorder" Property="Opacity" Value="0"/>
+ </Trigger>
+        <Trigger Property="IsMouseOver" Value="True">
+       <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+  <Setter TargetName="InnerBorder" Property="Opacity" Value="0.6"/>
+    </Trigger>
+     <MultiTrigger>
+             <MultiTrigger.Conditions>
+               <Condition Property="IsMouseOver" Value="True"/>
+               <Condition Property="IsChecked" Value="True"/>
+        </MultiTrigger.Conditions>
+    <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.PrimaryDark}"/>
+       <Setter TargetName="InnerBorder" Property="Opacity" Value="0"/>
+                 </MultiTrigger>
+   </ControlTemplate.Triggers>
+             </ControlTemplate>
+    </Setter.Value>
+   </Setter>
         </Style>
 
         <!-- Theme-aware ToolTip Style -->
