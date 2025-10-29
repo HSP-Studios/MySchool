@@ -44,12 +44,13 @@ namespace MySchool.Pages
         {
             string userName = App.CurrentSettings.UserName;
 
-            if (!string.IsNullOrWhiteSpace(userName))
+            // Only use name if it's 8 characters or less
+            if (!string.IsNullOrWhiteSpace(userName) && userName.Length <= 8)
             {
                 return $"Hey {userName}!";
             }
 
-            // Use time-based greeting if no name is set
+            // Use time-based greeting if no name is set or name is too long
             var hour = DateTime.Now.Hour;
 
             if (hour >= 5 && hour < 12)
