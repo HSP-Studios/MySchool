@@ -10,7 +10,7 @@
   
 *A sleek, intuitive WPF application for displaying student information and resources at a glance.*
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#%EF%B8%8F-architecture) • [Contributing](#-contributing) • [Branch Layout](#-branch-layout)
+[Getting Started](#-getting-started) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#%EF%B8%8F-architecture) • [Contributing](#-contributing) • [Branch Layout](#-branch-layout)
 
 ---
 
@@ -23,6 +23,88 @@
 > **Note:** Currently, MySchool supports **Queensland, Australia** school calendars and term dates (2025-2029).
 > 
 > 📬 Want support for your region? [Create an issue](https://github.com/HSP-Studios/MySchool/issues/new?template=region_support.yml) and we'll implement it!
+
+---
+
+## 🚀 Getting Started
+
+New to MySchool? Follow this step-by-step guide to get up and running in minutes!
+
+### Step 1: Check System Requirements
+
+Before you begin, ensure your system meets these requirements:
+
+- **Operating System**: Windows 10 or Windows 11 (64-bit)
+
+That's it! The pre-built releases are self-contained and include everything you need.
+
+> **Note for Developers**: If you plan to build from source, you'll also need the [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+
+### Step 2: Download and Install MySchool
+
+1. Go to the [Releases](https://github.com/HSP-Studios/MySchool/releases) page
+2. Download the latest `MySchool-win-Setup.exe` installer
+3. Run the installer and follow the on-screen instructions
+4. Launch MySchool from your Start Menu or desktop shortcut
+
+> **For Developers**: If you want to build from source or use Visual Studio, see the [Installation](#-installation) section below.
+
+### Step 3: First Launch Setup
+
+When you launch MySchool for the first time:
+
+1. **Welcome Screen**: The app opens to the Home page with a default greeting
+2. **Default Settings**: User preferences are automatically created in `%AppData%/MySchool/user_settings.json`
+3. **Light Theme**: The application starts in light mode by default
+
+### Step 4: Personalize Your Experience
+
+Make MySchool your own with these quick customization steps:
+
+#### Set Your Name
+
+1. Click the **Settings** tab (gear icon on the left sidebar)
+2. Enter your name in the "Your Name" text field
+3. Your Home page will now display a personalized greeting like "Good Morning, [Your Name]!"
+
+#### Choose Your Theme
+
+1. In **Settings**, toggle the **Dark Mode** switch
+2. Watch the smooth 0.5-second transition between light and dark themes
+3. Your preference is automatically saved for future sessions
+
+### Step 5: Add Your Class Schedule
+
+Get the most out of MySchool by uploading your timetable:
+
+1. Click the **Schedule** tab (calendar icon on the left sidebar)
+2. Click the **"Upload Timetable"** button
+3. Follow the AI-powered upload wizard to process your schedule document
+4. If any subject names are over 8 characters, you'll be prompted to create shorter versions
+5. Your timetable is now active!
+
+Once uploaded, your Home page will display:
+- **Current Class**: What class you're in right now
+- **Next Class**: Your upcoming class
+- **Time Remaining**: Countdown until your current period ends
+
+### Step 6: Explore Additional Features
+
+Now that you're set up, explore these features:
+
+- **Weekend Weather**: On Saturdays and Sundays, your Home page shows current weather conditions
+- **PDF Viewer**: View your uploaded timetable as a PDF in the Schedule tab
+- **Holiday Tracking**: MySchool knows Queensland school term dates and holidays (2025-2029)
+- **Auto-Updates**: The app automatically checks for and installs updates on startup
+
+### Need Help?
+
+- 📖 Check the full [Usage](#-usage) section below for detailed feature documentation
+- 🐛 Found a bug? [Report it here](https://github.com/HSP-Studios/MySchool/issues/new?template=bug_report.md)
+- 💡 Have an idea? [Suggest a feature](https://github.com/HSP-Studios/MySchool/issues/new?template=feature_request.md)
+- 💬 Questions? Visit our [Discussions](https://github.com/HSP-Studios/MySchool/discussions)
+
+**Congratulations! You're all set to use MySchool.** 🎉
 
 ---
 
