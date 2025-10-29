@@ -24,7 +24,27 @@ namespace MySchool.Pages
             // Initialize toggle from current settings
             try
             {
-                DarkModeToggle.IsChecked = App.CurrentSettings.IsDarkMode;
+                // Set the appropriate theme button as checked based on saved theme
+                string currentTheme = App.CurrentSettings.ThemeName ?? "Light";
+                switch (currentTheme.ToLower())
+                {
+                    case "light":
+                        LightThemeButton.IsChecked = true;
+                        break;
+                    case "dark":
+                        DarkThemeButton.IsChecked = true;
+                        break;
+                    case "midnight":
+                        MidnightThemeButton.IsChecked = true;
+                        break;
+                    case "nord":
+                        NordThemeButton.IsChecked = true;
+                        break;
+                    default:
+                        LightThemeButton.IsChecked = true;
+                        break;
+                }
+
                 UserNameTextBox.Text = App.CurrentSettings.UserName;
                 UpdateLocationDisplay();
                 UpdateBuildInfo();
@@ -32,7 +52,7 @@ namespace MySchool.Pages
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Failed to initialize settings: " + ex);
-                DarkModeToggle.IsChecked = false; // fallback to default
+                LightThemeButton.IsChecked = true; // fallback to default
             }
         }
 
@@ -69,22 +89,28 @@ namespace MySchool.Pages
             }
         }
 
-        private void DarkModeToggle_Checked(object sender, RoutedEventArgs e)
+        private void ThemeButton_Checked(object sender, RoutedEventArgs e)
         {
-            SetDarkMode(true);
+            if (sender is not RadioButton button) return;
+
+            string themeName = button.Name switch
+            {
+                "LightThemeButton" => "Light",
+                "DarkThemeButton" => "Dark",
+                "MidnightThemeButton" => "Midnight",
+                "NordThemeButton" => "Nord",
+                _ => "Light"
+            };
+
+            SetTheme(themeName);
         }
 
-        private void DarkModeToggle_Unchecked(object sender, RoutedEventArgs e)
+        private void SetTheme(string themeName)
         {
-            SetDarkMode(false);
-        }
-
-        private void SetDarkMode(bool isDark)
-        {
-            App.CurrentSettings.IsDarkMode = isDark;
+            App.CurrentSettings.ThemeName = themeName;
             SettingsService.Save(App.CurrentSettings);
             // Apply theme with cross-fade transition (0.5s)
-            ThemeManager.ApplyThemeWithTransition(isDark, 0.5);
+            ThemeManager.ApplyThemeWithTransition(themeName, 0.5);
         }
 
         private void UserNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
