@@ -40,6 +40,12 @@ namespace MySchool.Pages
                     case "nord":
                         NordThemeButton.IsChecked = true;
                         break;
+                    case "ocean":
+                        OceanThemeButton.IsChecked = true;
+                        break;
+                    case "forest":
+                        ForestThemeButton.IsChecked = true;
+                        break;
                     default:
                         LightThemeButton.IsChecked = true;
                         break;
@@ -99,6 +105,8 @@ namespace MySchool.Pages
                 "DarkThemeButton" => "Dark",
                 "MidnightThemeButton" => "Midnight",
                 "NordThemeButton" => "Nord",
+                "OceanThemeButton" => "Ocean",
+                "ForestThemeButton" => "Forest",
                 _ => "Light"
             };
 
