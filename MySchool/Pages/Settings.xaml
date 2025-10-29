@@ -37,9 +37,34 @@
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
                     <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,5"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <CheckBox x:Name="DarkModeToggle" VerticalAlignment="Center" IsChecked="False" Checked="DarkModeToggle_Checked" Unchecked="DarkModeToggle_Unchecked"/>
-                        <TextBlock Text="Enable dark mode" Style="{StaticResource Text.Body}" Margin="8,0,0,0"/>
+                    <TextBlock Style="{StaticResource Text.Body}" Text="Choose your theme" Margin="0,0,0,12"/>
+  
+                    <!-- Discord-style theme switcher -->
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="LightThemeButton" 
+                                     GroupName="ThemeSelector"
+                                     Style="{StaticResource ThemeSwitcherRadioButton}"
+                                     Tag="{StaticResource Theme.Light.Preview}"
+                                     Checked="ThemeButton_Checked"
+                                     ToolTip="Light theme"/>
+                        <RadioButton x:Name="DarkThemeButton" 
+                                     GroupName="ThemeSelector"
+                                     Style="{StaticResource ThemeSwitcherRadioButton}"
+                                     Tag="{StaticResource Theme.Dark.Preview}"
+                                     Checked="ThemeButton_Checked"
+                                     ToolTip="Dark theme"/>
+                        <RadioButton x:Name="MidnightThemeButton" 
+                                     GroupName="ThemeSelector"
+                                     Style="{StaticResource ThemeSwitcherRadioButton}"
+                                     Tag="{StaticResource Theme.Midnight.Preview}"
+                                     Checked="ThemeButton_Checked"
+                                     ToolTip="Midnight theme (Purple/Pink)"/>
+                        <RadioButton x:Name="NordThemeButton" 
+                                     GroupName="ThemeSelector"
+                                     Style="{StaticResource ThemeSwitcherRadioButton}"
+                                     Tag="{StaticResource Theme.Nord.Preview}"
+                                     Checked="ThemeButton_Checked"
+                                     ToolTip="Nord theme (Arctic)"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
