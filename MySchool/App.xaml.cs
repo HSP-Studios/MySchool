@@ -192,10 +192,22 @@ namespace MySchool
                 // Load settings and apply theme
                 Logger.Info("Application", "Loading user settings...");
                 CurrentSettings = SettingsService.Load();
-                Logger.Info("Application", $"Settings loaded - Dark mode: {CurrentSettings.IsDarkMode}");
+
+                // Use ThemeName property, fallback to IsDarkMode for migration
+                string themeName = CurrentSettings.ThemeName;
+                if (string.IsNullOrWhiteSpace(themeName))
+                {
+#pragma warning disable CS0618 // Type or member is obsolete
+                    themeName = CurrentSettings.IsDarkMode ? "Dark" : "Light";
+#pragma warning restore CS0618 // Type or member is obsolete
+                    CurrentSettings.ThemeName = themeName;
+                    SettingsService.Save(CurrentSettings);
+                }
+
+                Logger.Info("Application", $"Settings loaded - Theme: {themeName}");
 
                 Logger.Info("Application", "Applying theme...");
-                ThemeManager.ApplyTheme(CurrentSettings.IsDarkMode);
+                ThemeManager.ApplyTheme(themeName);
 
                 // Check for updates on startup
                 await CheckForUpdatesOnStartup();

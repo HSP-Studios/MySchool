@@ -44,56 +44,141 @@ namespace MySchool.Classes
             PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
         }
 
-        public static void ApplyTheme(bool dark)
+        /// <summary>
+        /// Apply a named theme (Light, Dark, Midnight, Nord, Ocean, Forest)
+        /// </summary>
+        public static void ApplyTheme(string themeName)
         {
-            CurrentTheme = dark ? "Dark" : "Light";
+            CurrentTheme = themeName;
 
             var resources = Application.Current.Resources;
 
-            if (dark)
+            switch (themeName.ToLower())
             {
-                resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#818CF8"));
-                resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#6366F1"));
-                resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#22D3EE"));
-                // Background and card surface (card slightly lighter than background)
-                var bg = (Color)ColorConverter.ConvertFromString("#0B1220");
-                resources["Brush.Background"] = new SolidColorBrush(bg);
-                var surface = Lighten(bg, 0.10);
-                resources["Brush.Surface"] = new SolidColorBrush(surface);
-                // Lighter text for contrast
-                resources["Brush.TextPrimary"] = new SolidColorBrush(Colors.White);
-                resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C7D2FE"));
-                // Border color for dark mode
-                resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4B5563"));
+                case "light":
+                    ApplyLightTheme(resources);
+                    break;
+                case "dark":
+                    ApplyDarkTheme(resources);
+                    break;
+                case "midnight":
+                    ApplyMidnightTheme(resources);
+                    break;
+                case "nord":
+                    ApplyNordTheme(resources);
+                    break;
+                case "ocean":
+                    ApplyOceanTheme(resources);
+                    break;
+                case "forest":
+                    ApplyForestTheme(resources);
+                    break;
+                default:
+                    ApplyLightTheme(resources);
+                    break;
             }
-            else
-            {
-                resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4F46E5"));
-                resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4338CA"));
-                resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#06B6D4"));
-                // Slightly darker neutral background so surfaces (white) stand out
-                var bg = (Color)ColorConverter.ConvertFromString("#EEF2F7");
-                resources["Brush.Background"] = new SolidColorBrush(bg);
-                // Use pure white for surfaces (cards/app bar) for clear separation
-                resources["Brush.Surface"] = new SolidColorBrush(Colors.White);
-                resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
-                resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
-                // Border color for light mode
-                resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D1D5DB"));
-            }
+        }
+
+        /// <summary>
+        /// Legacy method for boolean dark mode compatibility
+        /// </summary>
+        public static void ApplyTheme(bool dark)
+        {
+            ApplyTheme(dark ? "Dark" : "Light");
+        }
+
+        private static void ApplyLightTheme(ResourceDictionary resources)
+        {
+            resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4F46E5"));
+            resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4338CA"));
+            resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#06B6D4"));
+            var bg = (Color)ColorConverter.ConvertFromString("#EEF2F7");
+            resources["Brush.Background"] = new SolidColorBrush(bg);
+            resources["Brush.Surface"] = new SolidColorBrush(Colors.White);
+            resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
+            resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
+            resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D1D5DB"));
+        }
+
+        private static void ApplyDarkTheme(ResourceDictionary resources)
+        {
+            resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#818CF8"));
+            resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#6366F1"));
+            resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#22D3EE"));
+            var bg = (Color)ColorConverter.ConvertFromString("#0B1220");
+            resources["Brush.Background"] = new SolidColorBrush(bg);
+            var surface = Lighten(bg, 0.10);
+            resources["Brush.Surface"] = new SolidColorBrush(surface);
+            resources["Brush.TextPrimary"] = new SolidColorBrush(Colors.White);
+            resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C7D2FE"));
+            resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4B5563"));
+        }
+
+        private static void ApplyMidnightTheme(ResourceDictionary resources)
+        {
+            resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8B5CF6"));
+            resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7C3AED"));
+            resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F472B6"));
+            var bg = (Color)ColorConverter.ConvertFromString("#1A1A2E");
+            resources["Brush.Background"] = new SolidColorBrush(bg);
+            var surface = Lighten(bg, 0.12);
+            resources["Brush.Surface"] = new SolidColorBrush(surface);
+            resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E9D5FF"));
+            resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C4B5FD"));
+            resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
+        }
+
+        private static void ApplyNordTheme(ResourceDictionary resources)
+        {
+            resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#88C0D0"));
+            resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#81A1C1"));
+            resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8FBCBB"));
+            var bg = (Color)ColorConverter.ConvertFromString("#2E3440");
+            resources["Brush.Background"] = new SolidColorBrush(bg);
+            var surface = Lighten(bg, 0.08);
+            resources["Brush.Surface"] = new SolidColorBrush(surface);
+            resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ECEFF4"));
+            resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D8DEE9"));
+            resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4C566A"));
+        }
+
+        private static void ApplyOceanTheme(ResourceDictionary resources)
+        {
+            resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#14B8A6"));
+            resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0D9488"));
+            resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F97316"));
+            var bg = (Color)ColorConverter.ConvertFromString("#F0F9FF");
+            resources["Brush.Background"] = new SolidColorBrush(bg);
+            resources["Brush.Surface"] = new SolidColorBrush(Colors.White);
+            resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
+            resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
+            resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CBD5E1"));
+        }
+
+        private static void ApplyForestTheme(ResourceDictionary resources)
+        {
+            resources["Brush.Primary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#10B981"));
+            resources["Brush.PrimaryDark"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#059669"));
+            resources["Brush.Accent"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F59E0B"));
+            var bg = (Color)ColorConverter.ConvertFromString("#F0FDF4");
+            resources["Brush.Background"] = new SolidColorBrush(bg);
+            resources["Brush.Surface"] = new SolidColorBrush(Colors.White);
+            resources["Brush.TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F172A"));
+            resources["Brush.TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#475569"));
+            resources["Brush.Border"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D1D5DB"));
         }
 
         /// <summary>
         /// Applies the theme with a cross-fade transition over the specified duration.
         /// </summary>
-        /// <param name="dark">True for dark mode.</param>
+        /// <param name="themeName">The name of the theme (Light, Dark, Midnight, Nord, Ocean, Forest)</param>
         /// <param name="durationSeconds">Length of the fade in seconds. Default 0.5s.</param>
-        public static void ApplyThemeWithTransition(bool dark, double durationSeconds = 0.5)
+        public static void ApplyThemeWithTransition(string themeName, double durationSeconds = 0.5)
         {
             var window = Application.Current?.MainWindow;
             if (window == null || durationSeconds <= 0)
             {
-                ApplyTheme(dark);
+                ApplyTheme(themeName);
                 return;
             }
 
@@ -113,13 +198,13 @@ namespace MySchool.Classes
             if (window.Content is not FrameworkElement rootElement)
             {
                 // Fallback: no transition possible on unknown visual tree.
-                ApplyTheme(dark);
+                ApplyTheme(themeName);
                 return;
             }
             if (window.Content is not Panel rootPanel)
             {
                 // Fallback: no transition possible on unknown visual tree.
-                ApplyTheme(dark);
+                ApplyTheme(themeName);
                 return;
             }
 
@@ -127,7 +212,7 @@ namespace MySchool.Classes
             rootElement.UpdateLayout();
             if (rootElement.ActualWidth <= 0 || rootElement.ActualHeight <= 0)
             {
-                ApplyTheme(dark);
+                ApplyTheme(themeName);
                 return;
             }
 
@@ -160,7 +245,7 @@ namespace MySchool.Classes
             rootPanel.Children.Add(overlay);
 
             // Apply the new theme under the overlay
-            ApplyTheme(dark);
+            ApplyTheme(themeName);
 
             _transitionOverlay = overlay;
             _isTransitioning = true;
@@ -187,6 +272,14 @@ namespace MySchool.Classes
             };
 
             overlay.BeginAnimation(UIElement.OpacityProperty, anim);
+        }
+
+        /// <summary>
+        /// Legacy method for boolean dark mode compatibility
+        /// </summary>
+        public static void ApplyThemeWithTransition(bool dark, double durationSeconds = 0.5)
+        {
+            ApplyThemeWithTransition(dark ? "Dark" : "Light", durationSeconds);
         }
     }
 }

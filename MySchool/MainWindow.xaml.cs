@@ -3,7 +3,6 @@ using MySchool.Pages;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 
 namespace MySchool
@@ -58,11 +57,30 @@ namespace MySchool
 
         private void SetTabHighlight(string selected)
         {
-            var blue = (Brush)FindResource("Brush.Primary");
-            var gray = (Brush)FindResource("Brush.TextSecondary");
-            if (ScheduleTabIcon != null) ScheduleTabIcon.Foreground = selected == "Schedule" ? blue : gray;
-            if (HomeTabIcon != null) HomeTabIcon.Foreground = selected == "Home" ? blue : gray;
-            if (SettingsTabIcon != null) SettingsTabIcon.Foreground = selected == "Settings" ? blue : gray;
+            // Use SetResourceReference for dynamic theme updates instead of FindResource
+            if (ScheduleTabIcon != null)
+            {
+                if (selected == "Schedule")
+                    ScheduleTabIcon.SetResourceReference(TextBlock.ForegroundProperty, "Brush.Primary");
+                else
+                    ScheduleTabIcon.SetResourceReference(TextBlock.ForegroundProperty, "Brush.TextSecondary");
+            }
+
+            if (HomeTabIcon != null)
+            {
+                if (selected == "Home")
+                    HomeTabIcon.SetResourceReference(TextBlock.ForegroundProperty, "Brush.Primary");
+                else
+                    HomeTabIcon.SetResourceReference(TextBlock.ForegroundProperty, "Brush.TextSecondary");
+            }
+
+            if (SettingsTabIcon != null)
+            {
+                if (selected == "Settings")
+                    SettingsTabIcon.SetResourceReference(TextBlock.ForegroundProperty, "Brush.Primary");
+                else
+                    SettingsTabIcon.SetResourceReference(TextBlock.ForegroundProperty, "Brush.TextSecondary");
+            }
         }
 
         private void HomeTab_Click(object sender, RoutedEventArgs e)

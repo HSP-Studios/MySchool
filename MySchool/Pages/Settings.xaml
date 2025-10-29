@@ -9,148 +9,243 @@
       Title="Settings"
       Background="{DynamicResource Brush.Background}">
 
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-        <StackPanel Margin="24" Orientation="Vertical">
-            <TextBlock Text="Settings" Style="{StaticResource Text.Headline}" Margin="0,0,0,12"/>
+	<ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+		<StackPanel Margin="24" Orientation="Vertical">
+			<TextBlock Text="Settings" Style="{StaticResource Text.Headline}" Margin="0,0,0,12"/>
 
-            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Personalization" Margin="0,0,0,5"/>
-                    <TextBlock Style="{StaticResource Text.Body}" Text="Enter your name for a personalized greeting" Margin="0,0,0,8"/>
-                    
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBox x:Name="UserNameTextBox" 
+			<Border Style="{StaticResource Card}" Margin="0,0,0,12">
+				<StackPanel>
+					<TextBlock Style="{StaticResource Text.Title}" Text="Personalization" Margin="0,0,0,5"/>
+					<TextBlock Style="{StaticResource Text.Body}" Text="Enter your name for a personalized greeting" Margin="0,0,0,8"/>
+
+					<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+						<TextBox x:Name="UserNameTextBox" 
                                  Width="250" 
                                  Padding="8"
                                  VerticalContentAlignment="Center"
                                  Style="{DynamicResource TextBox.Standard}"
                                  TextChanged="UserNameTextBox_TextChanged"/>
-                        <TextBlock Text="(Leave empty for time-based greeting)" 
+						<TextBlock Text="(Leave empty for time-based greeting)" 
                                    Style="{StaticResource Text.Body}" 
                                    Margin="12,0,0,0"
                                    Opacity="0.7"
                                    VerticalAlignment="Center"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
+					</StackPanel>
+				</StackPanel>
+			</Border>
 
-            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,5"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <CheckBox x:Name="DarkModeToggle" VerticalAlignment="Center" IsChecked="False" Checked="DarkModeToggle_Checked" Unchecked="DarkModeToggle_Unchecked"/>
-                        <TextBlock Text="Enable dark mode" Style="{StaticResource Text.Body}" Margin="8,0,0,0"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
+			<Border Style="{StaticResource Card}" Margin="0,0,0,12">
+				<StackPanel>
+					<TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,16"/>
 
-            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Timetable" Margin="0,0,0,5"/>
-                    <TextBlock Style="{StaticResource Text.Body}" Text="Upload your school timetable using an AI assistant (ChatGPT, Claude, etc.)" Margin="0,0,0,8"/>
-                    <Button x:Name="UploadTimetableButton" 
+					<!-- Discord-style theme switcher with labels -->
+					<StackPanel Orientation="Horizontal">
+						<!-- Light Theme -->
+						<StackPanel Margin="0,0,8,0">
+							<TextBlock Text="Light"
+                                       Style="{StaticResource Text.Body}"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,6"/>
+							<RadioButton x:Name="LightThemeButton"
+                                         GroupName="ThemeSelector"
+                                         Style="{StaticResource ThemeSwitcherRadioButton}"
+                                         Tag="{StaticResource Theme.Light.Preview}"
+                                         Checked="ThemeButton_Checked"
+                                         Margin="0"
+                                         ToolTip="Light theme"/>
+						</StackPanel>
+
+						<!-- Ocean Theme -->
+						<StackPanel Margin="0,0,8,0">
+							<TextBlock Text="Ocean"
+                                       Style="{StaticResource Text.Body}"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,6"/>
+							<RadioButton x:Name="OceanThemeButton"
+                                         GroupName="ThemeSelector"
+                                         Style="{StaticResource ThemeSwitcherRadioButton}"
+                                         Tag="{StaticResource Theme.Ocean.Preview}"
+                                         Checked="ThemeButton_Checked"
+                                         Margin="0"
+                                         ToolTip="Ocean theme (Teal/Coral)"/>
+						</StackPanel>
+
+						<!-- Forest Theme -->
+						<StackPanel Margin="0,0,8,0">
+							<TextBlock Text="Forest" 
+Style="{StaticResource Text.Body}" 
+   FontSize="12"
+      HorizontalAlignment="Center"
+   Margin="0,0,0,6"/>
+							<RadioButton x:Name="ForestThemeButton" 
+    GroupName="ThemeSelector"
+      Style="{StaticResource ThemeSwitcherRadioButton}"
+  Tag="{StaticResource Theme.Forest.Preview}"
+         Checked="ThemeButton_Checked"
+  Margin="0"
+   ToolTip="Forest theme (Emerald/Amber)"/>
+						</StackPanel>
+
+						<!-- Dark Theme -->
+						<StackPanel Margin="0,0,8,0">
+							<TextBlock Text="Dark" 
+   Style="{StaticResource Text.Body}" 
+   FontSize="12"
+    HorizontalAlignment="Center"
+       Margin="0,0,0,6"/>
+							<RadioButton x:Name="DarkThemeButton" 
+        GroupName="ThemeSelector"
+       Style="{StaticResource ThemeSwitcherRadioButton}"
+           Tag="{StaticResource Theme.Dark.Preview}"
+    Checked="ThemeButton_Checked"
+      Margin="0"
+      ToolTip="Dark theme"/>
+						</StackPanel>
+
+						<!-- Midnight Theme -->
+						<StackPanel Margin="0,0,8,0">
+							<TextBlock Text="Midnight" 
+  Style="{StaticResource Text.Body}" 
+    FontSize="12"
+    HorizontalAlignment="Center"
+      Margin="0,0,0,6"/>
+							<RadioButton x:Name="MidnightThemeButton" 
+        GroupName="ThemeSelector"
+   Style="{StaticResource ThemeSwitcherRadioButton}"
+  Tag="{StaticResource Theme.Midnight.Preview}"
+Checked="ThemeButton_Checked"
+       Margin="0"
+       ToolTip="Midnight theme (Purple/Pink)"/>
+						</StackPanel>
+
+						<!-- Nord Theme -->
+						<StackPanel Margin="0,0,8,0">
+							<TextBlock Text="Nord" 
+        Style="{StaticResource Text.Body}" 
+        FontSize="12"
+        HorizontalAlignment="Center"
+        Margin="0,0,0,6"/>
+							<RadioButton x:Name="NordThemeButton" 
+        GroupName="ThemeSelector"
+        Style="{StaticResource ThemeSwitcherRadioButton}"
+        Tag="{StaticResource Theme.Nord.Preview}"
+        Checked="ThemeButton_Checked"
+        Margin="0"
+        ToolTip="Nord theme (Arctic)"/>
+						</StackPanel>
+					</StackPanel>
+				</StackPanel>
+			</Border>
+
+			<Border Style="{StaticResource Card}" Margin="0,0,0,12">
+				<StackPanel>
+					<TextBlock Style="{StaticResource Text.Title}" Text="Timetable" Margin="0,0,0,5"/>
+					<TextBlock Style="{StaticResource Text.Body}" Text="Upload your school timetable using an AI assistant (ChatGPT, Claude, etc.)" Margin="0,0,0,8"/>
+					<Button x:Name="UploadTimetableButton" 
                             Style="{StaticResource Button.Primary}" 
                             Content="Upload Timetable" 
                             Padding="16,8"
                             HorizontalAlignment="Left"
                             Click="UploadTimetableButton_Click"/>
-                </StackPanel>
-            </Border>
+				</StackPanel>
+			</Border>
 
-            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Troubleshooting" Margin="0,0,0,5"/>
-                    <TextBlock Style="{StaticResource Text.Body}" 
+			<Border Style="{StaticResource Card}" Margin="0,0,0,12">
+				<StackPanel>
+					<TextBlock Style="{StaticResource Text.Title}" Text="Troubleshooting" Margin="0,0,0,5"/>
+					<TextBlock Style="{StaticResource Text.Body}" 
                                Text="Re-process your timetable to fix display issues or apply updated grouping rules" 
                                Margin="0,0,0,8"/>
-                    <TextBlock Style="{StaticResource Text.Body}" 
+					<TextBlock Style="{StaticResource Text.Body}" 
                                Text="This will group consecutive periods with the same subject name into single periods and save the changes to your timetable." 
                                Margin="0,0,0,8"
                                Opacity="0.8"
                                TextWrapping="Wrap"/>
-                    <TextBlock Style="{StaticResource Text.Body}" 
+					<TextBlock Style="{StaticResource Text.Body}" 
                                Text="Use this if: periods are appearing incorrectly split, or the app updated with new timetable processing features." 
                                Margin="0,0,0,8"
                                Opacity="0.8"
                                FontStyle="Italic"
                                TextWrapping="Wrap"/>
-                    <Button x:Name="ReprocessTimetableButton" 
+					<Button x:Name="ReprocessTimetableButton" 
                             Style="{StaticResource Button.Secondary}" 
                             Content="Re-run Timetable Processing" 
                             Padding="16,8"
                             HorizontalAlignment="Left"
                             Click="ReprocessTimetableButton_Click"/>
-                </StackPanel>
-            </Border>
+				</StackPanel>
+			</Border>
 
-            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Weather Location" Margin="0,0,0,5"/>
-                    <TextBlock Style="{StaticResource Text.Body}" Text="Configure location for weekend weather display" Margin="0,0,0,8"/>
-                    
-                    <TextBlock x:Name="CurrentLocationText" 
+			<Border Style="{StaticResource Card}" Margin="0,0,0,12">
+				<StackPanel>
+					<TextBlock Style="{StaticResource Text.Title}" Text="Weather Location" Margin="0,0,0,5"/>
+					<TextBlock Style="{StaticResource Text.Body}" Text="Configure location for weekend weather display" Margin="0,0,0,8"/>
+
+					<TextBlock x:Name="CurrentLocationText" 
                                Style="{StaticResource Text.Body}" 
                                Text="Using device location" 
                                Margin="0,0,0,8"
                                FontWeight="SemiBold"/>
-                    
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="RequestLocationButton" 
+
+					<StackPanel Orientation="Horizontal">
+						<Button x:Name="RequestLocationButton" 
                                 Style="{StaticResource Button.Primary}" 
                                 Content="Request Location Permission" 
                                 Padding="16,8"
                                 Margin="0,0,8,0"
                                 Click="RequestLocationButton_Click"/>
-                        <Button x:Name="ManualLocationButton" 
+						<Button x:Name="ManualLocationButton" 
                                 Style="{StaticResource Button.Secondary}" 
                                 Content="Set Manual Location" 
                                 Padding="16,8"
                                 Click="ManualLocationButton_Click"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
+					</StackPanel>
+				</StackPanel>
+			</Border>
 
-            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="About" Margin="0,0,0,5"/>
-                    <StackPanel Orientation="Vertical" Margin="0,4,0,0">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                            <TextBlock Text="Version:" 
+			<Border Style="{StaticResource Card}" Margin="0,0,0,12">
+				<StackPanel>
+					<TextBlock Style="{StaticResource Text.Title}" Text="About" Margin="0,0,0,5"/>
+					<StackPanel Orientation="Vertical" Margin="0,4,0,0">
+						<StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+							<TextBlock Text="Version:" 
                                        Style="{StaticResource Text.Body}" 
                                        FontWeight="SemiBold"
                                        Width="100"/>
-                            <TextBlock x:Name="VersionText" 
+							<TextBlock x:Name="VersionText" 
                                        Text="Loading..." 
                                        Style="{StaticResource Text.Body}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                            <TextBlock Text="Build Number:" 
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+							<TextBlock Text="Build Number:" 
                                        Style="{StaticResource Text.Body}" 
                                        FontWeight="SemiBold"
                                        Width="100"/>
-                            <TextBlock x:Name="BuildNumberText" 
+							<TextBlock x:Name="BuildNumberText" 
                                        Text="Loading..." 
                                        Style="{StaticResource Text.Body}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                            <TextBlock Text="Build Date:" 
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+							<TextBlock Text="Build Date:" 
                                        Style="{StaticResource Text.Body}" 
                                        FontWeight="SemiBold"
                                        Width="100"/>
-                            <TextBlock x:Name="BuildDateText" 
+							<TextBlock x:Name="BuildDateText" 
                                        Text="Loading..." 
                                        Style="{StaticResource Text.Body}"/>
-                        </StackPanel>
-     
-                        <Button x:Name="CheckUpdatesButton" 
+						</StackPanel>
+
+						<Button x:Name="CheckUpdatesButton" 
                                 Style="{StaticResource Button.Primary}" 
                                 Content="Check for Updates" 
                                 Padding="16,8"
                                 HorizontalAlignment="Left"
                                 Click="CheckUpdatesButton_Click"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-        </StackPanel>
-    </ScrollViewer>
+					</StackPanel>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+	</ScrollViewer>
 </Page>

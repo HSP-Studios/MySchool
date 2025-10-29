@@ -11,6 +11,14 @@
         <!-- Brand font for greetings and app title -->
         <FontFamily x:Key="Font.Brand">pack://application:,,,/MySchool;component/resources/fonts/SF-Pro.ttf#SF Pro</FontFamily>
 
+        <!-- Theme preview colors for Discord-style theme switcher -->
+        <SolidColorBrush x:Key="Theme.Light.Preview" Color="#EEF2F7"/>
+        <SolidColorBrush x:Key="Theme.Dark.Preview" Color="#0B1220"/>
+        <SolidColorBrush x:Key="Theme.Midnight.Preview" Color="#1A1A2E"/>
+        <SolidColorBrush x:Key="Theme.Nord.Preview" Color="#2E3440"/>
+        <SolidColorBrush x:Key="Theme.Ocean.Preview" Color="#F0F9FF"/>
+        <SolidColorBrush x:Key="Theme.Forest.Preview" Color="#F0FDF4"/>
+
         <!-- Default TextBlock font and color so pages without explicit styles still use the app font and themed text color -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
@@ -275,6 +283,115 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="RepeatButton">
                         <Border Background="Transparent"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Theme Switcher RadioButton Style (Discord-like) -->
+        <Style x:Key="ThemeSwitcherRadioButton" TargetType="RadioButton">
+    <Setter Property="Width" Value="72"/>
+    <Setter Property="Height" Value="72"/>
+    <Setter Property="Margin" Value="0,0,8,0"/>
+    <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="RadioButton">
+                <Grid>
+                    <Border x:Name="OuterBorder"
+                           Background="{TemplateBinding Tag}"
+                           CornerRadius="16"
+                           BorderThickness="3"
+                           BorderBrush="Transparent">
+                        <Grid>
+                            <!-- Inner border for visibility -->
+                            <Border x:Name="InnerBorder"
+                                   CornerRadius="13"
+                                   BorderThickness="1"
+                                   BorderBrush="{DynamicResource Brush.Border}"
+                                   Opacity="0.3"
+                                   Margin="2"/>
+
+                            <!-- Checkmark icon (Segoe MDL2 Assets) -->
+                            <TextBlock x:Name="CheckIcon"
+                                       Text="&#xE73E;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="28"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="White"
+                                       Opacity="0"/>
+
+                            <!-- Accent color indicator (small circle in bottom-right) -->
+                            <Border x:Name="AccentIndicator"
+                                   Width="18"
+                                   Height="18"
+                                   CornerRadius="9"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,6,6"
+                                   BorderThickness="2"
+                                   BorderBrush="{DynamicResource Brush.Surface}">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="4" ShadowDepth="0" Opacity="0.3"/>
+                                </Border.Effect>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.Primary}"/>
+                        <Setter TargetName="CheckIcon" Property="Opacity" Value="1"/>
+                        <Setter TargetName="InnerBorder" Property="Opacity" Value="0"/>
+                        <Setter TargetName="AccentIndicator" Property="Opacity" Value="0"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+                        <Setter TargetName="InnerBorder" Property="Opacity" Value="0.6"/>
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True"/>
+                            <Condition Property="IsChecked" Value="True"/>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource Brush.PrimaryDark}"/>
+                        <Setter TargetName="InnerBorder" Property="Opacity" Value="0"/>
+                    </MultiTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+   </Setter>
+        </Style>
+
+        <!-- Theme-aware ToolTip Style -->
+        <Style TargetType="ToolTip">
+            <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HasDropShadow" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="8" 
+                                                  ShadowDepth="2" 
+                                                  Opacity="0.3"
+                                                  Direction="270"/>
+                            </Border.Effect>
+                            <ContentPresenter/>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
