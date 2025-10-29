@@ -51,6 +51,22 @@ namespace MySchool.Pages
                         break;
                 }
 
+                // Force template application before setting accent colors
+                LightThemeButton.ApplyTemplate();
+                DarkThemeButton.ApplyTemplate();
+                MidnightThemeButton.ApplyTemplate();
+                NordThemeButton.ApplyTemplate();
+                OceanThemeButton.ApplyTemplate();
+                ForestThemeButton.ApplyTemplate();
+
+                // Set accent colors for theme buttons
+                SetAccentColor(LightThemeButton, "#4F46E5");  // Primary: Indigo
+                SetAccentColor(DarkThemeButton, "#818CF8");   // Primary: Light Indigo
+                SetAccentColor(MidnightThemeButton, "#8B5CF6"); // Primary: Purple
+                SetAccentColor(NordThemeButton, "#88C0D0");   // Primary: Light Blue
+                SetAccentColor(OceanThemeButton, "#14B8A6");  // Primary: Teal
+                SetAccentColor(ForestThemeButton, "#10B981"); // Primary: Green
+
                 UserNameTextBox.Text = App.CurrentSettings.UserName;
                 UpdateLocationDisplay();
                 UpdateBuildInfo();
@@ -59,6 +75,36 @@ namespace MySchool.Pages
             {
                 System.Diagnostics.Debug.WriteLine("Failed to initialize settings: " + ex);
                 LightThemeButton.IsChecked = true; // fallback to default
+            }
+        }
+
+        /// <summary>
+        /// Sets the accent color indicator for a theme button
+        /// </summary>
+        private void SetAccentColor(RadioButton button, string hexColor)
+        {
+            try
+            {
+                // Ensure the button's template is applied
+                button.ApplyTemplate();
+
+                // Force a layout update to ensure visual tree is ready
+                button.UpdateLayout();
+
+                // Get the template
+                if (button.Template.FindName("AccentIndicator", button) is Border accentIndicator)
+                {
+                    accentIndicator.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(hexColor));
+                    System.Diagnostics.Debug.WriteLine($"Set accent color for {button.Name}: {hexColor}");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"AccentIndicator not found for {button.Name}");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to set accent color for {button.Name}: {ex.Message}");
             }
         }
 

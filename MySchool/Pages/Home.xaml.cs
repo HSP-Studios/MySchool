@@ -163,7 +163,8 @@ namespace MySchool.Pages
         private void SetWeatherGradient(string condition)
         {
             Color startColor, endColor;
-            bool isDarkMode = App.CurrentSettings.IsDarkMode;
+            // Check if current theme is a dark variant (Dark, Midnight, Nord)
+            bool isDarkTheme = ThemeManager.CurrentTheme.ToLower() is "dark" or "midnight" or "nord";
 
             switch (condition.ToLower())
             {
@@ -175,7 +176,7 @@ namespace MySchool.Pages
 
                 case "clouds":
                     // Cloudy gradient
-                    if (isDarkMode)
+                    if (isDarkTheme)
                     {
                         startColor = (Color)ColorConverter.ConvertFromString("#6B7280"); // gray
                         endColor = (Color)ColorConverter.ConvertFromString("#475569"); // gray
@@ -190,7 +191,7 @@ namespace MySchool.Pages
                 case "rain":
                 case "drizzle":
                     // Rainy gradient
-                    if (isDarkMode)
+                    if (isDarkTheme)
                     {
                         startColor = (Color)ColorConverter.ConvertFromString("#1E3A8A"); // deep blue
                         endColor = (Color)ColorConverter.ConvertFromString("#1E40AF"); // deep blue
@@ -204,7 +205,7 @@ namespace MySchool.Pages
 
                 case "snow":
                     // Snowy gradient
-                    if (isDarkMode)
+                    if (isDarkTheme)
                     {
                         startColor = (Color)ColorConverter.ConvertFromString("#60A5FA"); // blue; should be updated to better snowy colors
                         endColor = (Color)ColorConverter.ConvertFromString("#3B82F6"); // blue; should be updated to better snowy colors
@@ -218,7 +219,7 @@ namespace MySchool.Pages
 
                 case "thunderstorm":
                     // Storm gradient
-                    if (isDarkMode)
+                    if (isDarkTheme)
                     {
                         startColor = (Color)ColorConverter.ConvertFromString("#3730A3");
                         endColor = (Color)ColorConverter.ConvertFromString("#374151");
