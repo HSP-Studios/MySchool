@@ -11,6 +11,12 @@
         <!-- Brand font for greetings and app title -->
         <FontFamily x:Key="Font.Brand">pack://application:,,,/MySchool;component/resources/fonts/SF-Pro.ttf#SF Pro</FontFamily>
 
+        <!-- Theme preview colors for Discord-style theme switcher -->
+        <SolidColorBrush x:Key="Theme.Light.Preview" Color="#EEF2F7"/>
+        <SolidColorBrush x:Key="Theme.Dark.Preview" Color="#0B1220"/>
+        <SolidColorBrush x:Key="Theme.Midnight.Preview" Color="#1A1A2E"/>
+        <SolidColorBrush x:Key="Theme.Nord.Preview" Color="#2E3440"/>
+
         <!-- Default TextBlock font and color so pages without explicit styles still use the app font and themed text color -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
