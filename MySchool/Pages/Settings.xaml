@@ -36,7 +36,7 @@
 
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource Text.Title}" Text="Appearance" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <ToggleButton x:Name="DarkModeToggle" 
                                       Style="{StaticResource ToggleSwitch}"
