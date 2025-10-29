@@ -40,37 +40,14 @@ That's it! The pre-built releases are self-contained and include everything you 
 
 > **Note for Developers**: If you plan to build from source, you'll also need the [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 
-### Step 2: Download MySchool
-
-Choose one of these methods to get MySchool:
-
-#### Option A: Download Pre-built Release (Recommended for most users)
+### Step 2: Download and Install MySchool
 
 1. Go to the [Releases](https://github.com/HSP-Studios/MySchool/releases) page
 2. Download the latest `MySchool-win-Setup.exe` installer
 3. Run the installer and follow the on-screen instructions
 4. Launch MySchool from your Start Menu or desktop shortcut
 
-#### Option B: Build from Source (For developers)
-
-```bash
-# Clone the repository
-git clone https://github.com/HSP-Studios/MySchool.git
-cd MySchool
-
-# Build the solution
-dotnet build MySchool.sln --configuration Release
-
-# Run the application
-dotnet run --project MySchool/MySchool.csproj
-```
-
-#### Option C: Using Visual Studio
-
-1. Install [Visual Studio 2022](https://visualstudio.microsoft.com/) with **.NET Desktop Development** workload
-2. Clone the repository or download and extract the source code
-3. Open `MySchool.sln` in Visual Studio
-4. Press `F5` or click **Start** to build and run
+> **For Developers**: If you want to build from source or use Visual Studio, see the [Installation](#-installation) section below.
 
 ### Step 3: First Launch Setup
 
