@@ -31,6 +31,18 @@
                                    Opacity="0.7"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
+                    
+                    <!-- Warning for name length -->
+                    <TextBlock x:Name="NameLengthWarning"
+                               Style="{StaticResource Text.Body}"
+                               Foreground="#F59E0B"
+                               FontWeight="SemiBold"
+                               Margin="0,8,0,0"
+                               Visibility="Collapsed"
+                               TextWrapping="Wrap">
+                        <Run Text="⚠"/>
+                        <Run Text=" Name is too long! Names over 8 characters will not be shown in the home tab greeting."/>
+                    </TextBlock>
                 </StackPanel>
             </Border>
 

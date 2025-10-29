@@ -93,6 +93,16 @@ namespace MySchool.Pages
             {
                 App.CurrentSettings.UserName = UserNameTextBox.Text.Trim();
                 SettingsService.Save(App.CurrentSettings);
+
+                // Show warning if name exceeds 8 characters
+                if (!string.IsNullOrWhiteSpace(UserNameTextBox.Text) && UserNameTextBox.Text.Trim().Length > 8)
+                {
+                    NameLengthWarning.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    NameLengthWarning.Visibility = Visibility.Collapsed;
+                }
             }
             catch (Exception ex)
             {
