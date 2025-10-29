@@ -12,14 +12,42 @@ namespace MySchool
     public partial class App : Application
     {
         public static UserSettings CurrentSettings { get; private set; } = new UserSettings();
+        private static Mutex? _instanceMutex;
+        private const string MutexName = "MySchool_SingleInstance_Mutex";
 
         [STAThread]
         private static void Main(string[] args)
         {
-            VelopackApp.Build().Run();
-            App app = new();
-            app.InitializeComponent();
-            app.Run();
+            // Check for existing instance
+            bool createdNew;
+            _instanceMutex = new Mutex(true, MutexName, out createdNew);
+
+            if (!createdNew)
+            {
+                // Another instance is already running
+                MessageBox.Show(
+    "MySchool is already running. Only one instance of the application can be open at a time.",
+            "Application Already Running",
+        MessageBoxButton.OK,
+MessageBoxImage.Information);
+
+                // Exit this instance
+                return;
+            }
+
+            try
+            {
+                VelopackApp.Build().Run();
+                App app = new();
+                app.InitializeComponent();
+                app.Run();
+            }
+            finally
+            {
+                // Release the mutex when the application exits
+                _instanceMutex?.ReleaseMutex();
+                _instanceMutex?.Dispose();
+            }
         }
 
         public static async Task<UpdateInfo?> CheckForUpdatesAsync()
@@ -192,10 +220,22 @@ namespace MySchool
                 // Load settings and apply theme
                 Logger.Info("Application", "Loading user settings...");
                 CurrentSettings = SettingsService.Load();
-                Logger.Info("Application", $"Settings loaded - Dark mode: {CurrentSettings.IsDarkMode}");
+
+                // Use ThemeName property, fallback to IsDarkMode for migration
+                string themeName = CurrentSettings.ThemeName;
+                if (string.IsNullOrWhiteSpace(themeName))
+                {
+#pragma warning disable CS0618 // Type or member is obsolete
+                    themeName = CurrentSettings.IsDarkMode ? "Dark" : "Light";
+#pragma warning restore CS0618 // Type or member is obsolete
+                    CurrentSettings.ThemeName = themeName;
+                    SettingsService.Save(CurrentSettings);
+                }
+
+                Logger.Info("Application", $"Settings loaded - Theme: {themeName}");
 
                 Logger.Info("Application", "Applying theme...");
-                ThemeManager.ApplyTheme(CurrentSettings.IsDarkMode);
+                ThemeManager.ApplyTheme(themeName);
 
                 // Check for updates on startup
                 await CheckForUpdatesOnStartup();
