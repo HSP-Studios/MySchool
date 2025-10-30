@@ -9,7 +9,7 @@
       Title="Settings"
       Background="{DynamicResource Brush.Background}">
 
-	<ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
 		<StackPanel Margin="24" Orientation="Vertical">
 			<TextBlock Text="Settings" Style="{StaticResource Text.Headline}" Margin="0,0,0,12"/>
 
