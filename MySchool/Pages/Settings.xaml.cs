@@ -13,10 +13,13 @@ namespace MySchool.Pages
 	/// </summary>
 	public partial class Settings : Page
 	{
+		private ScrollViewer? _settingsScrollViewer;
+
 		public Settings()
 		{
 			InitializeComponent();
 			Loaded += Settings_Loaded;
+			PreviewMouseWheel += Settings_PreviewMouseWheel;
 		}
 
 		private void Settings_Loaded(object sender, RoutedEventArgs e)
@@ -76,6 +79,34 @@ namespace MySchool.Pages
 				System.Diagnostics.Debug.WriteLine("Failed to initialize settings: " + ex);
 				LightThemeButton.IsChecked = true; // fallback to default
 			}
+
+			// Find the ScrollViewer instance
+			_settingsScrollViewer = FindScrollViewer(this);
+		}
+
+		private void Settings_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+		{
+			if (_settingsScrollViewer != null)
+			{
+				// Reduce scroll speed by dividing delta
+				int scrollDelta = e.Delta / 6; // Lower divisor = slower scroll
+				_settingsScrollViewer.ScrollToVerticalOffset(_settingsScrollViewer.VerticalOffset - scrollDelta);
+				e.Handled = true;
+			}
+		}
+
+		private ScrollViewer? FindScrollViewer(DependencyObject parent)
+		{
+			if (parent is ScrollViewer sv)
+				return sv;
+			for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+			{
+				var child = VisualTreeHelper.GetChild(parent, i);
+				var result = FindScrollViewer(child);
+				if (result != null)
+					return result;
+			}
+			return null;
 		}
 
 		/// <summary>
