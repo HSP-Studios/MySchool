@@ -7,6 +7,7 @@ Ask the user to provide their school timetable information, including:
 - Teacher name (if available, can be empty for breaks)
 - Room/location (if available, can be empty for breaks)
 - Start and end times
+- IMPORTANT: Include ALL periods (including homeroom, roll mark, HR periods, etc.) from the timetable
 - IMPORTANT: Include ALL breaks (morning tea, recess, lunch, etc.) as separate periods
 
 Once you have all the information, output ONLY a valid JSON object in this EXACT format (do not include any explanatory text, markdown formatting, or code blocks):
@@ -66,3 +67,8 @@ CRITICAL RULES:
 8. Ensure the JSON is properly formatted and valid
 9. The response must start with { and end with }
 10. INCLUDE ALL BREAKS - they are essential for accurate schedule tracking
+11. INCLUDE ALL PERIODS - Do not skip homeroom (HR), roll mark, roll call, or any other periods from the timetable. Every single period must be included in the output.
+12. For blank or free periods in the MIDDLE of the school day: use "Free" as the subject name with isBreak set to false
+13. For blank or free periods at the START or END of the school day: EXCLUDE them completely from the output
+14. AUTOMATICALLY GROUP PERIODS: If the same subject appears in consecutive periods (back-to-back), combine them into a single period entry with the start time of the first period and the end time of the last period
+15. AUTOMATICALLY GROUP BREAKS: If breaks appear consecutively (e.g., "Break 1" immediately followed by "Break 2"), combine them into a single break entry with the start time of the first break and the end time of the last break
