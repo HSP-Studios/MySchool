@@ -261,43 +261,7 @@ namespace MySchool.Pages
             Logger.Info("Settings", "User initiated timetable re-processing");
 
             // Create progress dialog
-            var progressDialog = new Window
-            {
-                Title = "Re-processing Timetable",
-                Width = 400,
-                Height = 150,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = Window.GetWindow(this),
-                ResizeMode = ResizeMode.NoResize,
-                WindowStyle = WindowStyle.ToolWindow,
-                Background = (Brush)Application.Current.Resources["Brush.Background"]
-            };
-
-            var stackPanel = new StackPanel
-            {
-                Margin = new Thickness(20),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-
-            var progressBar = new ProgressBar
-            {
-                IsIndeterminate = true,
-                Width = 300,
-                Height = 20,
-                Margin = new Thickness(0, 0, 0, 10)
-            };
-
-            var statusText = new TextBlock
-            {
-                Text = "Processing timetable...",
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Style = (Style)Application.Current.Resources["Text.Body"]
-            };
-
-            stackPanel.Children.Add(progressBar);
-            stackPanel.Children.Add(statusText);
-            progressDialog.Content = stackPanel;
+            var (progressDialog, stackPanel, progressBar, statusText) = CreateProgressDialog("Re-processing Timetable", "Processing timetable...");
 
             // Disable the button while processing
             ReprocessTimetableButton.IsEnabled = false;
@@ -406,43 +370,7 @@ namespace MySchool.Pages
         {
             Logger.Info("Settings", "User initiated manual update check");
 
-            var checkingDialog = new Window
-            {
-                Title = "Checking for Updates",
-                Width = 400,
-                Height = 150,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = Window.GetWindow(this),
-                ResizeMode = ResizeMode.NoResize,
-                WindowStyle = WindowStyle.ToolWindow,
-                Background = (Brush)Application.Current.Resources["Brush.Background"]
-            };
-
-            var stackPanel = new StackPanel
-            {
-                Margin = new Thickness(20),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-
-            var progressBar = new ProgressBar
-            {
-                IsIndeterminate = true,
-                Width = 300,
-                Height = 20,
-                Margin = new Thickness(0, 0, 0, 10)
-            };
-
-            var statusText = new TextBlock
-            {
-                Text = "Checking for updates...",
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Style = (Style)Application.Current.Resources["Text.Body"]
-            };
-
-            stackPanel.Children.Add(progressBar);
-            stackPanel.Children.Add(statusText);
-            checkingDialog.Content = stackPanel;
+            var (checkingDialog, stackPanel, progressBar, statusText) = CreateProgressDialog("Checking for Updates", "Checking for updates...");
 
             // Track dialog state
             bool dialogClosed = false;
@@ -624,6 +552,55 @@ namespace MySchool.Pages
                 CheckUpdatesButton.IsEnabled = true;
                 Logger.Debug("Settings", "Update check button re-enabled");
             }
+        }
+
+        /// <summary>
+        /// Creates a progress dialog window with the specified title and message
+        /// </summary>
+        /// <param name="title">Dialog window title</param>
+        /// <param name="message">Status message to display</param>
+        /// <returns>Tuple containing the Window, StackPanel, ProgressBar, and TextBlock for updates</returns>
+        private (Window dialog, StackPanel panel, ProgressBar progressBar, TextBlock statusText) CreateProgressDialog(string title, string message)
+        {
+            var dialog = new Window
+            {
+                Title = title,
+                Width = 400,
+                Height = 150,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this),
+                ResizeMode = ResizeMode.NoResize,
+                WindowStyle = WindowStyle.ToolWindow,
+                Background = (Brush)Application.Current.Resources["Brush.Background"]
+            };
+
+            var stackPanel = new StackPanel
+            {
+                Margin = new Thickness(20),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            var progressBar = new ProgressBar
+            {
+                IsIndeterminate = true,
+                Width = 300,
+                Height = 20,
+                Margin = new Thickness(0, 0, 0, 10)
+            };
+
+            var statusText = new TextBlock
+            {
+                Text = message,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Style = (Style)Application.Current.Resources["Text.Body"]
+            };
+
+            stackPanel.Children.Add(progressBar);
+            stackPanel.Children.Add(statusText);
+            dialog.Content = stackPanel;
+
+            return (dialog, stackPanel, progressBar, statusText);
         }
     }
 }
