@@ -11,7 +11,7 @@
 	<StartupObject>MySchool.App</StartupObject>
 
     <!-- Versioning -->
-	<Version>1.0.0-rc2</Version>
+	<Version>1.0.0-rc3</Version>
 	  
   </PropertyGroup>
 
