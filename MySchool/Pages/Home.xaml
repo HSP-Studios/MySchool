@@ -126,8 +126,8 @@
                                 <TextBlock Style="{StaticResource Icon}" Text="&#xF763;" HorizontalAlignment="Center"/>
                                 <TextBlock FontWeight="SemiBold" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Schedule"/>
                             </StackPanel>
-                            <TextBlock Style="{StaticResource Text.Body}" Margin="0,6,0,0"><Run Text="View your full schedule,"/><LineBreak/><Run Text="or upload a new schedule"/><Run Language="en-au" Text="."/></TextBlock>
-                        </StackPanel>
+							<TextBlock Style="{StaticResource Text.Body}" Margin="0,6,0,0"><Run Language="en-au" Text="View your schedule and upload a new schedule."/></TextBlock>
+						</StackPanel>
                     </Border>
                     <!-- Action card 2 -->
                     <Border Style="{StaticResource Card}" Width="200" Height="100" Margin="0,0,0,0">
