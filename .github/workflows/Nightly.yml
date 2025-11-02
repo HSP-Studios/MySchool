@@ -99,7 +99,7 @@ jobs:
                   repo,
                   tag_name: tag,
                   name: 'Nightly',
-                  body: 'This is the nightly build of MySchool that is generated every time a code change is made in the main branch. These builds are untested and should be run in virtual machines as they can modify %AppData% or %LocalAppData% on the host machine. HSP Studios does not take responsibility for damage caused from the usabe of nightly builds. ',
+                  body: 'This is the nightly build of MySchool that is generated every time a code change is made in the main branch. These builds are untested and should be run in virtual machines as they can modify %AppData% or %LocalAppData% on the host machine. HSP Studios does not take responsibility for damage caused from the usage of nightly builds.',
                   draft: false,
                   prerelease: true
                 });
