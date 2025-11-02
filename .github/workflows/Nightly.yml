@@ -34,8 +34,8 @@ jobs:
           $out = Join-Path $env:GITHUB_WORKSPACE "publish"
           if (Test-Path $out) { Remove-Item -Recurse -Force $out }
 
-          # Run dotnet publish only once (it will build as needed) and capture the output to parse the generated build number.
-          dotnet publish MySchool/MySchool.csproj -c Release -r win-x64 --self-contained false -o $out *>&1 | Tee-Object -FilePath $log
+          # Run dotnet publish only once (it will build as needed), set Version=nightly, and capture output to parse the generated build number.
+          dotnet publish MySchool/MySchool.csproj -c Release -r win-x64 --self-contained false -o $out -p:Version=nightly *>&1 | Tee-Object -FilePath $log
 
           # Parse the "Generated build number: <number>" line that Directory.Build.targets prints
           $match = Select-String -Path $log -Pattern 'Generated build number:\s*(\d+)' | Select-Object -First 1
