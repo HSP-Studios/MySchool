@@ -1,0 +1,141 @@
+name: Nightly Build & Release
+
+on: push: branches: - main workflow_dispatch:
+
+permissions: contents: write
+
+jobs: build-and-release: runs-on: windows-latest steps: - name: Checkout uses: actions/checkout@v4
+- name: Setup .NET
+    uses: actions/setup-dotnet@v3
+    with:
+      dotnet-version: '9.0.x'
+
+  - name: Restore
+    run: dotnet restore MySchool.sln
+
+  - name: Build and capture log
+    id: build
+    shell: pwsh
+    run: |
+      $log = Join-Path $env:GITHUB_WORKSPACE "buildlog.txt"
+      # Build the solution and tee output to a file so we can parse the generated build number
+      dotnet build MySchool.sln -c Release *>&1 | Tee-Object -FilePath $log
+
+      # Look for the generated build number. Directory.Build.targets prints:
+      #   Generated build number: $(BuildNumber)
+      $match = Select-String -Path $log -Pattern 'Generated build number:\s*(\d+)' | Select-Object -First 1
+      if (-not $match) {
+        Write-Error "Build number not found in build output. Build log saved to $log"
+        exit 1
+      }
+      $bn = $match.Matches[0].Groups[1].Value
+      Write-Host "Detected build number: $bn"
+
+      echo "build_number=$bn" >> $env:GITHUB_OUTPUT
+
+  - name: Publish (produce runnable output)
+    id: publish
+    shell: pwsh
+    run: |
+      $out = Join-Path $env:GITHUB_WORKSPACE "publish"
+      if (Test-Path $out) { Remove-Item -Recurse -Force $out }
+      # Publish to a RID-specific folder so the WPF exe (and dependencies) are produced.
+      # Adjust the RID (win-x64) if you want different target(s).
+      dotnet publish MySchool/MySchool.csproj -c Release -r win-x64 --self-contained false -o $out
+      Write-Host "Published to $out"
+
+  - name: Create nightly zip
+    id: zip
+    shell: pwsh
+    env:
+      BUILD_NUMBER: ${{ steps.build.outputs.build_number }}
+    run: |
+      if (-not $env:BUILD_NUMBER) { Write-Error "BUILD_NUMBER not set"; exit 1 }
+      $publish = Join-Path $env:GITHUB_WORKSPACE "publish"
+      if (-not (Test-Path $publish)) { Write-Error "Publish folder not found at $publish"; exit 1 }
+
+      $zipName = "MySchool-Nightly-$env:BUILD_NUMBER.zip"
+      $zipPath = Join-Path $env:GITHUB_WORKSPACE $zipName
+
+      if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+      Compress-Archive -Path (Join-Path $publish '*') -DestinationPath $zipPath -Force
+
+      Write-Host "Created zip: $zipPath"
+      echo "zip_path=$zipPath" >> $env:GITHUB_OUTPUT
+      echo "zip_name=$zipName" >> $env:GITHUB_OUTPUT
+
+  - name: Upload artifact (GitHub Actions artifact)
+    uses: actions/upload-artifact@v4
+    with:
+      name: MySchool-Nightly-${{ steps.build.outputs.build_number }}
+      path: ${{ steps.zip.outputs.zip_path }}
+
+  - name: Create/Update Nightly Release (delete previous nightly assets & upload new asset)
+    id: release
+    uses: actions/github-script@v6
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      script: |
+        const fs = require('fs');
+        const core = require('@actions/core');
+        const owner = context.repo.owner;
+        const repo = context.repo.repo;
+        const tag = 'nightly';
+
+        // Try to get release by tag; if missing, create it.
+        let relResp;
+        try {
+          relResp = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
+        } catch (err) {
+          if (err.status === 404) {
+            core.info('Nightly release not found; creating one.');
+            relResp = await github.rest.repos.createRelease({
+              owner,
+              repo,
+              tag_name: tag,
+              name: 'Nightly',
+              body: 'Automated nightly build (replaced on each run)',
+              draft: false,
+              prerelease: true
+            });
+          } else {
+            throw err;
+          }
+        }
+
+        const release = relResp.data;
+        core.info(`Release id: ${release.id}`);
+
+        // Delete existing assets in the release
+        const assets = (await github.rest.repos.listReleaseAssets({ owner, repo, release_id: release.id })).data;
+        for (const a of assets) {
+          core.info(`Deleting existing asset: ${a.name} (${a.id})`);
+          await github.rest.repos.deleteReleaseAsset({ owner, repo, asset_id: a.id });
+        }
+
+        // Upload the zip we created above
+        const zipPath = process.env.ZIP_PATH;
+        const zipName = process.env.ZIP_NAME;
+        if (!fs.existsSync(zipPath)) {
+          throw new Error(`Zip file not found at ${zipPath}`);
+        }
+        const data = fs.readFileSync(zipPath);
+        const stat = fs.statSync(zipPath);
+        core.info(`Uploading ${zipName} (${stat.size} bytes) to release ${release.id}`);
+
+        await github.rest.repos.uploadReleaseAsset({
+          owner,
+          repo,
+          release_id: release.id,
+          data,
+          name: zipName,
+          headers: {
+            'content-type': 'application/zip',
+            'content-length': stat.size
+          }
+        });
+
+        core.setOutput('release_id', release.id);
+    env:
+      ZIP_PATH: ${{ steps.zip.outputs.zip_path }}
+      ZIP_NAME: ${{ steps.zip.outputs.zip_name }}
