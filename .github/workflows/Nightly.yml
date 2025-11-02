@@ -26,42 +26,38 @@ jobs:
       - name: Restore
         run: dotnet restore MySchool.sln
 
-      - name: Build and capture log
-        id: build
+      - name: Publish and capture build number (single run)
+        id: publish_and_capture
         shell: pwsh
         run: |
-          $log = Join-Path $env:GITHUB_WORKSPACE "buildlog.txt"
-          dotnet build MySchool.sln -c Release *>&1 | Tee-Object -FilePath $log
+          $log = Join-Path $env:GITHUB_WORKSPACE "publishlog.txt"
+          $out = Join-Path $env:GITHUB_WORKSPACE "publish"
+          if (Test-Path $out) { Remove-Item -Recurse -Force $out }
 
-          # The Directory.Build.targets prints: "Generated build number: $(BuildNumber)"
+          # Run dotnet publish only once (it will build as needed) and capture the output to parse the generated build number.
+          dotnet publish MySchool/MySchool.csproj -c Release -r win-x64 --self-contained false -o $out *>&1 | Tee-Object -FilePath $log
+
+          # Parse the "Generated build number: <number>" line that Directory.Build.targets prints
           $match = Select-String -Path $log -Pattern 'Generated build number:\s*(\d+)' | Select-Object -First 1
           if (-not $match) {
-            Write-Error "Build number not found in build output. Build log saved to $log"
+            Write-Error "Build number not found in publish output. Publish log saved to $log"
             exit 1
           }
           $bn = $match.Matches[0].Groups[1].Value
           Write-Host "Detected build number: $bn"
 
+          if (-not (Test-Path $out)) { Write-Error "Publish folder not found at $out"; exit 1 }
           echo "build_number=$bn" >> $env:GITHUB_OUTPUT
-
-      - name: Publish (produce runnable output)
-        id: publish
-        shell: pwsh
-        run: |
-          $out = Join-Path $env:GITHUB_WORKSPACE "publish"
-          if (Test-Path $out) { Remove-Item -Recurse -Force $out }
-          # Publish for Windows x64. Change RID or self-contained options as needed.
-          dotnet publish MySchool/MySchool.csproj -c Release -r win-x64 --self-contained false -o $out
-          Write-Host "Published to $out"
+          echo "publish_dir=$out" >> $env:GITHUB_OUTPUT
 
       - name: Create nightly zip
         id: zip
         shell: pwsh
         env:
-          BUILD_NUMBER: ${{ steps.build.outputs.build_number }}
+          BUILD_NUMBER: ${{ steps.publish_and_capture.outputs.build_number }}
         run: |
           if (-not $env:BUILD_NUMBER) { Write-Error "BUILD_NUMBER not set"; exit 1 }
-          $publish = Join-Path $env:GITHUB_WORKSPACE "publish"
+          $publish = '${{ steps.publish_and_capture.outputs.publish_dir }}'
           if (-not (Test-Path $publish)) { Write-Error "Publish folder not found at $publish"; exit 1 }
 
           $zipName = "MySchool-Nightly-$env:BUILD_NUMBER.zip"
@@ -77,7 +73,7 @@ jobs:
       - name: Upload artifact (Actions artifact)
         uses: actions/upload-artifact@v4
         with:
-          name: MySchool-Nightly-${{ steps.build.outputs.build_number }}
+          name: MySchool-Nightly-${{ steps.publish_and_capture.outputs.build_number }}
           path: ${{ steps.zip.outputs.zip_path }}
 
       - name: Create/Update Nightly Release (remove previous assets & upload new)
@@ -87,20 +83,18 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const core = require('@actions/core');
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const tag = 'nightly';
 
-            // Get or create the release
-            let rel;
+            // Try to get release by tag; if missing, create it.
+            let relResp;
             try {
-              rel = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
-              core.info('Found existing nightly release.');
+              relResp = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
             } catch (err) {
               if (err.status === 404) {
                 core.info('Nightly release not found; creating one.');
-                rel = await github.rest.repos.createRelease({
+                relResp = await github.rest.repos.createRelease({
                   owner,
                   repo,
                   tag_name: tag,
@@ -114,20 +108,20 @@ jobs:
               }
             }
 
-            const release = rel.data;
+            const release = relResp.data;
             core.info(`Release id: ${release.id}`);
 
-            // Delete all existing assets in the release
+            // Delete existing assets in the release
             const assets = (await github.rest.repos.listReleaseAssets({ owner, repo, release_id: release.id })).data;
             for (const a of assets) {
               core.info(`Deleting existing asset: ${a.name} (${a.id})`);
               await github.rest.repos.deleteReleaseAsset({ owner, repo, asset_id: a.id });
             }
 
-            // Upload the new zip
+            // Upload the zip we created above
             const zipPath = process.env.ZIP_PATH;
             const zipName = process.env.ZIP_NAME;
-            if (!zipPath || !fs.existsSync(zipPath)) {
+            if (!fs.existsSync(zipPath)) {
               throw new Error(`Zip file not found at ${zipPath}`);
             }
             const data = fs.readFileSync(zipPath);
@@ -150,5 +144,3 @@ jobs:
         env:
           ZIP_PATH: ${{ steps.zip.outputs.zip_path }}
           ZIP_NAME: ${{ steps.zip.outputs.zip_name }}
-
-# End of workflow
