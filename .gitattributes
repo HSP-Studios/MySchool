@@ -1,8 +1,2 @@
-# Force Linguist to recognize XAML and XML as languages
-*.xaml linguist-language=XAML
-*.xml linguist-language=XML
-*.html linguist-language=HTML
-
-# Optional: include config files or assets
-*.css linguist-language=CSS
-*.js linguist-language=JavaScript
+*.xaml linguist-detectable=true
+*.xml linguist-detectable=true
