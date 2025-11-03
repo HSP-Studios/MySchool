@@ -144,3 +144,20 @@ jobs:
         env:
           ZIP_PATH: ${{ steps.zip.outputs.zip_path }}
           ZIP_NAME: ${{ steps.zip.outputs.zip_name }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'ap-southeast-2'
+
+      - name: Upload nightly zip to S3
+        shell: pwsh
+        run: |
+          $zipPath = '${{ steps.zip.outputs.zip_path }}'
+          $zipName = '${{ steps.zip.outputs.zip_name }}'
+          $bucket = '${{ secrets.AWS_S3_BUCKET_NIGHTLY }}'
+     
+          Write-Host "Uploading $zipName to S3 bucket: $bucket"
+          aws s3 cp $zipPath "s3://$bucket/$zipName"
