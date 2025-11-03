@@ -12,6 +12,11 @@ CHANGE VERSION IN CSPROJ
 2.
 PUBLISH (SELF CONTAINED)
 
+(starts at repo root)
+
+dotnet clean
+dotnet publish -c Release -r win-x64 --self-contained true -o MySchool\bin\Publish
+
 3.
 vpk pack `
 --packId MySchool `
