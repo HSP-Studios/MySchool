@@ -30,13 +30,4 @@ vpk pack `
 - MySchool-v*-full.nupkg
 - MySchool-v*-delta.nupkg
 
-5. UPLOAD TO S3 (Fallback for update checks)
-Upload the same files to the S3 bucket: myschool-ap-se-2.s3.ap-southeast-2.amazonaws.com
-- assets.win.json
-- releases.win.json
-- MySchool-v*-full.nupkg
-- MySchool-v*-delta.nupkg
-
-Note: The app will first try GitHub for updates (10 second timeout). 
-If GitHub is unreachable or slow, it automatically falls back to the S3 bucket.
 
