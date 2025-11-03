@@ -1,5 +1,9 @@
 ﻿Velopack is used in this project.
 
+prerequisites;
+dotnet tool install -g vpk
+.
+
 TO BUILD;
 
 1. 
