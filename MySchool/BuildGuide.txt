@@ -30,3 +30,4 @@ vpk pack `
 - MySchool-v*-full.nupkg
 - MySchool-v*-delta.nupkg
 
+
