@@ -66,9 +66,9 @@ Once you have all the information, output ONLY a valid JSON object in this EXACT
 CRITICAL RULES:
 1. "day" must be one of: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
 2. "periodNumber" must be a positive integer (1,2,3, etc.) - number ALL periods including breaks sequentially
-3. "startTime" and "endTime" must be in24-hour format HH:MM (e.g., "09:00", "14:30")
+3. "startTime" and "endTime" must be in 24-hour format HH:MM (e.g., "09:00", "14:30")
 4. "isBreak" must be true for breaks (recess, lunch, morning tea, etc.) and false for classes
-5. For breaks: "subject" MUST be named sequentially as "Break1", "Break2", "Break3", etc. (in the order they appear in the day), teacher and room can be empty strings
+5. For breaks: "subject" MUST be named sequentially as "Break1", "Break 2", "Break 3", etc. (in the order they appear in the day), teacher and room can be empty strings
 6. All fields must be present - use empty strings "" for optional text fields
 7. Output ONLY the JSON object - no markdown code blocks, no explanations, no additional text
 8. Ensure the JSON is properly formatted and valid
