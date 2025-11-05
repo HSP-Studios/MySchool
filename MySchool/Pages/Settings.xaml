@@ -10,7 +10,7 @@
       Background="{DynamicResource Brush.Background}">
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
-		<StackPanel Margin="24" Orientation="Vertical">
+		<StackPanel Margin="24" Orientation="Vertical" MaxWidth="880">
 			<TextBlock Text="Settings" Style="{StaticResource Text.Headline}" Margin="0,0,0,12"/>
 
 			<Border Style="{StaticResource Card}" Margin="0,0,0,12">

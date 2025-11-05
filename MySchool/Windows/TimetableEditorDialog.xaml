@@ -184,6 +184,67 @@ Margin="0,0,8,0"/>
  </Trigger>
  </Style.Triggers>
  </Style>
+ 
+ <!-- Themed CheckBox Style -->
+ <Style TargetType="CheckBox">
+ <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+ <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+ <Setter Property="BorderBrush" Value="{DynamicResource Brush.Primary}"/>
+ <Setter Property="BorderThickness" Value="2"/>
+ <Setter Property="Padding" Value="4,0,0,0"/>
+ <Setter Property="VerticalAlignment" Value="Center"/>
+ <Setter Property="HorizontalAlignment" Value="Center"/>
+ <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+ <Setter Property="Template">
+ <Setter.Value>
+ <ControlTemplate TargetType="CheckBox">
+ <Grid Background="Transparent">
+ <Border x:Name="CheckBoxBorder"
+ Width="20"
+ Height="20"
+ Background="{TemplateBinding Background}"
+ BorderBrush="{TemplateBinding BorderBrush}"
+ BorderThickness="{TemplateBinding BorderThickness}"
+ CornerRadius="4"
+ SnapsToDevicePixels="True">
+ <TextBlock x:Name="CheckMark"
+ Text="&#xE73E;"
+ FontFamily="Segoe MDL2 Assets"
+ FontSize="12"
+ Foreground="{DynamicResource Brush.Primary}"
+ HorizontalAlignment="Center"
+ VerticalAlignment="Center"
+ Visibility="Collapsed"/>
+ </Border>
+ </Grid>
+ <ControlTemplate.Triggers>
+ <Trigger Property="IsChecked" Value="True">
+ <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+ <Setter TargetName="CheckBoxBorder" Property="Background" Value="{DynamicResource Brush.Primary}"/>
+ <Setter TargetName="CheckMark" Property="Foreground" Value="White"/>
+ </Trigger>
+ <Trigger Property="IsMouseOver" Value="True">
+ <Setter TargetName="CheckBoxBorder" Property="BorderBrush" Value="{DynamicResource Brush.PrimaryDark}"/>
+ </Trigger>
+ <MultiTrigger>
+ <MultiTrigger.Conditions>
+ <Condition Property="IsMouseOver" Value="True"/>
+ <Condition Property="IsChecked" Value="False"/>
+ </MultiTrigger.Conditions>
+ <Setter TargetName="CheckBoxBorder" Property="Background">
+ <Setter.Value>
+ <SolidColorBrush Color="{Binding Source={StaticResource Brush.Primary}, Path=Color}" Opacity="0.1"/>
+ </Setter.Value>
+ </Setter>
+ </MultiTrigger>
+ <Trigger Property="IsEnabled" Value="False">
+ <Setter TargetName="CheckBoxBorder" Property="Opacity" Value="0.5"/>
+ </Trigger>
+ </ControlTemplate.Triggers>
+ </ControlTemplate>
+ </Setter.Value>
+ </Setter>
+ </Style>
  </DataGrid.Resources>
 
          <DataGrid.Columns>
