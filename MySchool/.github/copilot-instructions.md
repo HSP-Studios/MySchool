@@ -71,3 +71,10 @@ MySchool is a WPF application for managing and displaying student and class info
 ### Notes and examples from this repo
 - Primary UI logic lives in `MainWindow.xaml.cs` — prefer small, incremental edits there and test each change.
 - Assets live under `resources/` (e.g., `resources/logo/png/Dark-Icon.png`). Keep added assets in the same subfolder and reference relatively in XAML.
+
+# MCP Servers
+You have access to a variety of MCP Servers such as;
+- Github MCP - allows you to manage the github side of repos
+- playwright - allows you to use a web browser to complete a variety of web-based tasks
+- MCP Control - allows you to control a Windows 11 instance which can be used to test the application features
+- nuget - allows you to manage nuget packages 
