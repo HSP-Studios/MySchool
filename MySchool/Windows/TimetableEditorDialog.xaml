@@ -63,8 +63,8 @@
 Margin="0,0,8,0"/>
        <ComboBox x:Name="DayComboBox" 
   Width="150" 
-       SelectionChanged="DayComboBox_SelectionChanged"
- Style="{DynamicResource ComboBox.Standard}"/>
+     SelectionChanged="DayComboBox_SelectionChanged"
+ Style="{StaticResource ComboBox.Standard}"/>
       </StackPanel>
 
       <!-- Action Buttons -->
@@ -137,49 +137,54 @@ Margin="0,0,8,0"/>
           CanUserReorderColumns="False"
   CanUserSortColumns="True"
     SelectionMode="Single"
-  Background="Transparent"
+  Background="{DynamicResource Brush.Surface}"
           BorderThickness="0"
  GridLinesVisibility="Horizontal"
      HorizontalGridLinesBrush="{DynamicResource Brush.Border}"
    RowHeaderWidth="0"
      HeadersVisibility="Column"
-       AlternatingRowBackground="{DynamicResource Brush.CardHover}"
-   Margin="12">
-     <DataGrid.Resources>
-    <Style TargetType="DataGridColumnHeader">
-           <Setter Property="Background" Value="{DynamicResource Brush.Background}"/>
-        <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
-  <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Padding" Value="12,8"/>
-        <Setter Property="BorderThickness" Value="0,0,0,2"/>
-          <Setter Property="BorderBrush" Value="{DynamicResource Brush.Primary}"/>
-      </Style>
-             <Style TargetType="DataGridCell">
-      <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="8"/>
-      <Style.Triggers>
-         <Trigger Property="IsSelected" Value="True">
-     <Setter Property="Background" Value="{DynamicResource Brush.CardHover}"/>
-              <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
-      </Trigger>
-        </Style.Triggers>
-   </Style>
-           <Style TargetType="DataGridRow">
-           <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
-          <Style.Triggers>
-   <Trigger Property="IsMouseOver" Value="True">
-      <Setter Property="Background" Value="{DynamicResource Brush.CardHover}"/>
-       </Trigger>
-       <Trigger Property="IsSelected" Value="True">
-      <Setter Property="Background" Value="{DynamicResource Brush.CardHover}"/>
-             <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
-            </Trigger>
-          </Style.Triggers>
-       </Style>
-       </DataGrid.Resources>
+       AlternatingRowBackground="#08000000"
+   Margin="12"
+ Foreground="{DynamicResource Brush.TextPrimary}"
+ FontFamily="{StaticResource Font.Main}">
+ <DataGrid.Resources>
+ <Style TargetType="DataGridColumnHeader">
+ <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
+ <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+ <Setter Property="FontWeight" Value="SemiBold"/>
+ <Setter Property="Padding" Value="12,8"/>
+ <Setter Property="BorderThickness" Value="0,0,0,2"/>
+ <Setter Property="BorderBrush" Value="{DynamicResource Brush.Primary}"/>
+ <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+ </Style>
+ <Style TargetType="DataGridCell">
+ <Setter Property="Background" Value="Transparent"/>
+ <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+ <Setter Property="BorderThickness" Value="0"/>
+ <Setter Property="Padding" Value="8"/>
+ <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+ <Style.Triggers>
+ <Trigger Property="IsSelected" Value="True">
+ <Setter Property="Background" Value="#15000000"/>
+ <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+ </Trigger>
+ </Style.Triggers>
+ </Style>
+ <Style TargetType="DataGridRow">
+ <Setter Property="Background" Value="Transparent"/>
+ <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+ <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+ <Style.Triggers>
+ <Trigger Property="IsMouseOver" Value="True">
+ <Setter Property="Background" Value="#0A000000"/>
+ </Trigger>
+ <Trigger Property="IsSelected" Value="True">
+ <Setter Property="Background" Value="#15000000"/>
+ <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+ </Trigger>
+ </Style.Triggers>
+ </Style>
+ </DataGrid.Resources>
 
          <DataGrid.Columns>
           <!-- Period Number -->
