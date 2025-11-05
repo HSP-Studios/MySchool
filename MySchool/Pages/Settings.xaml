@@ -192,6 +192,26 @@ Checked="ThemeButton_Checked"
 
 			<Border Style="{StaticResource Card}" Margin="0,0,0,12">
 				<StackPanel>
+					<TextBlock Style="{StaticResource Text.Title}" Text="Timetable Editor" Margin="0,0,0,5"/>
+					<TextBlock Style="{StaticResource Text.Body}" 
+    Text="Edit your timetable directly - change class names, period times, teachers, and rooms" 
+             Margin="0,0,0,8"/>
+					<TextBlock Style="{StaticResource Text.Body}" 
+      Text="Make changes to individual periods, add or remove periods, and reorganize your schedule as needed." 
+      Margin="0,0,0,8"
+                Opacity="0.8"
+         TextWrapping="Wrap"/>
+					<Button x:Name="EditTimetableButton" 
+         Style="{StaticResource Button.Primary}" 
+            Content="Open Timetable Editor" 
+      Padding="16,8"
+      HorizontalAlignment="Left"
+       Click="EditTimetableButton_Click"/>
+				</StackPanel>
+			</Border>
+
+			<Border Style="{StaticResource Card}" Margin="0,0,0,12">
+				<StackPanel>
 					<TextBlock Style="{StaticResource Text.Title}" Text="Weather Location" Margin="0,0,0,5"/>
 					<TextBlock Style="{StaticResource Text.Body}" Text="Configure location for weekend weather display" Margin="0,0,0,8"/>
 
