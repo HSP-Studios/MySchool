@@ -4,18 +4,20 @@
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         Title="Timetable Editor"
         WindowStyle="None"
-        ResizeMode="CanResize"
+        ResizeMode="NoResize"
         AllowsTransparency="True"
     Background="Transparent"
         Width="1000"
         Height="550"
-        MinWidth="800"
-        MinHeight="450"
+        MaxWidth="1000"
+        MaxHeight="550"
+        MinWidth="1000"
+        MinHeight="550"
         WindowStartupLocation="CenterOwner"
     FontFamily="{StaticResource Font.Main}">
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="40"
-          ResizeBorderThickness="6"
+          ResizeBorderThickness="0"
       CornerRadius="0"
         GlassFrameThickness="0"
           UseAeroCaptionButtons="False"/>
@@ -68,37 +70,37 @@ Margin="0,0,8,0"/>
       </StackPanel>
 
       <!-- Action Buttons -->
-             <StackPanel Grid.Column="2" Orientation="Horizontal">
-     <Button x:Name="AddPeriodButton" 
+       <StackPanel Grid.Column="2" Orientation="Horizontal">
+<Button x:Name="AddPeriodButton" 
       Style="{StaticResource Button.Primary}" 
-          Content="Add Period" 
-             Padding="12,6"
+      Content="Add Period" 
+  Padding="12,6"
       Margin="0,0,8,0"
-          Click="AddPeriodButton_Click">
-              <Button.ContentTemplate>
-        <DataTemplate>
+    Click="AddPeriodButton_Click">
+    <Button.ContentTemplate>
+  <DataTemplate>
       <StackPanel Orientation="Horizontal">
    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE710;" VerticalAlignment="Center" Margin="0,0,6,0"/>
           <TextBlock Text="Add Period" VerticalAlignment="Center"/>
-             </StackPanel>
-               </DataTemplate>
-         </Button.ContentTemplate>
+  </StackPanel>
+         </DataTemplate>
+   </Button.ContentTemplate>
   </Button>
-         <Button x:Name="ReorderButton" 
+    <Button x:Name="FindReplaceButton" 
     Style="{StaticResource Button.Secondary}" 
-       Content="Reorder" 
-             Padding="12,6"
-     Click="ReorderButton_Click"
-             ToolTip="Automatically renumber periods sequentially">
+   Content="Find &amp; Replace" 
+  Padding="12,6"
+     Click="FindReplaceButton_Click"
+  ToolTip="Find and replace subject names across all days">
          <Button.ContentTemplate>
       <DataTemplate>
  <StackPanel Orientation="Horizontal">
-      <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8CB;" VerticalAlignment="Center" Margin="0,0,6,0"/>
-  <TextBlock Text="Reorder" VerticalAlignment="Center"/>
+ <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8EF;" VerticalAlignment="Center" Margin="0,0,6,0"/>
+  <TextBlock Text="Find &amp; Replace" VerticalAlignment="Center"/>
      </StackPanel>
-          </DataTemplate>
+ </DataTemplate>
       </Button.ContentTemplate>
-           </Button>
+     </Button>
     </StackPanel>
      </Grid>
 
@@ -163,6 +165,19 @@ Margin="0,0,8,0"/>
  <Setter Property="BorderThickness" Value="0"/>
  <Setter Property="Padding" Value="8"/>
  <Setter Property="FontFamily" Value="{StaticResource Font.Main}"/>
+ <Setter Property="VerticalContentAlignment" Value="Center"/>
+ <Setter Property="Template">
+ <Setter.Value>
+ <ControlTemplate TargetType="DataGridCell">
+ <Border Background="{TemplateBinding Background}"
+ BorderBrush="{TemplateBinding BorderBrush}"
+ BorderThickness="{TemplateBinding BorderThickness}"
+ Padding="{TemplateBinding Padding}">
+ <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+ </Border>
+ </ControlTemplate>
+ </Setter.Value>
+ </Setter>
  <Style.Triggers>
  <Trigger Property="IsSelected" Value="True">
  <Setter Property="Background" Value="#15000000"/>
@@ -182,6 +197,10 @@ Margin="0,0,8,0"/>
  <Setter Property="Background" Value="#15000000"/>
  <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
  </Trigger>
+          <DataTrigger Binding="{Binding IsDragging}" Value="True">
+     <Setter Property="Opacity" Value="0.5"/>
+         <Setter Property="Background" Value="{DynamicResource Brush.Primary}"/>
+              </DataTrigger>
  </Style.Triggers>
  </Style>
  
@@ -252,7 +271,7 @@ Margin="0,0,8,0"/>
   <DataGridTextColumn Header="#" 
      Binding="{Binding PeriodNumber}" 
        Width="60"
-            IsReadOnly="False"/>
+            IsReadOnly="True"/>
 
         <!-- Subject -->
            <DataGridTextColumn Header="Subject" 
@@ -289,7 +308,23 @@ Binding="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}"
          <!-- Is Break -->
  <DataGridCheckBoxColumn Header="Break" 
      Binding="{Binding IsBreak, UpdateSourceTrigger=PropertyChanged}" 
-          Width="70"/>
+     Width="70"
+     IsReadOnly="False">
+     <DataGridCheckBoxColumn.ElementStyle>
+         <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+   <Setter Property="HorizontalAlignment" Value="Center"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+       <Setter Property="IsHitTestVisible" Value="True"/>
+         </Style>
+     </DataGridCheckBoxColumn.ElementStyle>
+     <DataGridCheckBoxColumn.EditingElementStyle>
+         <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+             <Setter Property="HorizontalAlignment" Value="Center"/>
+   <Setter Property="VerticalAlignment" Value="Center"/>
+   <Setter Property="IsHitTestVisible" Value="True"/>
+         </Style>
+     </DataGridCheckBoxColumn.EditingElementStyle>
+ </DataGridCheckBoxColumn>
 
       <!-- Delete Button -->
       <DataGridTemplateColumn Header="Actions" Width="80">
