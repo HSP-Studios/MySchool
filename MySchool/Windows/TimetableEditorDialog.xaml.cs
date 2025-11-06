@@ -39,26 +39,32 @@ PeriodsDataGrid.MouseMove += DataGrid_MouseMove;
       /// <summary>
         /// Handle mouse down to initiate drag
         /// </summary>
-        private void DataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+      private void DataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
    {
-        // Reset dragged period at the start of any click
-        _draggedPeriod = null;
-     _draggedPeriodOriginalIndex = -1;
+     // If this is a double-click, don't initiate drag - allow editing instead
+     if (e.ClickCount == 2)
+   {
+    return;
+  }
+
+       // Reset dragged period at the start of any click
+       _draggedPeriod = null;
+   _draggedPeriodOriginalIndex = -1;
 
   if (e.OriginalSource is FrameworkElement element)
-    {
-                var row = FindVisualParent<DataGridRow>(element);
-    if (row != null && row.Item is EditablePeriod period && _currentDay != null)
-                {
-  _draggedPeriod = period;
-_draggedPeriodOriginalIndex = _currentDay.Periods.IndexOf(period);
-  
-             // Clear any existing selection to prevent blue highlight accumulation
-      PeriodsDataGrid.SelectedItem = null;
-             PeriodsDataGrid.UnselectAll();
-           }
+  {
+        var row = FindVisualParent<DataGridRow>(element);
+       if (row != null && row.Item is EditablePeriod period && _currentDay != null)
+      {
+ _draggedPeriod = period;
+ _draggedPeriodOriginalIndex = _currentDay.Periods.IndexOf(period);
+      
+    // Clear any existing selection to prevent blue highlight accumulation
+          PeriodsDataGrid.SelectedItem = null;
+ PeriodsDataGrid.UnselectAll();
             }
-    }
+   }
+  }
 
  /// <summary>
   /// Handle mouse move to start drag operation
