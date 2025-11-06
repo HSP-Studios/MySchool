@@ -553,51 +553,90 @@ DialogResult = true;
     var errors = new List<string>();
 
     foreach (var daySchedule in _editableDays.Values)
-          {
-       foreach (var period in daySchedule.Periods)
-                {
-        // Validate subject
-   if (string.IsNullOrWhiteSpace(period.Subject))
-      {
-   errors.Add($"{daySchedule.Day} - Period {period.PeriodNumber}: Subject cannot be empty");
-      }
+        {
+    foreach (var period in daySchedule.Periods)
+        {
+             // Validate subject
+      if (string.IsNullOrWhiteSpace(period.Subject))
+    {
+    errors.Add($"{daySchedule.Day} - Period {period.PeriodNumber}: Subject cannot be empty");
+  }
 
-         // Validate times
-          if (!TimeSpan.TryParse(period.StartTime, out _))
-  {
-   errors.Add($"{daySchedule.Day} - Period {period.PeriodNumber}: Invalid start time format (use HH:MM)");
+      // Validate times
+                if (!TimeSpan.TryParse(period.StartTime, out _))
+            {
+           errors.Add($"{daySchedule.Day} - Period {period.PeriodNumber}: Invalid start time format (use HH:MM)");
         }
 
-   if (!TimeSpan.TryParse(period.EndTime, out _))
-  {
-errors.Add($"{daySchedule.Day} - Period {period.PeriodNumber}: Invalid end time format (use HH:MM)");
-             }
+         if (!TimeSpan.TryParse(period.EndTime, out _))
+      {
+          errors.Add($"{daySchedule.Day} - Period {period.PeriodNumber}: Invalid end time format (use HH:MM)");
+            }
 
-               // Validate start time is before end time
+        // Validate start time is before end time
       if (TimeSpan.TryParse(period.StartTime, out var start) && 
-     TimeSpan.TryParse(period.EndTime, out var end))
-       {
-     if (start >= end)
-     {
-     errors.Add($"{daySchedule.Day} - Period {period.PeriodNumber}: Start time must be before end time");
-          }
-      }
-      }
-  }
+  TimeSpan.TryParse(period.EndTime, out var end))
+                {
+        if (start >= end)
+            {
+       errors.Add($"{daySchedule.Day} - Period {period.PeriodNumber}: Start time must be before end time");
+              }
+       }
+                }
 
-       if (errors.Any())
-        {
-        MessageBox.Show(
-       "Please fix the following errors:\n\n" + string.Join("\n", errors.Take(10)) +
-  (errors.Count > 10 ? $"\n\n...and {errors.Count - 10} more" : ""),
+      // Check for overlapping periods
+      var overlaps = FindOverlappingPeriods(daySchedule);
+        errors.AddRange(overlaps);
+       }
+
+      if (errors.Any())
+    {
+         MessageBox.Show(
+               "Please fix the following errors:\n\n" + string.Join("\n", errors.Take(10)) +
+         (errors.Count > 10 ? $"\n\n...and {errors.Count - 10} more" : ""),
         "Validation Errors",
-          MessageBoxButton.OK,
-            MessageBoxImage.Warning);
-       return false;
-  }
+        MessageBoxButton.OK,
+   MessageBoxImage.Warning);
+ return false;
+            }
 
-  return true;
+    return true;
+        }
+
+        /// <summary>
+        /// Find overlapping periods in a day schedule
+      /// </summary>
+  private List<string> FindOverlappingPeriods(EditableDaySchedule daySchedule)
+        {
+var overlaps = new List<string>();
+ var periods = daySchedule.Periods
+   .Where(p => TimeSpan.TryParse(p.StartTime, out _) && TimeSpan.TryParse(p.EndTime, out _))
+       .OrderBy(p => p.GetStartTimeSpan())
+        .ToList();
+
+         for (int i = 0; i < periods.Count - 1; i++)
+   {
+          var currentPeriod = periods[i];
+             var currentStart = TimeSpan.Parse(currentPeriod.StartTime);
+     var currentEnd = TimeSpan.Parse(currentPeriod.EndTime);
+
+    for (int j = i + 1; j < periods.Count; j++)
+    {
+       var nextPeriod = periods[j];
+       var nextStart = TimeSpan.Parse(nextPeriod.StartTime);
+                    var nextEnd = TimeSpan.Parse(nextPeriod.EndTime);
+
+          // Check if periods overlap (not just touching)
+          // Periods are overlapping if one starts before the other ends AND ends after the other starts
+         if (currentStart < nextEnd && currentEnd > nextStart)
+        {
+      overlaps.Add($"{daySchedule.Day} - Overlapping periods: Period {currentPeriod.PeriodNumber} ({currentPeriod.Subject}, {currentPeriod.StartTime}-{currentPeriod.EndTime}) overlaps with Period {nextPeriod.PeriodNumber} ({nextPeriod.Subject}, {nextPeriod.StartTime}-{nextPeriod.EndTime})");
       }
+   }
+          }
+
+        return overlaps;
+     }
 
         /// <summary>
         /// Cancel editing and close dialog
