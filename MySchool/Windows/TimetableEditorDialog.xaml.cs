@@ -31,12 +31,34 @@ namespace MySchool.Windows
    {
   PeriodsDataGrid.PreviewMouseLeftButtonDown += DataGrid_PreviewMouseLeftButtonDown;
 PeriodsDataGrid.MouseMove += DataGrid_MouseMove;
-            PeriodsDataGrid.Drop += DataGrid_Drop;
+     PeriodsDataGrid.Drop += DataGrid_Drop;
       PeriodsDataGrid.AllowDrop = true;
-            PeriodsDataGrid.DragOver += DataGrid_DragOver;
+    PeriodsDataGrid.DragOver += DataGrid_DragOver;
+       
+     // Handle cell edit ending to trigger reordering
+     PeriodsDataGrid.CellEditEnding += DataGrid_CellEditEnding;
         }
 
-      /// <summary>
+        /// <summary>
+        /// Handle cell edit ending to reorder periods by time
+     /// </summary>
+     private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+ // Only reorder if editing a time column
+            if (e.Column.Header?.ToString() == "Start Time" || e.Column.Header?.ToString() == "End Time")
+       {
+       if (_currentDay != null)
+      {
+       // Defer the reordering until after the edit is committed
+       Dispatcher.BeginInvoke(new Action(() =>
+    {
+      _currentDay.AutoReorderByTime();
+     }), System.Windows.Threading.DispatcherPriority.Background);
+  }
+          }
+  }
+
+        /// <summary>
         /// Handle mouse down to initiate drag
         /// </summary>
       private void DataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -319,23 +341,21 @@ private void DataGrid_DragOver(object sender, DragEventArgs e)
      if (_editableDays.TryGetValue(day, out var daySchedule))
         {
    _currentDay = daySchedule;
-                PeriodsDataGrid.ItemsSource = _currentDay.Periods;
+    PeriodsDataGrid.ItemsSource = _currentDay.Periods;
 
-                // Set up time change callbacks for auto-reordering
+       // Set up time change callbacks for auto-reordering
         foreach (var period in _currentDay.Periods)
             {
   period.SetTimeChangedCallback(() => {
-// Auto-reorder by time when any period's time changes
-          _currentDay.AutoReorderByTime();
-        // Don't refresh here - it exits edit mode
-      // The DataGrid will update automatically through data binding
+// Just mark as changed, don't reorder yet
+        // Reordering will happen when the user commits the edit
   DataChanged = true;
               });
-          }
+  }
 
     // Show/hide no periods message
      NoPeriodsPanel.Visibility = _currentDay.Periods.Count == 0 
-               ? Visibility.Visible 
+         ? Visibility.Visible 
   : Visibility.Collapsed;
 
           Logger.Debug("TimetableEditor", $"Loaded {_currentDay.Periods.Count} periods for {day}");
@@ -374,15 +394,14 @@ private void DataGrid_DragOver(object sender, DragEventArgs e)
          IsBreak = false
             };
 
-            // Set up time change callback for auto-reordering
-         newPeriod.SetTimeChangedCallback(() => {
-             _currentDay.AutoReorderByTime();
-   // Don't refresh here - it exits edit mode
-      // The DataGrid will update automatically through data binding
+ // Set up time change callback for auto-reordering
+       newPeriod.SetTimeChangedCallback(() => {
+    // Just mark as changed, don't reorder yet
+     // Reordering will happen when the user commits the edit
      DataChanged = true;
       });
 
-         _currentDay.Periods.Add(newPeriod);
+       _currentDay.Periods.Add(newPeriod);
     
  // Update visibility
       NoPeriodsPanel.Visibility = Visibility.Collapsed;
