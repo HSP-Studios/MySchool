@@ -314,32 +314,33 @@ private void DataGrid_DragOver(object sender, DragEventArgs e)
         /// <summary>
         /// Load the schedule for the selected day
         /// </summary>
- private void LoadDaySchedule(string day)
+    private void LoadDaySchedule(string day)
         {
      if (_editableDays.TryGetValue(day, out var daySchedule))
-    {
-       _currentDay = daySchedule;
-    PeriodsDataGrid.ItemsSource = _currentDay.Periods;
+        {
+   _currentDay = daySchedule;
+                PeriodsDataGrid.ItemsSource = _currentDay.Periods;
 
-              // Set up time change callbacks for auto-reordering
-  foreach (var period in _currentDay.Periods)
-    {
-             period.SetTimeChangedCallback(() => {
-         // Auto-reorder by time when any period's time changes
-    _currentDay.AutoReorderByTime();
-          PeriodsDataGrid.Items.Refresh();
-         DataChanged = true;
-      });
-                }
+                // Set up time change callbacks for auto-reordering
+        foreach (var period in _currentDay.Periods)
+            {
+  period.SetTimeChangedCallback(() => {
+// Auto-reorder by time when any period's time changes
+          _currentDay.AutoReorderByTime();
+        // Don't refresh here - it exits edit mode
+      // The DataGrid will update automatically through data binding
+  DataChanged = true;
+              });
+          }
 
-           // Show/hide no periods message
+    // Show/hide no periods message
      NoPeriodsPanel.Visibility = _currentDay.Periods.Count == 0 
-                    ? Visibility.Visible 
-     : Visibility.Collapsed;
+               ? Visibility.Visible 
+  : Visibility.Collapsed;
 
-     Logger.Debug("TimetableEditor", $"Loaded {_currentDay.Periods.Count} periods for {day}");
+          Logger.Debug("TimetableEditor", $"Loaded {_currentDay.Periods.Count} periods for {day}");
             }
-        }
+  }
 
         /// <summary>
         /// Add a new period to the current day
@@ -376,18 +377,19 @@ private void DataGrid_DragOver(object sender, DragEventArgs e)
             // Set up time change callback for auto-reordering
          newPeriod.SetTimeChangedCallback(() => {
              _currentDay.AutoReorderByTime();
-   PeriodsDataGrid.Items.Refresh();
-                DataChanged = true;
-            });
+   // Don't refresh here - it exits edit mode
+      // The DataGrid will update automatically through data binding
+     DataChanged = true;
+      });
 
-            _currentDay.Periods.Add(newPeriod);
+         _currentDay.Periods.Add(newPeriod);
     
  // Update visibility
-            NoPeriodsPanel.Visibility = Visibility.Collapsed;
+      NoPeriodsPanel.Visibility = Visibility.Collapsed;
 
 Logger.Info("TimetableEditor", $"Added new period {nextPeriodNumber} to {_currentDay.Day}");
  DataChanged = true;
-        }
+ }
 
      /// <summary>
         /// Delete a period from the current day
