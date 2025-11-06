@@ -168,47 +168,51 @@ private void DataGrid_DragOver(object sender, DragEventArgs e)
      _draggedPeriod.IsDragging = false;
 
     // Clear selection and refresh with a delay to ensure it happens after all drag events
-       var tempPeriod = _draggedPeriod;
+     var tempPeriod = _draggedPeriod;
       Dispatcher.BeginInvoke(new Action(() =>
-      {
-     // Make sure IsDragging is false
+   {
+  // Make sure IsDragging is false
    if (tempPeriod != null)
   {
    tempPeriod.IsDragging = false;
  }
-            
-       // Clear selection
+  
+    // Clear selection
         PeriodsDataGrid.SelectedItem = null;
-        PeriodsDataGrid.UnselectAll();
+   PeriodsDataGrid.UnselectAll();
  
+    // Commit any pending edits before refreshing
+ PeriodsDataGrid.CommitEdit();
+     PeriodsDataGrid.CommitEdit();
+           
     // Force a complete refresh
-             PeriodsDataGrid.Items.Refresh();
+        PeriodsDataGrid.Items.Refresh();
     PeriodsDataGrid.UpdateLayout();
-        }), System.Windows.Threading.DispatcherPriority.Background);
-           }
+}), System.Windows.Threading.DispatcherPriority.Background);
+    }
       catch (Exception ex)
      {
      Logger.Warning("TimetableEditor", $"Failed to finalize drop: {ex.Message}");
-           }
+    }
      finally
     {
      if (_draggedPeriod != null)
           {
    _draggedPeriod.IsDragging = false;
-                }
+       }
     _draggedPeriod = null;
  }
-            }
+   }
      else
    {
-           if (_draggedPeriod != null)
+      if (_draggedPeriod != null)
          {
-          _draggedPeriod.IsDragging = false;
-          }
+  _draggedPeriod.IsDragging = false;
+    }
     _draggedPeriod = null;
       }
 
-      e.Handled = true;
+   e.Handled = true;
         }
 
         /// <summary>
