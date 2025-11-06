@@ -41,13 +41,13 @@ PeriodsDataGrid.MouseMove += DataGrid_MouseMove;
         /// </summary>
       private void DataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
    {
-     // If this is a double-click, don't initiate drag - allow editing instead
+  // If this is a double-click, don't initiate drag - allow editing instead
      if (e.ClickCount == 2)
    {
     return;
   }
 
-       // Reset dragged period at the start of any click
+ // Reset dragged period at the start of any click
        _draggedPeriod = null;
    _draggedPeriodOriginalIndex = -1;
 
@@ -58,41 +58,45 @@ PeriodsDataGrid.MouseMove += DataGrid_MouseMove;
       {
  _draggedPeriod = period;
  _draggedPeriodOriginalIndex = _currentDay.Periods.IndexOf(period);
-      
-    // Clear any existing selection to prevent blue highlight accumulation
-          PeriodsDataGrid.SelectedItem = null;
- PeriodsDataGrid.UnselectAll();
-            }
+       }
    }
   }
 
- /// <summary>
-  /// Handle mouse move to start drag operation
-        /// </summary>
+        /// <summary>
+     /// Handle mouse move to start drag operation
+     /// </summary>
         private void DataGrid_MouseMove(object sender, MouseEventArgs e)
-      {
+        {
     // Only start drag if left button is pressed, we have a dragged period, and current day is not null
             if (e.LeftButton == MouseButtonState.Pressed && 
-                _draggedPeriod != null && 
+    _draggedPeriod != null && 
   _currentDay != null &&
-       _currentDay.Periods.Contains(_draggedPeriod))
+     _currentDay.Periods.Contains(_draggedPeriod))
   {
    try
     {
        _draggedPeriod.IsDragging = true;
-            DragDrop.DoDragDrop(PeriodsDataGrid, _draggedPeriod, DragDropEffects.Move);
-             }
+   DragDrop.DoDragDrop(PeriodsDataGrid, _draggedPeriod, DragDropEffects.Move);
+  }
           catch (Exception ex)
      {
  Logger.Warning("TimetableEditor", $"Drag operation failed: {ex.Message}");
    }
           finally
  {
-         // Always reset dragging state
-            if (_draggedPeriod != null)
-          {
+         // Always reset dragging state and clear selection
+     if (_draggedPeriod != null)
+   {
           _draggedPeriod.IsDragging = false;
-                 }
+     }
+            _draggedPeriod = null;
+       
+     // Clear selection after drag
+     Dispatcher.BeginInvoke(new Action(() =>
+   {
+        PeriodsDataGrid.SelectedItem = null;
+  PeriodsDataGrid.UnselectAll();
+ }), System.Windows.Threading.DispatcherPriority.Background);
          }
      }
         }
