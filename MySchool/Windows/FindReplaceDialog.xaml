@@ -8,7 +8,7 @@
   AllowsTransparency="True"
         Background="Transparent"
         Width="450"
-        Height="250"
+        Height="300"
         WindowStartupLocation="CenterOwner"
         FontFamily="{StaticResource Font.Main}">
     <shell:WindowChrome.WindowChrome>
