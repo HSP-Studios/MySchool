@@ -76,5 +76,4 @@ MySchool is a WPF application for managing and displaying student and class info
 You have access to a variety of MCP Servers such as;
 - Github MCP - allows you to manage the github side of repos
 - playwright - allows you to use a web browser to complete a variety of web-based tasks
-- MCP Control - allows you to control a Windows 11 instance which can be used to test the application features
 - nuget - allows you to manage nuget packages 
