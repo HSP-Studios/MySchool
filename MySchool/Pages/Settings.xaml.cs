@@ -237,6 +237,35 @@ namespace MySchool.Pages
 			}
 		}
 
+		private void EditTimetableButton_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				Logger.Info("Settings", "User opened timetable editor");
+				var dialog = new TimetableEditorDialog
+				{
+					Owner = Window.GetWindow(this)
+				};
+				
+				var result = dialog.ShowDialog();
+				
+				if (result == true && dialog.DataChanged)
+				{
+					Logger.Info("Settings", "Timetable editor changes saved successfully");
+					MessageBox.Show(
+						"Your timetable has been updated!\n\nChanges will be reflected immediately in the Home and Schedule tabs.",
+						"Timetable Updated",
+						MessageBoxButton.OK,
+						MessageBoxImage.Information);
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.Error("Settings", "Failed to open timetable editor", ex);
+				MessageBox.Show($"Failed to open timetable editor: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
+
 		private async void RequestLocationButton_Click(object sender, RoutedEventArgs e)
 		{
 			try

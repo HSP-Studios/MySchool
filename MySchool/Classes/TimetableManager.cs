@@ -322,6 +322,27 @@ namespace MySchool.Classes
 
             return ProcessAndSaveTimetable(latestFile);
         }
+
+        /// <summary>
+        /// Save timetable data to a specified file
+        /// </summary>
+        public static void SaveTimetable(TimetableData timetableData, string filePath)
+        {
+            Logger.Info("TimetableManager", $"Saving timetable to: {filePath}");
+
+            try
+            {
+                string formattedJson = JsonSerializer.Serialize(timetableData, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(filePath, formattedJson);
+
+                Logger.Info("TimetableManager", "Timetable saved successfully");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("TimetableManager", "Failed to save timetable", ex);
+                throw;
+            }
+        }
     }
 }
 
